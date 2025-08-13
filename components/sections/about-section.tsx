@@ -9,9 +9,9 @@ export function AboutSection() {
       <div className="floating-element floating-element-2"></div>
       <div className="floating-element floating-element-3"></div>
 
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
+      <div className="container mx-auto px-6 max-w-7xl leading-[2.85rem]">
+        <div className="grid lg:grid-cols-2 gap-16 items-center leading-[4.6rem] my-[45px]">
+          <div className="space-y-8 my-[26px]">
             <div>
               <h2 className="text-5xl lg:text-6xl font-bold text-[#b9925a] mb-6">About Me</h2>
               <p className="text-lg text-gray-300 leading-relaxed mb-6">
