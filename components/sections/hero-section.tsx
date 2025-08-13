@@ -62,6 +62,12 @@ export default function HeroSection() {
       <nav className={`navbar ${isNavbarPinned ? "navbar-pinned" : ""}`}>
         <div className="nav-container">
           <div className="nav-logo" tabIndex={0} role="button" aria-label="Home">
+            <Image
+              src="/logo.png" // Update this path to your logo file
+              alt="Gayanga Bandara Logo"
+              width={48}
+              height={48}
+            />
           </div>
 
           <button
@@ -110,7 +116,6 @@ export default function HeroSection() {
       </div>
 
       <div className="scroll-indicator">
-        <div className="scroll-arrow"></div>
       </div>
     </section>
   )

@@ -202,11 +202,6 @@
   transform: scale(1.05);
 }
 
-.nav-logo:focus {
-  outline: 2px solid #b9925a;
-  outline-offset: 2px;
-}
-
 .mobile-menu-button {
   display: none;
   flex-direction: column;
@@ -221,7 +216,7 @@
 }
 
 .hamburger-line {
-  width: 2rem;
+  width: zrem;
   height: 0.25rem;
   background: #fff;
   border-radius: 10px;
@@ -270,16 +265,11 @@
   transform: translateY(-2px);
 }
 
-.nav-link:focus {
-  outline: 2px solid #b9925a;
-  outline-offset: 2px;
-}
-
 .nav-link::after {
   content: "";
   position: absolute;
   width: 0;
-  height: 2px;
+  height: 1px;
   bottom: 0;
   left: 50%;
   background-color: #b9925a;
@@ -409,7 +399,7 @@
   width: 50vw;
   aspect-ratio: 957 / 1436;
   z-index: 10;
-  margin-top: 225px;
+  margin-top: 250px;
 }
 
 .hero-subtitle {
