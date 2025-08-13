@@ -174,7 +174,6 @@
 .navbar-pinned {
   background: rgba(0, 8, 15, 0.9);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(185, 146, 90, 0.2);
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
@@ -410,6 +409,7 @@
   width: 50vw;
   aspect-ratio: 957 / 1436;
   z-index: 10;
+  margin-top: 225px;
 }
 
 .hero-subtitle {

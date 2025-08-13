@@ -62,7 +62,6 @@ export default function HeroSection() {
       <nav className={`navbar ${isNavbarPinned ? "navbar-pinned" : ""}`}>
         <div className="nav-container">
           <div className="nav-logo" tabIndex={0} role="button" aria-label="Home">
-            <span className="sr-only">Gayanga Bandara Logo</span>
           </div>
 
           <button
@@ -108,18 +107,10 @@ export default function HeroSection() {
             priority
           />
         </div>
-
-        <div className="hero-subtitle">
-          <p>Creative Developer</p>
-          <p>Digital Artist</p>
-        </div>
-
-        <div className="bandara-text">BANDARA</div>
       </div>
 
       <div className="scroll-indicator">
         <div className="scroll-arrow"></div>
-        <span className="scroll-text">Scroll</span>
       </div>
     </section>
   )
