@@ -6,6 +6,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Gayanga Bandara",
+  icons: {
+    icon: '/favicon.ico?v=1', // must be inside /public
+  },
 };
 
 export default function RootLayout({
@@ -14,17 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="public/favicon.ico" sizes="any" />
-        <style>{`
-html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
-      </head>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
