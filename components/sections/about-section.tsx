@@ -1,8 +1,48 @@
 "use client"
 
+import { useEffect } from "react"
 import Image from "next/image"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function AboutSection() {
+  useEffect(() => {
+    // GSAP 3D scroll animation for the creative image and stats
+    const creativeImage = document.querySelector(".creative-image-container")
+    const statsItems = gsap.utils.toArray(".stats-item") as HTMLElement[]
+
+    if (creativeImage) {
+      gsap.to(creativeImage, {
+        scrollTrigger: {
+          trigger: creativeImage,
+          start: "top center",
+          scrub: 1,
+        },
+        rotationX: 10,
+        rotationY: -10,
+        y: 50,
+        scale: 0.95,
+        ease: "power1.inOut",
+      })
+    }
+
+    if (statsItems.length > 0) {
+      gsap.from(statsItems, {
+        scrollTrigger: {
+          trigger: statsItems,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+        opacity: 0,
+        y: 50,
+        stagger: 0.2,
+      })
+    }
+  }, [])
+
   return (
     <section id="about" className="about-section py-20">
       <div className="floating-element floating-element-1"></div>
