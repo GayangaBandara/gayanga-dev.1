@@ -25,7 +25,6 @@ export default function HeroSection() {
       const bandaraText = document.querySelector(".bandara-text") as HTMLElement
       const aboutSection = document.getElementById("about")
 
-      // Calculate scroll progress and about section position
       const aboutSectionTop = aboutSection ? aboutSection.offsetTop : windowHeight
       const scrollProgress = scrollY / aboutSectionTop
 
