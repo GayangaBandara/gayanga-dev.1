@@ -55,32 +55,32 @@ export function AboutSection() {
             <div>
               <h2 className="text-5xl lg:text-6xl font-bold text-[#b9925a] mb-6">About Me</h2>
               <p className="text-lg text-gray-300 leading-relaxed mb-6">
-                I'm a passionate creative developer and digital artist with over 5 years of experience crafting
-                immersive digital experiences. My work spans across web development, 3D animation, and interactive
-                design.
+                I am a final-year B.Sc. Software Engineering undergraduate driven by a single goal: bridging the gap between complex data and intuitive user experiences.
+              </p>
+              <p className="text-lg text-gray-300 leading-relaxed mb-6">
+                My journey has taken me from mastering the fundamentals of Full-Stack Development to exploring the bleeding edge of Artificial Intelligence. Unlike traditional developers, I don't just build apps; I engineer intelligent ecosystems. Whether it's integrating Groq LLM for real-time sentiment analysis or using WebGL for immersive 3D web experiences, I focus on writing clean, scalable code that adapts to emerging industry standards.
               </p>
               <p className="text-lg text-gray-300 leading-relaxed">
-                I believe in pushing the boundaries of what's possible on the web, combining cutting-edge technology
-                with artistic vision to create memorable user experiences.
+                Currently, I am leveraging technologies like Next.js, Flutter, and FastAPI to build solutions that are not just functional, but future-proof.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <h3 className="text-xl font-semibold text-[#b9925a]">Frontend</h3>
-                <p className="text-gray-400">React, Next.js, TypeScript</p>
+                <p className="text-gray-400">React, Next.js, TypeScript, Tailwind, Bootstrap, Flutter</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-[#b9925a]">Animation</h3>
-                <p className="text-gray-400">GSAP, Three.js, Framer Motion</p>
+                <h3 className="text-xl font-semibold text-[#b9925a]">Backend</h3>
+                <p className="text-gray-400">Node.js, Express.js, Python (FastAPI, Flask), SpringBoot</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-[#b9925a]">Design</h3>
-                <p className="text-gray-400">Figma, Adobe Creative Suite</p>
+                <h3 className="text-xl font-semibold text-[#b9925a]">AI & Data</h3>
+                <p className="text-gray-400">TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy, LLMs (Groq)</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-xl font-semibold text-[#b9925a]">3D</h3>
-                <p className="text-gray-400">Blender, Cinema 4D</p>
+                <h3 className="text-xl font-semibold text-[#b9925a]">Database</h3>
+                <p className="text-gray-400">PostgreSQL, MongoDB, Supabase, Firebase, MySQL</p>
               </div>
             </div>
           </div>
