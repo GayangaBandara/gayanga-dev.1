@@ -18,18 +18,37 @@ export default function HeroSection() {
       setIsNavbarPinned(scrollY > 100)
     }
 
+    // Set the CSS variable for navbar height so CSS can use it for scroll-margin-top
+    const updateNavbarHeightVar = () => {
+      const navbar = document.querySelector('.navbar') as HTMLElement
+      if (navbar) {
+        document.documentElement.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`)
+      }
+    }
+
+    updateNavbarHeightVar();
     window.addEventListener("scroll", handleScroll)
+    window.addEventListener("resize", updateNavbarHeightVar)
 
     return () => {
       clearTimeout(timer)
       window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("resize", updateNavbarHeightVar)
     }
   }, [])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      if (sectionId === 'home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setIsMobileMenuOpen(false)
+        return
+      }
+      const navbar = document.querySelector('.navbar') as HTMLElement
+      const navbarHeight = navbar ? navbar.offsetHeight : 64
+      const targetTop = element.getBoundingClientRect().top + window.scrollY - navbarHeight
+      window.scrollTo({ top: targetTop, behavior: 'smooth' })
     }
     setIsMobileMenuOpen(false)
   }
@@ -37,11 +56,11 @@ export default function HeroSection() {
   const scrollToBottom = () => {
     const aboutSection = document.getElementById("about")
     if (aboutSection) {
+      const navbar = document.querySelector('.navbar') as HTMLElement
+      const navbarHeight = navbar ? navbar.offsetHeight : 64
       const aboutSectionBottom = aboutSection.offsetTop + aboutSection.offsetHeight
-      window.scrollTo({
-        top: aboutSectionBottom + 100, // 100px beyond the about section
-        behavior: "smooth",
-      })
+      const targetTop = aboutSectionBottom + 100 - navbarHeight
+      window.scrollTo({ top: targetTop, behavior: "smooth" })
     }
   }
 
@@ -54,7 +73,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="hero-section">
+    <section id="home" className="hero-section">
       <nav className={`navbar ${isNavbarPinned ? "navbar-pinned" : ""}`}>
         <div className="nav-container">
           <div className="nav-logo" tabIndex={0} role="button" aria-label="Home">

@@ -1,5 +1,5 @@
 import HeroSection from "@/components/sections/hero-section"
-import { AboutSection } from "@/components/sections/about-section"
+import About from "@/components/sections/about-section"
 import ProjectsSection from "@/components/sections/projects-section"
 import ServicesSection from "@/components/sections/services-section"
 import SkillsSection from "@/components/sections/skills-section"
@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-slate-900">
       <HeroSection />
-      <AboutSection />
+      <About />
       <ProjectsSection />
       <ServicesSection />
       <SkillsSection />

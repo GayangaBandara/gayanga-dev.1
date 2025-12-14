@@ -43,6 +43,7 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    --navbar-height: 64px;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -565,13 +566,8 @@
   right: 0;
   height: 2px;
   background: linear-gradient(90deg, transparent, rgba(185, 146, 90, 0.3), transparent);
-  z-index: 1;
 }
 
-.about-section > * {
-  position: relative;
-  z-index: 2;
-}
 
 .floating-element {
   position: absolute;
@@ -1145,4 +1141,13 @@
     transition: none;
     will-change: auto;
   }
+}
+
+/* Ensure all main sections start below the navbar and smoothly scroll into view with an offset */
+.about-section,
+.projects-section,
+.services-section,
+.skills-section,
+.contact-section {
+  scroll-margin-top: var(--navbar-height);
 }
