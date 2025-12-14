@@ -191,19 +191,33 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 60; /* ensure it's above most page content */
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  transition: all 0.3s ease-in-out;
+  transition: background 0.25s ease-in-out, padding 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+  color: #fff;
 }
 
-.navbar-pinned {
-  background: rgba(0, 8, 15, 0.9);
-  backdrop-filter: blur(10px);
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+/* Desktop / web: ensure navbar is always readable (solid/semi-transparent) */
+@media (min-width: 1024px) {
+  .navbar {
+    /* semi-opaque dark background so links remain legible across sections */
+    background: rgba(0, 8, 15, 0.92);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none; /* remove heavy blur so content doesn't show through */
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+  }
+
+  .navbar-pinned {
+    /* slightly stronger background when pinned for added contrast */
+    background: rgba(0, 8, 15, 0.98);
+    border-bottom: 1px solid rgba(185, 146, 90, 0.28);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 
 .nav-container {
@@ -549,23 +563,12 @@
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   position: relative;
   overflow: hidden;
+  /* keep the section positioned below the fixed hero */
   margin-top: 100vh;
   padding-top: 0;
-  background-attachment: fixed;
-  /* Enhanced z-index and shadow to ensure proper layering over hero elements */
+  /* make the background flow naturally with the page for a continuous, seamless look */
+  /* background-attachment intentionally removed to avoid visual parallax seams */
   z-index: 25;
-  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.about-section::before {
-  /* Added subtle overlay to enhance separation from hero */
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(185, 146, 90, 0.3), transparent);
 }
 
 
@@ -638,11 +641,10 @@
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   position: relative;
   overflow: hidden;
-  margin-top: -1px;
+  /* remove the slight overlap/seam and box-shadow so sections appear continuous */
+  margin-top: 0;
   padding-top: 0;
-  background-attachment: fixed;
   z-index: 25;
-  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .project-card {
@@ -687,11 +689,9 @@
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   position: relative;
   overflow: hidden;
-  margin-top: -1px;
+  margin-top: 0;
   padding-top: 0;
-  background-attachment: fixed;
   z-index: 25;
-  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .service-card {
@@ -722,11 +722,9 @@
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   position: relative;
   overflow: hidden;
-  margin-top: -1px;
+  margin-top: 0;
   padding-top: 0;
-  background-attachment: fixed;
   z-index: 25;
-  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .skill-category {
@@ -777,11 +775,9 @@
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   position: relative;
   overflow: hidden;
-  margin-top: -1px;
+  margin-top: 0;
   padding-top: 0;
-  background-attachment: fixed;
   z-index: 25;
-  box-shadow: 0 -20px 40px rgba(0, 0, 0, 0.5);
 }
 
 .contact-info, .contact-form {

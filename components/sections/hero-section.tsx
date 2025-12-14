@@ -15,7 +15,9 @@ export default function HeroSection() {
 
     const handleScroll = () => {
       const scrollY = window.scrollY
-      setIsNavbarPinned(scrollY > 100)
+      // Change navbar only when scrolling past the Hero section (approx 1 viewport height)
+      // Subtracting a small buffer (e.g., 80px) ensures it transitions just as the About section hits the top.
+      setIsNavbarPinned(scrollY > window.innerHeight - 80)
     }
 
     // Set the CSS variable for navbar height so CSS can use it for scroll-margin-top
@@ -74,46 +76,8 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="hero-section">
-      <nav className={`navbar ${isNavbarPinned ? "navbar-pinned" : ""}`}>
-        <div className="nav-container">
-          <div className="nav-logo" tabIndex={0} role="button" aria-label="Home">
-            <Image src="/logo.png" alt="Gayanga Bandara Logo" width={48} height={48} />
-          </div>
-
-          <button
-            className="mobile-menu-button"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-            aria-expanded={isMobileMenuOpen}
-          >
-            <div className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}></div>
-            <div className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}></div>
-            <div className={`hamburger-line ${isMobileMenuOpen ? "open" : ""}`}></div>
-          </button>
-
-          <div className={`nav-links ${isMobileMenuOpen ? "mobile-open" : ""}`}>
-            <button className="nav-link" onClick={() => scrollToSection("home")} tabIndex={0}>
-              Home
-            </button>
-            <button className="nav-link" onClick={() => scrollToSection("about")} tabIndex={0}>
-              About
-            </button>
-            <button className="nav-link" onClick={() => scrollToSection("service")} tabIndex={0}>
-              Service
-            </button>
-            <button className="nav-link" onClick={() => scrollToSection("projects")} tabIndex={0}>
-              Projects
-            </button>
-            <button className="nav-link" onClick={() => scrollToSection("contact")} tabIndex={0}>
-              Contact
-            </button>
-          </div>
-        </div>
-      </nav>
-
       <div className="hero-content">
         <h1 className="hero-name">GAYANGA</h1>
-
         <div className="hero-image-container">
           <Image
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-photo-wFchO1UbSAqQtGJ0x00EDzQh4jCMek.png"
