@@ -568,10 +568,10 @@ main {
 
 /* ===== ABOUT SECTION STYLES ===== */
 /* Move the section gradient to the page root (main) so all sections share an identical
-   background and there are no visible seams between them. Individual sections should
-   be transparent and sit on top of the shared gradient. */
+    background and there are no visible seams between them. Individual sections should
+    be transparent and sit on top of the shared gradient. */
 .about-section {
-  background: transparent;
+  background: linear-gradient(#000a11 100%);
   position: relative;
   overflow: hidden;
   /* keep the section positioned below the fixed hero */
@@ -650,7 +650,7 @@ main {
 
 /* ===== PROJECTS SECTION STYLES ===== */
 .projects-section {
-  background: transparent;
+  background: linear-gradient(#000a11 100%);
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -697,7 +697,7 @@ main {
 
 /* ===== SERVICES SECTION STYLES ===== */
 .services-section {
-  background: transparent;
+  background: linear-gradient(#000a11 100%);
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -730,7 +730,7 @@ main {
 
 /* ===== SKILLS SECTION STYLES ===== */
 .skills-section {
-  background: transparent;
+  background: linear-gradient(#000a11 100%);
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -783,7 +783,7 @@ main {
 
 /* ===== CONTACT SECTION STYLES ===== */
 .contact-section {
-  background: transparent;
+  background: linear-gradient(#000a11 100%);
   position: relative;
   overflow: hidden;
   margin-top: 0;

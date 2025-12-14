@@ -242,7 +242,23 @@ export default function ContactSection() {
     <section id="contact" className="contact-section py-20">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-16">
-          <h2 className="text-5xl lg:text-6xl font-bold text-[#b9925a] mb-6">Contact</h2>
+          <div className="relative flex flex-col items-center justify-center w-full max-w-4xl mx-auto">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-3xl"></div>
+            <span className="text-8xl md:text-[10rem] font-extrabold bg-gradient-to-r from-white/10 via-white/5 to-white/2 bg-clip-text text-transparent select-none tracking-tighter">
+              CONTACT
+            </span>
+            <h2 className="absolute text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-gray-300 capitalize">
+              Contact
+            </h2>
+          </div>
+          <div className="flex items-center gap-4 my-2">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500/50"></div>
+            <div className="h-1.5 w-1.5 rounded-full bg-purple-500/70"></div>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-purple-500/50"></div>
+          </div>
+          <p className="text-base md:text-lg tracking-wider text-gray-300 uppercase max-w-md text-center font-light mb-2">
+            GET IN TOUCH
+          </p>
           <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
             Make it effortless to hire you.
           </p>
