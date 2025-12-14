@@ -1,175 +1,249 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import * as THREE from "three"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Brain, Layout, Smartphone, Palette, ArrowRight } from "lucide-react" // Importing Lucide icons
+import { Card } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+
+// Service Data with specialized icons
+const servicesData = [
+  {
+    id: "01",
+    title: "AI-Driven Development",
+    description: "Integration of LLMs and NLP pipelines to build 'smart' applications. I leverage tools like Groq, TensorFlow, and Python for sentiment analysis and automated chatbots.",
+    icon: Brain,
+    tags: ["Python", "TensorFlow", "OpenAI"],
+    color: "text-purple-400"
+  },
+  {
+    id: "02",
+    title: "Full-Stack Architecture",
+    description: "End-to-end web solutions using Next.js and Node.js. Focused on reactive UIs backed by scalable PostgreSQL databases and secure authentication flows.",
+    icon: Layout,
+    tags: ["React", "Node.js", "PostgreSQL"],
+    color: "text-blue-400"
+  },
+  {
+    id: "03",
+    title: "Mobile Engineering",
+    description: "High-performance cross-platform applications using Flutter and Dart. Ensuring real-time data synchronization and native-like performance on iOS and Android.",
+    icon: Smartphone,
+    tags: ["Flutter", "Dart", "Firebase"],
+    color: "text-green-400"
+  },
+  {
+    id: "04",
+    title: "Interactive UI/UX",
+    description: "Immersive user interfaces using WebGL and Custom CSS3. I move beyond templates to create animated, highly engaging experiences.",
+    icon: Palette,
+    tags: ["WebGL", "Three.js", "GSAP"],
+    color: "text-orange-400"
+  }
+]
 
 export default function ServicesSection() {
+  const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  
+  // Framer Motion Scroll Hooks
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
 
+  // Parallax Transforms
+  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]) // Background text moves opposite
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0])
+
+  // 3D Background Effect
   useEffect(() => {
     if (!canvasRef.current) return
 
     const canvas = canvasRef.current
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(75, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000)
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true })
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
     
     renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
-    renderer.setClearColor(0x000000, 0)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
-    // Create service visualization
-    const services = [
-      { 
-        title: "AI-Driven Application Development", 
-        color: 0xb9925a,
-        geometry: new THREE.OctahedronGeometry(1),
-        position: { x: -6, y: 0, z: 0 }
-      },
-      { 
-        title: "Full-Stack Web Architecture", 
-        color: 0x011d29,
-        geometry: new THREE.BoxGeometry(1.5, 1.5, 1.5),
-        position: { x: -2, y: 0, z: 0 }
-      },
-      { 
-        title: "Cross-Platform Mobile Engineering", 
-        color: 0xa57f4b,
-        geometry: new THREE.SphereGeometry(1.2, 32, 32),
-        position: { x: 2, y: 0, z: 0 }
-      },
-      { 
-        title: "Interactive UI/UX Engineering", 
-        color: 0x8a6b3f,
-        geometry: new THREE.TetrahedronGeometry(1.1),
-        position: { x: 6, y: 0, z: 0 }
-      }
-    ]
+    // Abstract Geometry Particles
+    const geometry = new THREE.IcosahedronGeometry(1, 0)
+    const particlesCount = 20
+    const particles = new THREE.InstancedMesh(
+      geometry,
+      new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.1 }),
+      particlesCount
+    )
 
-    const serviceObjects: THREE.Mesh[] = []
+    const dummy = new THREE.Object3D()
+    const positions: { x: number, y: number, z: number, speed: number }[] = []
 
-    services.forEach((service, index) => {
-      const material = new THREE.MeshBasicMaterial({ 
-        color: service.color, 
-        transparent: true, 
-        opacity: 0.7,
-        wireframe: true
-      })
-      const mesh = new THREE.Mesh(service.geometry, material)
-      
-      mesh.position.set(service.position.x, service.position.y, service.position.z)
-      
-      serviceObjects.push(mesh)
-      scene.add(mesh)
-    })
-
-    // Add connecting lines
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xb9925a, transparent: true, opacity: 0.4 })
-    
-    for (let i = 0; i < serviceObjects.length - 1; i++) {
-      const lineGeometry = new THREE.BufferGeometry().setFromPoints([
-        serviceObjects[i].position,
-        serviceObjects[i + 1].position
-      ])
-      const line = new THREE.Line(lineGeometry, lineMaterial)
-      scene.add(line)
+    for (let i = 0; i < particlesCount; i++) {
+      const x = (Math.random() - 0.5) * 20
+      const y = (Math.random() - 0.5) * 20
+      const z = (Math.random() - 0.5) * 10 - 5
+      positions.push({ x, y, z, speed: Math.random() * 0.02 })
+      dummy.position.set(x, y, z)
+      dummy.updateMatrix()
+      particles.setMatrixAt(i, dummy.matrix)
     }
 
+    scene.add(particles)
     camera.position.z = 10
 
+    // Animation Loop
+    let animationId: number
     const animate = () => {
-      requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate)
 
-      serviceObjects.forEach((mesh, index) => {
-        mesh.rotation.x += 0.01 + index * 0.002
-        mesh.rotation.y += 0.01 + index * 0.001
-        mesh.position.y = Math.sin(Date.now() * 0.001 + index * 2) * 0.5
-      })
+      // Slight rotation based on time
+      particles.rotation.y += 0.002
+      
+      // Update individual particles for "floating" effect
+      for (let i = 0; i < particlesCount; i++) {
+        const { x, y, z, speed } = positions[i]
+        const time = Date.now() * 0.001
+        
+        dummy.position.set(
+          x + Math.sin(time * speed) * 1,
+          y + Math.cos(time * speed) * 1,
+          z
+        )
+        dummy.rotation.x = time * speed
+        dummy.updateMatrix()
+        particles.setMatrixAt(i, dummy.matrix)
+      }
+      particles.instanceMatrix.needsUpdate = true
 
       renderer.render(scene, camera)
     }
 
     animate()
 
-    const handleResize = () => {
+    // Handle Scroll for 3D Camera Parallax
+    const handleScroll = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect()
+        const scrollPercent = 1 - (rect.bottom / (window.innerHeight + rect.height))
+        // Rotate the entire cloud of particles based on scroll
+        particles.rotation.z = scrollPercent * 0.5
+        particles.rotation.x = scrollPercent * 0.2
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("resize", () => {
       camera.aspect = canvas.offsetWidth / canvas.offsetHeight
       camera.updateProjectionMatrix()
       renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
-    }
-
-    window.addEventListener('resize', handleResize)
+    })
 
     return () => {
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener("scroll", handleScroll)
+      cancelAnimationFrame(animationId)
       renderer.dispose()
-      services.forEach(service => service.geometry.dispose())
     }
   }, [])
 
-  const servicesData = [
-    {
-      title: "01. AI-Driven Application Development",
-      description: "I integrate Large Language Models (LLMs) and NLP pipelines into web and mobile apps. From sentiment analysis to automated chatbots, I use tools like Groq, TensorFlow, and Python to make applications \"smart\".",
-      icon: "🧠"
-    },
-    {
-      title: "02. Full-Stack Web Architecture", 
-      description: "I build end-to-end web solutions using React, Next.js, and Node.js. My focus is on reactive UIs backed by scalable PostgreSQL/Supabase databases and secure authentication.",
-      icon: "🏗️"
-    },
-    {
-      title: "03. Cross-Platform Mobile Engineering",
-      description: "Using Flutter and Dart, I develop high-performance mobile applications that work seamlessly on iOS and Android, ensuring real-time data synchronization across devices.",
-      icon: "📱"
-    },
-    {
-      title: "04. Interactive UI/UX Engineering",
-      description: "I go beyond standard templates by using WebGL and Custom CSS3 to create immersive, animated, and highly engaging user interfaces.",
-      icon: "🎨"
-    }
-  ]
-
   return (
-    <section id="service" className="services-section section">
-      <div className="container mx-auto px-6 max-w-7xl">
-        <div className="text-center mb-16">
-          <div className="relative flex flex-col items-center justify-center w-full max-w-4xl mx-auto">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-3xl"></div>
-            <span className="text-8xl md:text-[10rem] font-extrabold bg-gradient-to-r from-white/10 via-white/5 to-white/2 bg-clip-text text-transparent select-none tracking-tighter">
-              SERVICES
-            </span>
-            <h2 className="absolute text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white/90 to-gray-300 capitalize">
-              Services
-            </h2>
-          </div>
-          <div className="flex items-center gap-4 my-2">
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-purple-500/50"></div>
-            <div className="h-1.5 w-1.5 rounded-full bg-purple-500/70"></div>
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-purple-500/50"></div>
-          </div>
-          <p className="text-base md:text-lg tracking-wider text-gray-300 uppercase max-w-md text-center font-light mb-2">
-            WHAT I OFFER
-          </p>
-          <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            Translate your skills into marketable business services.
-          </p>
-        </div>
+    <section
+      ref={containerRef}
+      id="services"
+      className="services-section relative min-h-screen py-24 overflow-hidden"
+    >
+      {/* 3D Background Layer */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+        <canvas ref={canvasRef} className="w-full h-full" />
+      </div>
 
-        <div className="section-canvas relative mb-16">
-          <canvas 
-            ref={canvasRef}
-            className="section-canvas-canvas absolute top-0 left-0 w-full h-96 pointer-events-none"
-            style={{ height: '400px' }}
-          />
-        </div>
+      {/* Decorative Gradients */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {servicesData.map((service, index) => (
-            <div key={index} className="service-card">
-              <div className="service-icon">{service.icon}</div>
-              <h3 className="text-2xl font-bold text-[#b9925a] mb-4">{service.title}</h3>
-              <p className="text-gray-300 leading-relaxed">{service.description}</p>
-            </div>
-          ))}
+      <div className="container relative z-10 px-6 mx-auto max-w-7xl">
+        <div className="flex flex-col lg:flex-row gap-16">
+          
+          {/* Sticky Header Section */}
+          <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
+            <motion.div style={{ y: y1, opacity }}>
+              <Badge variant="outline" className="mb-4 text-purple-400 border-purple-500/30">
+                What I Do
+              </Badge>
+              <h2 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 leading-tight">
+                My <br /> Services
+              </h2>
+              <p className="mt-6 text-lg text-gray-400 leading-relaxed max-w-md">
+                I help ambitious brands and startups build digital products that look good and work even better.
+              </p>
+              
+              <div className="mt-12 hidden lg:block">
+                <div className="flex items-center gap-3 text-sm text-gray-500">
+                  <span className="w-12 h-px bg-gray-800"></span>
+                  SCROLL TO EXPLORE
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Scrolling Cards Section */}
+          <div className="lg:w-2/3 grid gap-6">
+            {servicesData.map((service, index) => {
+              const Icon = service.icon
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <Card className="group relative overflow-hidden bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors duration-500">
+                    <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/10 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="p-8 flex flex-col md:flex-row gap-6 md:items-start">
+                      {/* Icon Box */}
+                      <div className="shrink-0">
+                        <span className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 group-hover:border-purple-500/30 group-hover:scale-110 transition-all duration-300">
+                          <Icon className={`w-8 h-8 ${service.color}`} />
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="space-y-4 flex-1">
+                        <div className="flex justify-between items-start">
+                          <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                            {service.title}
+                          </h3>
+                          <span className="text-4xl font-bold text-white/5 select-none">{service.id}</span>
+                        </div>
+                        
+                        <p className="text-gray-400 leading-relaxed">
+                          {service.description}
+                        </p>
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {service.tags.map((tag) => (
+                            <Badge key={tag} variant="secondary" className="bg-black/40 text-gray-400 text-xs border-0">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Arrow */}
+                      <div className="hidden md:flex items-center self-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
+                        <ArrowRight className="text-purple-400 w-6 h-6" />
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
