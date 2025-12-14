@@ -239,7 +239,7 @@ export default function ContactSection() {
   ]
 
   return (
-    <section id="contact" className="contact-section py-20">
+    <section id="contact" className="contact-section section">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-16">
           <div className="relative flex flex-col items-center justify-center w-full max-w-4xl mx-auto">

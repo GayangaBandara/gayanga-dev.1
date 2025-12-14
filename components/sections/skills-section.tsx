@@ -187,7 +187,7 @@ export default function SkillsSection() {
   ]
 
   return (
-    <section id="skills" className="skills-section py-20">
+    <section id="skills" className="skills-section section">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="text-center mb-16">
           <div className="relative flex flex-col items-center justify-center w-full max-w-4xl mx-auto">

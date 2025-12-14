@@ -398,6 +398,56 @@
   transform: translateY(-2px);
 }
 
+/* ===== SECTION SPACING & PROFESSIONAL GAPS ===== */
+/* Use a consistent vertical rhythm for sections (before & after spacing) */
+:root {
+  --section-gap: 4rem; /* default vertical spacing between sections */
+  --section-gap-lg: 6rem; /* spacing for larger screens */
+  --section-divider-color: rgba(185,146,90,0.06);
+}
+
+/* Apply spacing to all sections except the hero (which is full-viewport) */
+section:not(.hero-section) {
+  padding-block: var(--section-gap);
+  scroll-margin-top: calc(var(--navbar-height, 64px) + 1rem);
+}
+
+@media (min-width: 1024px) {
+  section:not(.hero-section) {
+    padding-block: var(--section-gap-lg);
+  }
+}
+
+/* Optional utility class for consistent sections */
+.section {
+  padding-block: var(--section-gap);
+}
+
+/* Subtle divider between sections for a professional look */
+section:not(.hero-section)::after {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-top: calc(var(--section-gap) / 2);
+  background: linear-gradient(90deg, transparent, var(--section-divider-color), transparent);
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  section:not(.hero-section)::after {
+    margin-top: calc(var(--section-gap-lg) / 2);
+  }
+}
+
+/* A container utility to unify horizontal layout inside sections */
+.section-container {
+  max-width: 110rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 .scroll-text {
   font-size: 0.875rem;
   color: #b9925a;
@@ -783,7 +833,7 @@ main {
 
 /* ===== CONTACT SECTION STYLES ===== */
 .contact-section {
-  background: linear-gradient(#000a11 100%);
+  background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   position: relative;
   overflow: hidden;
   margin-top: 0;

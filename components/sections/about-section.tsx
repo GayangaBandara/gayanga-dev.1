@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const About: React.FC = () => {
   return (
-    <section id="about" className="about-section text-gray-300 relative overflow-hidden">
+    <section id="about" className="about-section section text-gray-300 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="flex flex-col items-center justify-center py-8 px-4">
