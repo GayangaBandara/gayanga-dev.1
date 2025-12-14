@@ -248,10 +248,10 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="relative mb-16">
+        <div className="section-canvas relative mb-16">
           <canvas 
             ref={canvasRef}
-            className="absolute top-0 left-0 w-full h-96 pointer-events-none"
+            className="section-canvas-canvas absolute top-0 left-0 w-full h-96 pointer-events-none"
             style={{ height: '400px' }}
           />
         </div>

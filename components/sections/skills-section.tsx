@@ -201,10 +201,10 @@ export default function SkillsSection() {
           )}
         </div>
 
-        <div className="relative mb-16">
+        <div className="section-canvas relative mb-16">
           <canvas 
             ref={canvasRef}
-            className="absolute top-0 left-0 w-full h-96 pointer-events-auto"
+            className="section-canvas-canvas absolute top-0 left-0 w-full h-96 pointer-events-auto"
             style={{ height: '400px' }}
           />
         </div>

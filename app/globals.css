@@ -332,6 +332,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Keep the original hero gradient to preserve its intended visual style. */
   background-color: #00080f;
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
   overflow: hidden;
@@ -558,9 +559,19 @@
   will-change: transform, opacity;
 }
 
-/* ===== ABOUT SECTION STYLES ===== */
-.about-section {
+/* Shared page background =================================================== */
+/* Apply a single gradient to the page root so all sections sit on the exact same
+   background — this eliminates any visible seams between sections. */
+main {
   background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+}
+
+/* ===== ABOUT SECTION STYLES ===== */
+/* Move the section gradient to the page root (main) so all sections share an identical
+   background and there are no visible seams between them. Individual sections should
+   be transparent and sit on top of the shared gradient. */
+.about-section {
+  background: transparent;
   position: relative;
   overflow: hidden;
   /* keep the section positioned below the fixed hero */
@@ -612,7 +623,8 @@
   right: -20px;
   width: 100%;
   height: 100%;
-  border: 2px solid rgba(185, 146, 90, 0.2);
+  /* Decorative outline removed to avoid subtle horizontal seams between sections */
+  border: 2px solid transparent;
   border-radius: 12px;
   z-index: -1;
   background: linear-gradient(135deg, rgba(185, 146, 90, 0.05) 0%, rgba(1, 29, 41, 0.05) 50%, rgba(0, 8, 15, 0.05) 100%);
@@ -638,10 +650,9 @@
 
 /* ===== PROJECTS SECTION STYLES ===== */
 .projects-section {
-  background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
-  /* remove the slight overlap/seam and box-shadow so sections appear continuous */
   margin-top: 0;
   padding-top: 0;
   z-index: 25;
@@ -686,7 +697,7 @@
 
 /* ===== SERVICES SECTION STYLES ===== */
 .services-section {
-  background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -719,7 +730,7 @@
 
 /* ===== SKILLS SECTION STYLES ===== */
 .skills-section {
-  background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -772,12 +783,39 @@
 
 /* ===== CONTACT SECTION STYLES ===== */
 .contact-section {
-  background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+  background: transparent;
   position: relative;
   overflow: hidden;
   margin-top: 0;
   padding-top: 0;
   z-index: 25;
+}
+
+/* Canvas wrapper used across multiple sections to keep canvas from overlapping neighbors
+   and to ensure the canvas occupies space so sections don't show seams. */
+.section-canvas {
+  position: relative;
+  /* Ensure the canvas area takes up vertical space so content below doesn't show seams */
+  min-height: 24rem; /* 384px */
+}
+
+.section-canvas-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0; /* behind textual content */
+  background: transparent; /* ensure transparency so the section gradient shows through */
+}
+
+/* Make sure content inside sections sits above the canvas */
+.projects-section .container,
+.services-section .container,
+.skills-section .container,
+.contact-section .container {
+  position: relative;
+  z-index: 1;
 }
 
 .contact-info, .contact-form {
