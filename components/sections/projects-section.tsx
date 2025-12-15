@@ -5,7 +5,7 @@ import * as THREE from "three"
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Github, ExternalLink, PlayCircle } from "lucide-react"
+import { Github, ExternalLink, Maximize2, Download } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -61,6 +61,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     if (videoRef.current) videoRef.current.currentTime = 0
   }
 
+  // Close modal on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false)
+    }
+    if (open) window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [open])
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -69,12 +78,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Card 
-        className="group relative overflow-hidden border-white/10 bg-black/40 backdrop-blur-md hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 h-full flex flex-col"
+        className="group relative overflow-hidden border-white/10 bg-black/40 backdrop-blur-md hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 h-full flex flex-col will-change-transform hover:scale-[1.01]"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Media Container */}
-        <div className="relative aspect-video w-full overflow-hidden bg-gray-900 rounded-t-lg">
+        {/* Media Container (larger for improved UX) */}
+        <div className="relative w-full overflow-hidden bg-gray-900 rounded-t-lg h-56 md:h-72 lg:h-96">
           {/*
             Prioritize video preview playback (muted, loop) using the provided `project.video` MP4.
             Use `project.image` as the poster/fallback for mobile and when not hovering.
@@ -88,12 +97,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   muted
                   loop
                   playsInline
-                  // Use poster as fallback image while not playing
                   poster={project.image}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-500 ${
                     isHovering ? "opacity-100" : "opacity-0"
                   }`}
-                  // Small preload to allow smoother hover playback
                   preload="metadata"
                 />
               )}
@@ -109,32 +116,33 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                     src={project.image}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                    <PlayCircle className="w-12 h-12 text-white/20" />
-                  </div>
+                  <div className="w-full h-full flex items-center justify-center bg-zinc-900 text-gray-400">No preview</div>
                 )}
               </div>
 
-              {/* Play overlay: opens modal for full playback with sound */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <button
-                  onClick={() => setOpen(true)}
-                  className="pointer-events-auto bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-opacity opacity-95"
-                  aria-label={`Open ${project.title} video`}
-                >
-                  <PlayCircle className="w-6 h-6" />
-                </button>
-              </div>
+              {/* Make media clickable to open modal (no play icon overlay) */}
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => project.video && setOpen(true)}
+                onKeyDown={(e) => {
+                  if ((e.key === "Enter" || e.key === " ") && project.video) setOpen(true)
+                }}
+                className="absolute inset-0 flex items-center justify-center pointer-events-auto bg-transparent cursor-pointer"
+                aria-label={project.video ? `Open ${project.title} video` : undefined}
+              />
 
               {/* Modal for full playback */}
               {open && mounted && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
                   <div className="absolute inset-0 bg-black/70" onClick={() => setOpen(false)} />
-                  <div className="relative max-w-4xl w-full rounded-md overflow-hidden shadow-2xl bg-black z-10">
-                    <video src={project.video} controls autoPlay className="w-full h-auto" />
+                  <div className="relative max-w-6xl w-full rounded-md overflow-hidden shadow-2xl bg-black z-10">
+                    <div className="w-full bg-black aspect-video max-h-[80vh]">
+                      <video src={project.video} controls autoPlay className="w-full h-full object-contain" />
+                    </div>
                     <div className="p-3 flex justify-end">
                       <button
                         onClick={() => setOpen(false)}
@@ -154,7 +162,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   src={project.image}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-contain transition-transform duration-500 group-hover:scale-105"
                 />
                )}
             </div>
@@ -301,23 +309,23 @@ export default function ProjectsSection(): React.ReactElement {
       title: 'SafeSpace Ecosystem',
       subtitle: 'AI HealthTech',
       description: 'Award-winning platform connecting patients and doctors with real-time AI-driven sentiment analysis.',
-      image: '/projects/safespace.png',
+      image: 'image/safespace.png',
       tech: ['Flutter', 'React', 'TypeScript', 'Python', 'FastAPI'],
       demo: '#',
       github: '#',
       // demo video (replace with your own mp4 in /public/videos)
-      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+      video: 'https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/SafeSpace.mp4',
     },
     {
       id: 'master-designer',
       title: 'Master Designer v2',
       subtitle: 'Interactive 3D',
       description: 'Immersive web platform engineered with WebGL/Three.js for the All-Island Design Competition.',
-      image: '/projects/master-designer.png',
+      image: 'image/master.png',
       tech: ['Three.js', 'WebGL', 'GSAP', 'React'],
       demo: '#',
       github: '#',
-      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+      video: 'https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/Untitled%20video%20-%20Made%20with%20Clipchamp%20(1).mp4',
     },
     {
       id: 'freshmart',
@@ -413,11 +421,18 @@ export default function ProjectsSection(): React.ReactElement {
           </motion.p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+        {/* Projects Grid: show 2x2 on larger screens (first 4 projects) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {projects.slice(0, 4).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
+        </div>
+
+        {/* Optional: quick link to view more projects */}
+        <div className="mt-8 text-center">
+          <Button asChild size="sm" className="bg-white/5 hover:bg-white/10 text-white">
+            <Link href="#">View All Projects</Link>
+          </Button>
         </div>
       </div>
     </section>

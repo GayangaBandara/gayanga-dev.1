@@ -35,7 +35,7 @@ const About: React.FC = () => {
                 alt="Gayanga's Avatar"
                 width={300}
                 height={300}
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-photo-wFchO1UbSAqQtGJ0x00EDzQh4jCMek.png"
+                src="image/about.jpg"
                 className="h-full w-full object-cover"
               />
             </div>
