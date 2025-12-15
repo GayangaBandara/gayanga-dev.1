@@ -40,15 +40,18 @@ type Project = {
 // Modern Video Card Component with Hover Autoplay
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
+  const [open, setOpen] = useState(false)
 
+  // Hover behavior (desktop): play preview muted
   const handleMouseEnter = () => {
-    setIsPlaying(true)
+    setIsHovering(true)
+    // Attempt play; some browsers block autoplay - this is best-effort
     videoRef.current?.play().catch((e) => console.log("Autoplay prevented:", e))
   }
 
   const handleMouseLeave = () => {
-    setIsPlaying(false)
+    setIsHovering(false)
     videoRef.current?.pause()
     if (videoRef.current) videoRef.current.currentTime = 0
   }
@@ -67,6 +70,10 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       >
         {/* Media Container */}
         <div className="relative aspect-video w-full overflow-hidden bg-gray-900 rounded-t-lg">
+          {/*
+            Prioritize video preview playback (muted, loop) using the provided `project.video` MP4.
+            Use `project.image` as the poster/fallback for mobile and when not hovering.
+          */}
           {project.video ? (
             <>
               <video
@@ -75,13 +82,19 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 muted
                 loop
                 playsInline
+                // Use poster as fallback image while not playing
+                poster={project.image}
                 className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                  isPlaying ? "opacity-100" : "opacity-0"
+                  isHovering ? "opacity-100" : "opacity-0"
                 }`}
+                // Small preload to allow smoother hover playback
+                preload="metadata"
               />
+
+              {/* Poster / fallback when not playing */}
               <div
                 className={`absolute inset-0 transition-opacity duration-500 ${
-                  isPlaying ? "opacity-0" : "opacity-100"
+                  isHovering ? "opacity-0" : "opacity-100"
                 }`}
               >
                  {project.image ? (
@@ -97,6 +110,35 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   </div>
                 )}
               </div>
+
+              {/* Play overlay: opens modal for full playback with sound */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <button
+                  onClick={() => setOpen(true)}
+                  className="pointer-events-auto bg-white/10 hover:bg-white/20 text-white p-3 rounded-full transition-opacity opacity-95"
+                  aria-label={`Open ${project.title} video`}
+                >
+                  <PlayCircle className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Modal for full playback */}
+              {open && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                  <div className="absolute inset-0 bg-black/70" onClick={() => setOpen(false)} />
+                  <div className="relative max-w-4xl w-full rounded-md overflow-hidden shadow-2xl bg-black z-10">
+                    <video src={project.video} controls autoPlay className="w-full h-auto" />
+                    <div className="p-3 flex justify-end">
+                      <button
+                        onClick={() => setOpen(false)}
+                        className="px-3 py-1 rounded bg-white/5 hover:bg-white/10 text-white"
+                      >
+                        Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="relative w-full h-full">
@@ -256,7 +298,8 @@ export default function ProjectsSection(): React.ReactElement {
       tech: ['Flutter', 'React', 'TypeScript', 'Python', 'FastAPI'],
       demo: '#',
       github: '#',
-      video: '/videos/safespace-demo.mp4', // Ensure this file exists for autoplay
+      // demo video (replace with your own mp4 in /public/videos)
+      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     },
     {
       id: 'freshmart',
@@ -267,7 +310,7 @@ export default function ProjectsSection(): React.ReactElement {
       tech: ['Next.js', 'Redux', 'Tailwind', 'Stripe'],
       demo: '#',
       github: '#',
-      video: '/videos/freshmart-demo.mp4',
+      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     },
     {
       id: 'researchx',
@@ -275,6 +318,8 @@ export default function ProjectsSection(): React.ReactElement {
       subtitle: 'SaaS Platform',
       description: 'AI-powered document researcher that scrapes, synthesizes, and generates comprehensive whitepapers.',
       image: '/projects/researchx.png',
+      // Added a demo video placeholder (replace with your MP4)
+      video: '/videos/researchx-demo.mp4',
       tech: ['Next.js', 'OpenAI API', 'LangChain', 'Vercel'],
       demo: '#',
       github: '#',
@@ -288,7 +333,7 @@ export default function ProjectsSection(): React.ReactElement {
       tech: ['Three.js', 'WebGL', 'GSAP', 'React'],
       demo: '#',
       github: '#',
-      video: '/videos/master-designer-demo.mp4',
+      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     },
     {
       id: 'serendib-games',
@@ -299,7 +344,7 @@ export default function ProjectsSection(): React.ReactElement {
       tech: ['React', 'Node.js', 'AWS', 'MongoDB'],
       demo: '#',
       github: '#',
-      video: '/videos/serendib-demo.mp4',
+      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     },
     {
       id: 'ecommerce-platform',
@@ -310,7 +355,7 @@ export default function ProjectsSection(): React.ReactElement {
       tech: ['NestJS', 'PostgreSQL', 'Docker', 'Redis'],
       demo: '#',
       github: '#',
-      video: '/videos/ecommerce-demo.mp4',
+      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     },
   ]
 
@@ -335,7 +380,7 @@ export default function ProjectsSection(): React.ReactElement {
             className="inline-block"
           >
             <Badge variant="outline" className="border-purple-500/30 text-purple-400 mb-4 px-4 py-1.5 rounded-full text-sm">
-              Portfolio
+              Projects
             </Badge>
           </motion.div>
           

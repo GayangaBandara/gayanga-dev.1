@@ -42,6 +42,11 @@ To add/change project entries, edit `components/sections/projects-section.tsx` a
 
 The video overlay uses a simple modal that opens an HTML5 `<video>` (controls enabled). For YouTube embeds, replace the modal's `<video>` with an iframe and adjust the source accordingly.
 
+### Video Recommendations
+
+If you use MP4 demo clips for projects, follow the guidelines in `VIDEO_GUIDELINES.md` (H.264 + AAC, poster images, short looped preview clips for thumbnails and higher-bitrate files for modal playback).
+
+
 ## Hero Section Animations
 
 - The Hero section now includes a smooth, scroll-triggered fade-in (runs once) and a scroll-driven color overlay that transitions toward the About section theme as the user scrolls down.
