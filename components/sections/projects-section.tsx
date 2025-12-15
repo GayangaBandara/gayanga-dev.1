@@ -42,6 +42,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isHovering, setIsHovering] = useState(false)
   const [open, setOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Hover behavior (desktop): play preview muted
   const handleMouseEnter = () => {
@@ -76,20 +81,22 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           */}
           {project.video ? (
             <>
-              <video
-                ref={videoRef}
-                src={project.video}
-                muted
-                loop
-                playsInline
-                // Use poster as fallback image while not playing
-                poster={project.image}
-                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
-                  isHovering ? "opacity-100" : "opacity-0"
-                }`}
-                // Small preload to allow smoother hover playback
-                preload="metadata"
-              />
+              {mounted && (
+                <video
+                  ref={videoRef}
+                  src={project.video}
+                  muted
+                  loop
+                  playsInline
+                  // Use poster as fallback image while not playing
+                  poster={project.image}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                    isHovering ? "opacity-100" : "opacity-0"
+                  }`}
+                  // Small preload to allow smoother hover playback
+                  preload="metadata"
+                />
+              )}
 
               {/* Poster / fallback when not playing */}
               <div
@@ -123,7 +130,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               </div>
 
               {/* Modal for full playback */}
-              {open && (
+              {open && mounted && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
                   <div className="absolute inset-0 bg-black/70" onClick={() => setOpen(false)} />
                   <div className="relative max-w-4xl w-full rounded-md overflow-hidden shadow-2xl bg-black z-10">
@@ -302,6 +309,17 @@ export default function ProjectsSection(): React.ReactElement {
       video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     },
     {
+      id: 'master-designer',
+      title: 'Master Designer v2',
+      subtitle: 'Interactive 3D',
+      description: 'Immersive web platform engineered with WebGL/Three.js for the All-Island Design Competition.',
+      image: '/projects/master-designer.png',
+      tech: ['Three.js', 'WebGL', 'GSAP', 'React'],
+      demo: '#',
+      github: '#',
+      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+    },
+    {
       id: 'freshmart',
       title: 'Freshmart Store',
       subtitle: 'E-commerce',
@@ -324,17 +342,7 @@ export default function ProjectsSection(): React.ReactElement {
       demo: '#',
       github: '#',
     },
-    {
-      id: 'master-designer',
-      title: 'Master Designer v2',
-      subtitle: 'Interactive 3D',
-      description: 'Immersive web platform engineered with WebGL/Three.js for the All-Island Design Competition.',
-      image: '/projects/master-designer.png',
-      tech: ['Three.js', 'WebGL', 'GSAP', 'React'],
-      demo: '#',
-      github: '#',
-      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-    },
+
     {
       id: 'serendib-games',
       title: 'Serendib Games',
