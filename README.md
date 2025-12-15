@@ -41,3 +41,8 @@ I've refactored the `Projects` section to use a `ProjectCard` model that support
 To add/change project entries, edit `components/sections/projects-section.tsx` and update the `projects` array near the bottom of the file with fields: `id, title, subtitle, description, image, tech, demo, github, video`.
 
 The video overlay uses a simple modal that opens an HTML5 `<video>` (controls enabled). For YouTube embeds, replace the modal's `<video>` with an iframe and adjust the source accordingly.
+
+## Hero Section Animations
+
+- The Hero section now includes a smooth, scroll-triggered fade-in (runs once) and a scroll-driven color overlay that transitions toward the About section theme as the user scrolls down.
+- Implementation details: uses IntersectionObserver for the one-time fade, requestAnimationFrame for performant scroll interpolation, and CSS variables for lightweight styling. Respects `prefers-reduced-motion` and is enabled for desktop viewports only.

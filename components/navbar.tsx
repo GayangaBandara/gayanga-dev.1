@@ -23,7 +23,7 @@ export default function Navbar() {
         return
       }
       const scrollY = window.scrollY
-      setIsNavbarPinned(scrollY > window.innerHeight - 80)
+      setIsNavbarPinned(scrollY > 0)
     }
 
     updateNavbarHeightVar()
@@ -50,7 +50,10 @@ export default function Navbar() {
       const navbar = document.querySelector(".navbar") as HTMLElement;
       const navbarHeight = navbar ? navbar.offsetHeight : 64;
       const targetTop = element.getBoundingClientRect().top + window.scrollY - navbarHeight;
-      window.scrollTo({ top: targetTop, behavior: "smooth" });
+      // Clamp the scroll target so we don't try to scroll past the document end
+      const maxTop = document.documentElement.scrollHeight - window.innerHeight;
+      const finalTop = Math.max(0, Math.min(targetTop, maxTop));
+      window.scrollTo({ top: finalTop, behavior: "smooth" });
     }
     setIsMobileMenuOpen(false);
   };

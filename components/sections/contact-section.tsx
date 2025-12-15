@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
@@ -33,6 +33,34 @@ type ContactFormValues = z.infer<typeof contactSchema>
 
 export default function ContactSection() {
   const [isSuccess, setIsSuccess] = useState(false)
+
+  // Hide the fixed hero when the contact section is visible so the
+  // hero doesn't show through after the contact section is reached.
+  useEffect(() => {
+    const el = document.getElementById("contact")
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const hero = document.querySelector('.hero-section')
+        if (!hero) return
+        if (entry.isIntersecting) {
+          hero.classList.add('hero-hidden')
+        } else {
+          hero.classList.remove('hero-hidden')
+        }
+      },
+      { threshold: 0.2 }
+    )
+
+    observer.observe(el)
+
+    return () => {
+      observer.disconnect()
+      const hero = document.querySelector('.hero-section')
+      if (hero) hero.classList.remove('hero-hidden')
+    }
+  }, [])
 
   // 2. Form Hook Initialization
   const form = useForm<ContactFormValues>({

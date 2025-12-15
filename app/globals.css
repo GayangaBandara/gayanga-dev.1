@@ -344,6 +344,13 @@
   z-index: 1;
 }
 
+/* When the contact section is visible we hide the fixed hero so it
+   doesn't show through at the bottom of the page. This keeps the
+   hero implementation unchanged while preventing it from reappearing. */
+.hero-section.hero-hidden {
+  display: none !important;
+}
+
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -412,6 +419,8 @@
 section:not(.hero-section) {
   padding-block: var(--section-gap);
   scroll-margin-top: calc(var(--navbar-height, 64px) + 1rem);
+  position: relative;
+  z-index: 2;
 }
 
 @media (min-width: 1024px) {
