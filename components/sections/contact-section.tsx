@@ -69,15 +69,15 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="contact-section section text-gray-300 relative overflow-hidden py-24">
-      {/* Background Blurs and Gradients (matching About section) */}
+    <section id="contact" className="contact-section section text-gray-300 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-3xl"></div>
 
       <div className="container relative z-10 px-6 mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
           
-          {/* Left Column: Contact Info */}
+          {/* Left Column: Contact Info & CTA */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -92,8 +92,8 @@ export default function ContactSection() {
             </p>
 
             <div className="space-y-8">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10 group-hover:border-purple-500/50 transition-colors">
                   <Mail className="w-6 h-6 text-purple-400" />
                 </div>
                 <div>
@@ -104,8 +104,8 @@ export default function ContactSection() {
                 </div>
               </div>
               
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 rounded-lg bg-white/5 border border-white/10 group-hover:border-purple-500/50 transition-colors">
                   <MapPin className="w-6 h-6 text-purple-400" />
                 </div>
                 <div>
@@ -147,14 +147,14 @@ export default function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Right Column: Smart Form */}
+          {/* Right Column: Interactive Form */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-sm overflow-hidden">
+            <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-sm overflow-hidden shadow-2xl shadow-purple-900/10">
               <CardContent className="p-8">
                 <AnimatePresence mode="wait">
                   {isSuccess ? (
@@ -169,12 +169,12 @@ export default function ContactSection() {
                         <CheckCircle2 className="w-10 h-10 text-green-500" />
                       </div>
                       <h3 className="text-2xl font-bold text-white mb-2">Message Sent!</h3>
-                      <p className="text-gray-400 max-w-xs mx-auto">
+                      <p className="text-gray-400 max-w-xs mx-auto mb-8">
                         Thanks for reaching out. I'll check my inbox and get back to you shortly.
                       </p>
                       <Button 
                         variant="outline" 
-                        className="mt-8 border-white/10 hover:bg-white/5"
+                        className="border-white/10 hover:bg-white/5 text-white hover:text-white"
                         onClick={() => {
                           setIsSuccess(false)
                           form.reset()
@@ -200,7 +200,7 @@ export default function ContactSection() {
                                 <FormItem>
                                   <FormLabel className="text-gray-300">Name</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="John Doe" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px]" {...field} />
+                                    <Input placeholder="John Doe" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
                                   </FormControl>
                                   <FormMessage className="text-red-400" />
                                 </FormItem>
@@ -213,7 +213,7 @@ export default function ContactSection() {
                                 <FormItem>
                                   <FormLabel className="text-gray-300">Email</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="john@example.com" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px]" {...field} />
+                                    <Input placeholder="john@example.com" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
                                   </FormControl>
                                   <FormMessage className="text-red-400" />
                                 </FormItem>
@@ -228,7 +228,7 @@ export default function ContactSection() {
                               <FormItem>
                                 <FormLabel className="text-gray-300">Subject</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Project Inquiry" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px]" {...field} />
+                                  <Input placeholder="Project Inquiry" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
                                 </FormControl>
                                 <FormMessage className="text-red-400" />
                               </FormItem>
@@ -244,7 +244,7 @@ export default function ContactSection() {
                                 <FormControl>
                                   <Textarea 
                                     placeholder="Tell me about your project..." 
-                                    className="min-h-[150px] bg-black/50 border-white/10 focus:border-purple-500/50 resize-none" 
+                                    className="min-h-[150px] bg-black/50 border-white/10 focus:border-purple-500/50 resize-none text-white placeholder:text-gray-600" 
                                     {...field} 
                                   />
                                 </FormControl>
@@ -256,7 +256,7 @@ export default function ContactSection() {
                           <Button 
                             type="submit" 
                             disabled={isSubmitting}
-                            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-6"
+                            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-6 shadow-lg shadow-purple-900/20 transition-all duration-300 hover:scale-[1.01]"
                           >
                             {isSubmitting ? (
                               <>

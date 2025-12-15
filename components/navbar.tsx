@@ -78,11 +78,11 @@ export default function Navbar() {
           <button className="nav-link" onClick={() => scrollToSection("about")} tabIndex={0}>
             About
           </button>
-          <button className="nav-link" onClick={() => scrollToSection("service")} tabIndex={0}>
-            Service
-          </button>
           <button className="nav-link" onClick={() => scrollToSection("projects")} tabIndex={0}>
             Projects
+          </button>
+          <button className="nav-link" onClick={() => scrollToSection("services")} tabIndex={0}>
+            Service
           </button>
           <button className="nav-link" onClick={() => scrollToSection("contact")} tabIndex={0}>
             Contact

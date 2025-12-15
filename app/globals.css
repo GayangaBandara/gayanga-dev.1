@@ -833,7 +833,7 @@ main {
 
 /* ===== CONTACT SECTION STYLES ===== */
 .contact-section {
-  background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+  background: linear-gradient(#000a11 100%);
   position: relative;
   overflow: hidden;
   margin-top: 0;
@@ -855,7 +855,7 @@ main {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 0; /* behind textual content */
+
   background: transparent; /* ensure transparency so the section gradient shows through */
 }
 
