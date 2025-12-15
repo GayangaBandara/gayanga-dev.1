@@ -200,19 +200,21 @@
   color: #fff;
 }
 
-/* Desktop / web: ensure navbar is always readable (solid/semi-transparent) */
+/* Desktop / web: navbar transparent over hero, solid when pinned */
 @media (min-width: 1024px) {
   .navbar {
-    /* semi-opaque dark background so links remain legible across sections */
-    background: rgba(0, 8, 15, 0.92);
+    /* transparent background over hero section */
+    background: transparent;
     -webkit-backdrop-filter: none;
-    backdrop-filter: none; /* remove heavy blur so content doesn't show through */
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+    backdrop-filter: none;
+    border-bottom: none;
   }
 
   .navbar-pinned {
-    /* slightly stronger background when pinned for added contrast */
+    /* solid background when scrolling past hero */
     background: rgba(0, 8, 15, 0.98);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(185, 146, 90, 0.28);
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
     padding-top: 1rem;
