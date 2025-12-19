@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter, DialogHeader } from "@/components/ui/dialog";
 
 const About: React.FC = () => {
   return (
@@ -114,10 +115,34 @@ const About: React.FC = () => {
               </a>
             </div>
           </div>
-          <div className="mt-8">
-            <a target="_blank" href="#" className="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-orange-500 text-white font-medium rounded-full shadow-lg hover:shadow-violet-500/20 transition-all duration-300">
+          <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
+            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-orange-500 text-white font-medium rounded-full shadow-lg hover:shadow-violet-500/20 transition-all duration-300">
               Download Resume
             </a>
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="inline-block px-6 py-3 bg-white/5 hover:bg-gray-700/30 text-white rounded-full border border-white/10 transition-all duration-300">
+                  Preview
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl w-full overflow-hidden">
+                <DialogHeader>
+                  <DialogTitle>Gayanga Bandara — Curriculum Vitae</DialogTitle>
+                  <DialogDescription>Preview of resume. Use the download button below to save a copy.</DialogDescription>
+                </DialogHeader>
+
+                <div className="mt-4">
+                  <iframe src="/pdf/Gayanga Bandara curriculum vitae.pdf" className="w-full h-[70vh] sm:h-[80vh] border rounded-md" title="Resume Preview" />
+                </div>
+
+                <DialogFooter>
+                  <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-4 py-2 bg-gradient-to-r from-violet-600 to-orange-500 text-white font-medium rounded-full shadow-lg hover:shadow-violet-500/20 transition-all duration-300">
+                    Download
+                  </a>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>

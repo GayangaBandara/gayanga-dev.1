@@ -308,7 +308,7 @@ export default function ProjectsSection(): React.ReactElement {
       id: 'safe-space',
       title: 'SafeSpace Ecosystem',
       subtitle: 'AI HealthTech',
-      description: 'Award-winning platform connecting patients and doctors with real-time AI-driven sentiment analysis.',
+      description: 'Academic Research final year Project, Award-winning platform connecting patients and doctors with real-time AI-driven sentiment analysis.',
       image: 'image/safespace.png',
       tech: ['Flutter', 'React', 'TypeScript', 'Python', 'FastAPI'],
       demo: '#',
