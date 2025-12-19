@@ -27,7 +27,7 @@ const servicesData = [
   },
   {
     id: "03",
-    title: "Mobile Engineering",
+    title: "Mobile Apps Development",
     description: "High-performance cross-platform applications using Flutter and Dart. Ensuring real-time data synchronization and native-like performance on iOS and Android.",
     icon: Smartphone,
     tags: ["Flutter", "Dart", "Firebase"],
