@@ -6,7 +6,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Github, ExternalLink, Maximize2, Download } from "lucide-react"
-
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -311,32 +310,31 @@ export default function ProjectsSection(): React.ReactElement {
       description: 'Academic Research final year Project, Award-winning platform connecting patients and doctors with real-time AI-driven sentiment analysis.',
       image: 'image/safespace.png',
       tech: ['Flutter', 'React', 'TypeScript', 'Python', 'FastAPI'],
-      demo: '#',
-      github: '#',
-      // demo video (replace with your own mp4 in /public/videos)
+      demo: 'https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/SafeSpace.mp4',
+      github: 'https://github.com/GayangaBandara/Final_Year_Project.git',
       video: 'https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/SafeSpace.mp4',
     },
     {
       id: 'master-designer',
       title: 'Master Designer v2',
-      subtitle: 'Interactive 3D',
+      subtitle: 'Interactive 3D web application',
       description: 'Immersive web platform engineered with WebGL/Three.js for the All-Island Design Competition.',
       image: 'image/master.png',
       tech: ['Three.js', 'WebGL', 'GSAP', 'React'],
-      demo: '#',
-      github: '#',
+      demo: 'https://master-designer-v2-0.vercel.app/',
+      github: 'https://github.com/GayangaBandara/Master-Designer-v2.0.git',
       video: 'https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/Untitled%20video%20-%20Made%20with%20Clipchamp%20(1).mp4',
     },
     {
-      id: 'freshmart',
-      title: 'Freshmart Store',
-      subtitle: 'E-commerce',
-      description: 'A lightning-fast grocery store featuring state management, cart logic, and stripe payments.',
-      image: '/projects/freshmart.png',
-      tech: ['Next.js', 'Redux', 'Tailwind', 'Stripe'],
-      demo: '#',
-      github: '#',
-      video: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+      id: 'Serandib-Games',
+      title: 'Serandib Games Blog',
+      subtitle: 'Blog Platform',
+      description: 'A cloud-based gaming blog with a user-friendly interface, Firebase authentication, and a real-time trained chatbot for interactive user engagement.',
+      image: 'image/serandib.png',
+      tech: ['javascript', 'HTML 5', 'CSS', 'Chatbot', 'Firbase'],
+      demo: 'https://serendib-games-blog.vercel.app/',
+      github: 'https://github.com/GayangaBandara/Serendib-Games-Blog.git',
+      video: 'https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/Untitled%20video%20-%20Made%20with%20Clipchamp%20(4).mp4',
     },
     {
       id: 'researchx',
