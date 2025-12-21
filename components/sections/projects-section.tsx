@@ -513,23 +513,25 @@ export default function ProjectsSection(): React.ReactElement {
           </motion.p>
         </div>
 
-        {/* Projects Grid: show 2x2 on larger screens (first 4 projects) */}
+        {/* Projects Grid: show 2x2 on larger screens (first 4 projects, or all if expanded) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {projects.slice(0, 4).map((project, index) => (
+          {projects.slice(0, showAll ? projects.length : 4).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
 
-        {/* Optional: quick link to view more projects */}
-        <div className="mt-8 text-center">
-          <Button
-            asChild
-            size="sm"
-            className="bg-white/5 hover:bg-white/10 text-white"
-          >
-            <Link href="#">View All Projects</Link>
-          </Button>
-        </div>
+        {/* Toggle View All / Show Less Projects */}
+        {projects.length > 4 && (
+          <div className="mt-8 text-center">
+            <Button
+              onClick={() => setShowAll(!showAll)}
+              size="sm"
+              className="bg-white/5 hover:bg-white/10 text-white"
+            >
+              {showAll ? "Show Less" : "View All Projects"}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
