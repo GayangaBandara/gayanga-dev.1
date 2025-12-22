@@ -301,7 +301,7 @@ export default function ProjectsSection(): React.ReactElement {
 
     // Simplified elegant cubes
     const projectData = [
-      { color: 0x8b5cf6, position: { x: -4, y: 0, z: 0 } }, // Violet
+      { color: 0xFFD700, position: { x: -4, y: 0, z: 0 } }, // Yellow
       { color: 0x3b82f6, position: { x: 0, y: 0, z: 0 } }, // Blue
       { color: 0xec4899, position: { x: 4, y: 0, z: 0 } }, // Pink
     ];
@@ -496,7 +496,7 @@ export default function ProjectsSection(): React.ReactElement {
             className="text-4xl md:text-6xl font-bold tracking-tight text-white"
           >
             Selected{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-amber-600">
               Works
             </span>
           </motion.h2>

@@ -44,6 +44,10 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
     --navbar-height: 64px;
+    --hero-bg-1: #00080f;
+    --hero-bg-2: #011d29;
+    --hero-bg-3: #011a25;
+    --hero-bg-4: #000a11;
   }
   .dark {
     --background: 0 0% 3.9%;
@@ -559,7 +563,17 @@ section:not(.hero-section):not(:last-of-type)::after {
   transform: translate(-50%, -50%);
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: #a57f4b;
+  background: linear-gradient(
+    135deg, 
+    #f7edba 0%, 
+    #fcf59b 25%, 
+    #ffffff 50%, 
+    #968f2f 75%, 
+    #fdefa0 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: clamp(8rem, 15vw, 20rem);
   line-height: 1;
   text-transform: uppercase;

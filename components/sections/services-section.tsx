@@ -88,7 +88,7 @@ export default function ServicesSection() {
     const particles = new THREE.InstancedMesh(
       geometry,
       new THREE.MeshBasicMaterial({
-        color: 0x8b5cf6,
+        color: 0xFFD700,
         wireframe: true,
         transparent: true,
         opacity: 0.1,

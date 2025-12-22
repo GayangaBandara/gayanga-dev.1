@@ -43,7 +43,7 @@ const About: React.FC = () => {
             <div className="absolute -top-6 -right-6 bg-gradient-to-br from-violet-600 to-violet-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
               Software Engineer
             </div>
-            <div className="absolute -bottom-4 -left-6 bg-gradient-to-br from-orange-500 to-red-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+            <div className="absolute -bottom-4 -left-6 bg-gradient-to-br from-amber-600 to-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
               B.Sc. Student
             </div>
           </div>
@@ -52,10 +52,10 @@ const About: React.FC = () => {
           <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Hey! I'm{' '}
             <span className="relative">
-              <span className="bg-gradient-to-r from-violet-500 to-orange-500 bg-clip-text text-transparent font-bold">
-                GAYANGA BANDARA
+              <span className="bg-gradient-to-r from-violet-500 to-amber-600 bg-clip-text text-transparent font-bold">
+                Gayanga Bandara
               </span>
-              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-orange-500 rounded-full"></span>
+              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-amber-600 rounded-full"></span>
             </span>
           </h3>
           <p className="text-lg leading-7 mb-5 text-gray-200">
@@ -116,7 +116,7 @@ const About: React.FC = () => {
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-orange-500 text-white font-medium rounded-full shadow-lg hover:shadow-violet-500/20 transition-all duration-300">
+            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-amber-600 text-white font-medium rounded-full shadow-lg hover:shadow-amber-600/20 transition-all duration-300">
               Download Resume
             </a>
 
@@ -137,7 +137,7 @@ const About: React.FC = () => {
                 </div>
 
                 <DialogFooter>
-                  <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-4 py-2 bg-gradient-to-r from-violet-600 to-orange-500 text-white font-medium rounded-full shadow-lg hover:shadow-violet-500/20 transition-all duration-300">
+                  <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-4 py-2 bg-gradient-to-r from-violet-600 to-amber-600 text-white font-medium rounded-full shadow-lg hover:shadow-amber-600/20 transition-all duration-300">
                     Download
                   </a>
                 </DialogFooter>
