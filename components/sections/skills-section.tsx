@@ -14,14 +14,14 @@ import {
 import { cn } from "@/lib/utils"
 import { Badge } from "@/components/ui/badge"
 
-// --- Helper: Spotlight Card Effect ---
+// --- Spotlight Card Component ---
 function SpotlightCard({
   children,
   className = "",
   spotlightColor = "rgba(120, 119, 198, 0.3)"
 }: {
-  children: React.ReactNode;
-  className?: string;
+  children: React.ReactNode
+  className?: string
   spotlightColor?: string
 }) {
   const divRef = useRef<HTMLDivElement>(null)
@@ -60,19 +60,18 @@ function SpotlightCard({
   )
 }
 
-// --- Helper: Infinite Marquee ---
+// --- Infinite Marquee Component ---
 function Marquee({ items, speed = 20 }: { items: string[], speed?: number }) {
   return (
     <div className="relative flex overflow-hidden w-full bg-zinc-950/50 border-y border-white/5 py-4">
       <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
-
       <motion.div
         className="flex gap-12 whitespace-nowrap"
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
       >
-        {[...items, ...items, ...items, ...items].map((item, i) => (
+        {[...items, ...items, ...items].map((item, i) => (
           <span key={i} className="text-lg font-medium text-zinc-500 flex items-center gap-2">
             <Zap className="w-4 h-4 text-purple-900/50" fill="currentColor" />
             {item}
@@ -83,43 +82,83 @@ function Marquee({ items, speed = 20 }: { items: string[], speed?: number }) {
   )
 }
 
-// --- Main Component ---
+// --- Main Skills Section ---
 export default function SkillsSection() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
-  const frontendSkills = ["React", "Next.js", "TypeScript", "Tailwind", "Framer Motion", "Three.js"]
-  const backendSkills = ["Node.js", "FastAPI", "PostgreSQL", "Supabase", "GraphQL", "Redis"]
-  const aiSkills = ["TensorFlow", "PyTorch", "LangChain", "OpenAI API", "RAG Pipelines", "Hugging Face"]
-  const mobileSkills = ["Flutter", "Dart", "React Native", "Firebase", "iOS/Android"]
+  // --- Frontend skills with categories and colors ---
+  const frontendSkills = [
+    { name: "HTML5", category: "core" }, { name: "CSS3", category: "core" }, { name: "JavaScript (ES6+)", category: "core" }, { name: "TypeScript", category: "core" },
+    { name: "React", category: "framework" }, { name: "Next.js", category: "framework" }, { name: "Vue.js", category: "framework" }, { name: "Svelte", category: "framework" },
+    { name: "Redux", category: "state" }, { name: "Zustand", category: "state" }, { name: "Recoil", category: "state" },
+    { name: "Tailwind CSS", category: "style" }, { name: "Sass", category: "style" }, { name: "Framer Motion", category: "style" }, { name: "Three.js", category: "style" }, { name: "GSAP", category: "style" },
+    { name: "Storybook", category: "ui" }, { name: "Radix UI", category: "ui" }, { name: "Headless UI", category: "ui" }, { name: "Radium", category: "ui" },
+    { name: "Apollo Client", category: "data" }, { name: "React Query", category: "data" }, { name: "SWR", category: "data" },
+    { name: "Jest", category: "test" }, { name: "React Testing Library", category: "test" }, { name: "Cypress", category: "test" }
+  ]
+
+  const backendSkills = [
+    "Node.js", "NestJS", "FastAPI", "Flask", "Spring Boot",
+    "PostgreSQL", "MongoDB", "MySQL", "Redis", "GraphQL",
+    "Swagger (OpenAPI)", "cURL", "Postman", "Apache Camel", "Jitsi Meet"
+  ]
+
+  const aiSkills = [
+    "Python", "TensorFlow", "PyTorch", "LangChain",
+    "Ollama", "CrewAI", "Colab", "Jupyter Notebook"
+  ]
+
+  const mobileSkills = [
+    "Flutter", "Dart", "React Native", "Firebase",
+    "Kotlin", "Swift", "iOS/Android"
+  ]
+
+  const devopsSkills = [
+    "Docker", "Kubernetes", "Minikube", "Render", "AWS",
+    "GitHub Actions", "Linux", "Vercel"
+  ]
+
+  const designSkills = ["Figma", "VS Code", "Storybook", "Sanity", "Stripe", "Auth.js", "Clerk"]
+
+  // --- Map badge colors by category ---
+  const getBadgeColor = (category: string) => {
+    switch(category) {
+      case "core": return "bg-blue-500/10 text-blue-300 border-blue-500/20"
+      case "framework": return "bg-indigo-500/10 text-indigo-300 border-indigo-500/20"
+      case "state": return "bg-purple-500/10 text-purple-300 border-purple-500/20"
+      case "style": return "bg-pink-500/10 text-pink-300 border-pink-500/20"
+      case "ui": return "bg-cyan-500/10 text-cyan-300 border-cyan-500/20"
+      case "data": return "bg-green-500/10 text-green-300 border-green-500/20"
+      case "test": return "bg-yellow-500/10 text-yellow-300 border-yellow-500/20"
+      default: return "bg-gray-500/10 text-gray-300 border-gray-500/20"
+    }
+  }
 
   return (
     <section id="skills" className="skills-section section text-gray-300 relative overflow-hidden py-24">
-      {/* Background Blurs and Gradients (matching About section) */}
+      {/* Background */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
-      {/* Optional: subtle grid overlay for extra style */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-6 max-w-7xl">
 
         {/* Header */}
         <div className="mb-16 md:text-center max-w-3xl mx-auto">
-          <Badge variant="outline" className="mb-4 border-purple-500/30 text-purple-400">
-            Technical Arsenal
-          </Badge>
+          <Badge variant="outline" className="mb-4 border-purple-500/30 text-purple-400">Technical Arsenal</Badge>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
             Engineered for <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">Performance</span>
           </h2>
           <p className="text-zinc-400 text-lg">
-            A comprehensive suite of tools and technologies I use to build scalable, high-impact digital solutions.
+            Modern technologies I use to build scalable, high-performance digital products with clean code and smooth UX.
           </p>
         </div>
 
-        {/* Bento Grid Layout */}
+        {/* Grid */}
         <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-20">
 
-          {/* 1. Frontend Dominance (Large Card) */}
+          {/* Frontend */}
           <SpotlightCard className="col-span-1 md:col-span-2 lg:col-span-2 row-span-2 bg-gradient-to-br from-zinc-900/80 to-zinc-900/30">
             <div className="p-8 h-full flex flex-col justify-between">
               <div>
@@ -128,103 +167,103 @@ export default function SkillsSection() {
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-2">Frontend Architecture</h3>
                 <p className="text-zinc-400 mb-6">
-                  Building pixel-perfect, responsive interfaces with modern React ecosystems. Focused on performance, accessibility, and smooth animations.
+                  Pixel-perfect, modern, and scalable interfaces with advanced tools.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
                 {frontendSkills.map(skill => (
-                  <Badge key={skill} variant="secondary" className="bg-blue-500/10 text-blue-300 border-blue-500/20 hover:bg-blue-500/20">
-                    {skill}
+                  <Badge key={skill.name} variant="secondary" className={`${getBadgeColor(skill.category)} hover:opacity-80`}>
+                    {skill.name}
                   </Badge>
                 ))}
               </div>
-              {/* Decorative Visual */}
-              <div className="absolute right-0 bottom-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none" />
             </div>
           </SpotlightCard>
 
-          {/* 2. Backend (Tall Card) */}
+          {/* Backend */}
           <SpotlightCard className="col-span-1 md:col-span-1 lg:col-span-1 row-span-2">
-             <div className="p-6 h-full flex flex-col">
-                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 border border-green-500/20">
-                  <Terminal className="w-5 h-5 text-green-400" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Backend & API</h3>
-                <p className="text-zinc-400 text-sm mb-auto">
-                  Robust server-side logic and scalable database architectures.
-                </p>
-                <ul className="space-y-3 mt-6">
-                  {backendSkills.slice(0, 5).map(skill => (
-                    <li key={skill} className="flex items-center gap-2 text-sm text-zinc-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                      {skill}
-                    </li>
-                  ))}
-                </ul>
-             </div>
+            <div className="p-6 h-full flex flex-col">
+              <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 border border-green-500/20">
+                <Terminal className="w-5 h-5 text-green-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-2">Backend & API</h3>
+              <p className="text-zinc-400 text-sm mb-auto">
+                Scalable server logic, databases, and APIs for robust solutions.
+              </p>
+              <ul className="space-y-3 mt-6">
+                {backendSkills.map(skill => (
+                  <li key={skill} className="flex items-center gap-2 text-sm text-zinc-300">
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500" />{skill}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </SpotlightCard>
 
-          {/* 3. AI & Data (Standard Card) */}
+          {/* AI */}
           <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-1 row-span-1 bg-zinc-900/80">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
-                 <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                    <Cpu className="w-5 h-5 text-purple-400" />
-                 </div>
-                 <Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-400">AI Powered</Badge>
+                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
+                  <Cpu className="w-5 h-5 text-purple-400" />
+                </div>
+                <Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-400">AI & ML</Badge>
               </div>
               <h3 className="text-lg font-bold text-white mb-1">AI Engineering</h3>
-              <p className="text-zinc-500 text-xs mb-4">LLM Integration & Data Pipelines</p>
+              <p className="text-zinc-500 text-xs mb-4">
+                Smart solutions with ML pipelines, NLP, and automation for web and mobile apps.
+              </p>
               <div className="flex flex-wrap gap-1.5">
-                 {aiSkills.slice(0,4).map(s => <span key={s} className="text-[10px] px-2 py-1 rounded bg-white/5 text-zinc-300">{s}</span>)}
+                {aiSkills.map(s => <span key={s} className="text-[10px] px-2 py-1 rounded bg-white/5 text-zinc-300">{s}</span>)}
               </div>
             </div>
           </SpotlightCard>
 
-          {/* 4. Mobile (Standard Card) */}
+          {/* Mobile */}
           <SpotlightCard className="col-span-1 lg:col-span-1 row-span-1">
-             <div className="p-6">
-                <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4 border border-orange-500/20">
-                  <Smartphone className="w-5 h-5 text-orange-400" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">Mobile Apps</h3>
-                <div className="flex flex-wrap gap-2 mt-2">
-                   {mobileSkills.map(s => (
-                     <Badge key={s} variant="outline" className="border-white/10 text-zinc-400 hover:text-orange-400 transition-colors">{s}</Badge>
-                   ))}
-                </div>
-             </div>
+            <div className="p-6">
+              <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4 border border-orange-500/20">
+                <Smartphone className="w-5 h-5 text-orange-400" />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">Mobile Apps</h3>
+              <p className="text-zinc-400 text-sm mb-2">Cross-platform apps with Flutter, Dart, and native technologies.</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {mobileSkills.map(s => (
+                  <Badge key={s} variant="outline" className="border-white/10 text-zinc-400 hover:text-orange-400 transition-colors">{s}</Badge>
+                ))}
+              </div>
+            </div>
           </SpotlightCard>
 
-           {/* 5. DevOps (Wide Card) */}
-           <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-4 row-span-1">
-              <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-                 <div className="shrink-0 w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20">
-                    <Container className="w-6 h-6 text-red-400" />
-                 </div>
-                 <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-xl font-bold text-white">DevOps & Deployment</h3>
-                    <p className="text-zinc-400 text-sm">Streamlined CI/CD pipelines, containerization, and cloud infrastructure management.</p>
-                 </div>
-                 <div className="flex gap-4">
-                    {["Docker", "AWS", "GitHub Actions", "Vercel", "Linux"].map((tool) => (
-                       <div key={tool} className="flex flex-col items-center gap-1 group">
-                          <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
-                            <GitBranch className="w-4 h-4 text-zinc-400 group-hover:text-red-400" />
-                          </div>
-                          <span className="text-[10px] text-zinc-500">{tool}</span>
-                       </div>
-                    ))}
-                 </div>
+          {/* DevOps */}
+          <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-4 row-span-1">
+            <div className="p-6 flex flex-col md:flex-row items-center gap-6">
+              <div className="shrink-0 w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                <Container className="w-6 h-6 text-red-400" />
               </div>
-           </SpotlightCard>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-xl font-bold text-white">DevOps & Deployment</h3>
+                <p className="text-zinc-400 text-sm">CI/CD pipelines, containerization, cloud deployment, and essential developer tools.</p>
+              </div>
+              <div className="flex gap-4 flex-wrap justify-center md:justify-start">
+                {devopsSkills.map(tool => (
+                  <div key={tool} className="flex flex-col items-center gap-1 group">
+                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
+                      <GitBranch className="w-4 h-4 text-zinc-400 group-hover:text-red-400" />
+                    </div>
+                    <span className="text-[10px] text-zinc-500">{tool}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </SpotlightCard>
 
         </div>
 
-        {/* Infinite Marquee for "Other Tools" */}
+        {/* Marquee */}
         <div className="mt-24">
-          <p className="text-center text-sm text-zinc-500 mb-6 uppercase tracking-widest">Other Tools & Libraries</p>
-          <Marquee items={["VS Code", "Figma", "Postman", "Jest", "Cypress", "Webpack", "Vite", "Prisma", "Storybook", "Sanity", "Stripe", "Auth.js", "Clerk"]} />
+          <p className="text-center text-sm text-zinc-500 mb-6 uppercase tracking-widest">Design & Other Tools</p>
+          <Marquee items={designSkills} />
         </div>
 
       </div>
