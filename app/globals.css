@@ -435,7 +435,7 @@ section:not(.hero-section) {
 }
 
 /* Subtle divider between sections for a professional look */
-section:not(.hero-section)::after {
+section:not(.hero-section):not(:last-of-type)::after {
   content: '';
   display: block;
   height: 1px;
@@ -445,7 +445,7 @@ section:not(.hero-section)::after {
 }
 
 @media (min-width: 1024px) {
-  section:not(.hero-section)::after {
+  section:not(.hero-section):not(:last-of-type)::after {
     margin-top: calc(var(--section-gap-lg) / 2);
   }
 }

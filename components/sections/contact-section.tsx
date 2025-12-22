@@ -97,7 +97,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="contact-section section text-gray-300 relative overflow-hidden">
+    <section id="contact" className="contact-section text-gray-300 relative overflow-hidden pt-20 lg:pt-24 pb-0 min-h-screen flex flex-col justify-center">
       <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-3xl"></div>
@@ -228,7 +228,7 @@ export default function ContactSection() {
                                 <FormItem>
                                   <FormLabel className="text-gray-300">Name</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="John Doe" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
+                                    <Input placeholder="Gayanga Bandara" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
                                   </FormControl>
                                   <FormMessage className="text-red-400" />
                                 </FormItem>
@@ -241,7 +241,7 @@ export default function ContactSection() {
                                 <FormItem>
                                   <FormLabel className="text-gray-300">Email</FormLabel>
                                   <FormControl>
-                                    <Input placeholder="john@example.com" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
+                                    <Input placeholder="gayanga@example.com" className="bg-black/50 border-white/10 focus:border-purple-500/50 min-h-[50px] text-white placeholder:text-gray-600" {...field} />
                                   </FormControl>
                                   <FormMessage className="text-red-400" />
                                 </FormItem>

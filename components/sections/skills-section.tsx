@@ -61,7 +61,7 @@ function SpotlightCard({
 }
 
 // --- Infinite Marquee Component ---
-function Marquee({ items, speed = 20 }: { items: string[], speed?: number }) {
+function Marquee({ items, speed = 20, withLogos = false }: { items: (string | { name: string; logo: string })[], speed?: number, withLogos?: boolean }) {
   return (
     <div className="relative flex overflow-hidden w-full bg-zinc-950/50 border-y border-white/5 py-4">
       <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
@@ -71,12 +71,25 @@ function Marquee({ items, speed = 20 }: { items: string[], speed?: number }) {
         animate={{ x: [0, -1000] }}
         transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
       >
-        {[...items, ...items, ...items].map((item, i) => (
-          <span key={i} className="text-lg font-medium text-zinc-500 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-purple-900/50" fill="currentColor" />
-            {item}
-          </span>
-        ))}
+        {[...items, ...items, ...items].map((item, i) => {
+          const isObject = typeof item === 'object';
+          const displayText = isObject ? item.name : item;
+          return (
+            <div key={i} className="flex items-center gap-2">
+              {withLogos && isObject ? (
+                <>
+                  <img src={item.logo} alt={item.name} className="w-5 h-5 object-contain" />
+                  <span className="text-sm font-medium text-zinc-400">{displayText}</span>
+                </>
+              ) : (
+                <span className="text-lg font-medium text-zinc-500 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-purple-900/50" fill="currentColor" />
+                  {displayText}
+                </span>
+              )}
+            </div>
+          );
+        })}
       </motion.div>
     </div>
   )
@@ -115,11 +128,25 @@ export default function SkillsSection() {
   ]
 
   const devopsSkills = [
-    "Docker", "Kubernetes", "Minikube", "Render", "AWS",
-    "GitHub Actions", "Linux", "Vercel"
+    { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
+    { name: "Kubernetes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" },
+    { name: "Minikube", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" },
+    { name: "Render", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/renderco_logo-removebg-preview.png" },
+    { name: "AWS", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/aws-color.png" },
+    { name: "GitHub Actions", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
+    { name: "Linux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
+    { name: "Vercel", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" }
   ]
 
-  const designSkills = ["Figma", "VS Code", "Storybook", "Sanity", "Stripe", "Auth.js", "Clerk"]
+  const designSkills = [
+    { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
+    { name: "VS Code", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
+    { name: "Storybook", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/storybook/storybook-original.svg" },
+    { name: "Sanity", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sanity/sanity-original.svg" },
+    { name: "Stripe", logo: "https://logo.svgcdn.com/logos/stripe.svg" },
+    { name: "Auth.js", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/logo-sm.webp" },
+    { name: "Clerk", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/images.jfif" }
+  ]
 
   // --- Map badge colors by category ---
   const getBadgeColor = (category: string) => {
@@ -247,11 +274,11 @@ export default function SkillsSection() {
               </div>
               <div className="flex gap-4 flex-wrap justify-center md:justify-start">
                 {devopsSkills.map(tool => (
-                  <div key={tool} className="flex flex-col items-center gap-1 group">
+                  <div key={tool.name} className="flex flex-col items-center gap-1 group">
                     <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
-                      <GitBranch className="w-4 h-4 text-zinc-400 group-hover:text-red-400" />
+                      <img src={tool.logo} alt={tool.name} className="w-4 h-4" />
                     </div>
-                    <span className="text-[10px] text-zinc-500">{tool}</span>
+                    <span className="text-[10px] text-zinc-500">{tool.name}</span>
                   </div>
                 ))}
               </div>
@@ -263,7 +290,7 @@ export default function SkillsSection() {
         {/* Marquee */}
         <div className="mt-24">
           <p className="text-center text-sm text-zinc-500 mb-6 uppercase tracking-widest">Design & Other Tools</p>
-          <Marquee items={designSkills} />
+          <Marquee items={designSkills} withLogos={true} />
         </div>
 
       </div>
