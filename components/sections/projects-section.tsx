@@ -79,7 +79,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Card
-        className="group relative overflow-hidden border-white/10 bg-black/40 backdrop-blur-md hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 h-full flex flex-col will-change-transform hover:scale-[1.01]"
+        className="group relative overflow-hidden border-0 bg-black/40 backdrop-blur-md hover:border-purple-500/50 hover:shadow-2xl hover:shadow-purple-500/10 transition-all duration-300 h-full flex flex-col will-change-transform hover:scale-[1.01]"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -513,25 +513,23 @@ export default function ProjectsSection(): React.ReactElement {
           </motion.p>
         </div>
 
-        {/* Projects Grid: show 2x2 on larger screens (first 4 projects, or all if expanded) */}
+        {/* Projects Grid: show 2x2 on larger screens (first 4 projects) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {projects.slice(0, showAll ? projects.length : 4).map((project, index) => (
+          {projects.slice(0, 4).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
 
-        {/* Toggle View All / Show Less Projects */}
-        {projects.length > 4 && (
-          <div className="mt-8 text-center">
-            <Button
-              onClick={() => setShowAll(!showAll)}
-              size="sm"
-              className="bg-white/5 hover:bg-white/10 text-white"
-            >
-              {showAll ? "Show Less" : "View All Projects"}
-            </Button>
-          </div>
-        )}
+        {/* Optional: quick link to view more projects */}
+        <div className="mt-8 text-center">
+          <Button
+            asChild
+            size="sm"
+            className="bg-white/5 hover:bg-white/10 text-white"
+          >
+            <Link href="#">View All Projects</Link>
+          </Button>
+        </div>
       </div>
     </section>
   );
