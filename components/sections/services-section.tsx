@@ -1,152 +1,171 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef } from "react"
-import * as THREE from "three"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { Brain, Layout, Smartphone, Palette, ArrowRight } from "lucide-react" // Importing Lucide icons
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import React, { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Brain, Layout, Smartphone, Palette, ArrowRight } from "lucide-react"; // Importing Lucide icons
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 // Service Data with specialized icons
 const servicesData = [
   {
     id: "01",
-    title: "AI-Driven Development",
-    description: "Integration of LLMs and NLP pipelines to build 'smart' applications. I leverage tools like Groq, TensorFlow, and Python for sentiment analysis and automated chatbots.",
-    icon: Brain,
-    tags: ["Python", "TensorFlow", "OpenAI"],
-    color: "text-purple-400"
+    title: "Full-Stack Development",
+    description:
+      "Develop and maintain scalable, high-quality web applications with a strong focus on reliability and user experience. Skilled in building modern React and Next.js interfaces, implementing backend services with Node.js, and designing structured PostgreSQL databases. Committed to clean code practices, performance optimization, and secure authentication mechanisms.",
+    icon: Layout,
+    tags: ["React", "Next.js", "Node.js", "PostgreSQL"],
+    color: "text-blue-400",
   },
   {
     id: "02",
-    title: "Full-Stack Architecture",
-    description: "End-to-end web solutions using Next.js and Node.js. Focused on reactive UIs backed by scalable PostgreSQL databases and secure authentication flows.",
-    icon: Layout,
-    tags: ["React", "Node.js", "PostgreSQL"],
-    color: "text-blue-400"
+    title: "AI-Driven Development",
+    description:
+      "Build intelligent application features by applying machine learning and natural language processing techniques. Experienced in developing chatbot systems, sentiment analysis workflows, and data-driven automation using Python-based frameworks, with a focus on accuracy, performance, and responsible AI integration.",
+    icon: Brain,
+    tags: ["Python", "NLP", "TensorFlow", "Flask", "FastAPI"],
+    color: "text-purple-400",
   },
   {
     id: "03",
     title: "Mobile Apps Development",
-    description: "High-performance cross-platform applications using Flutter and Dart. Ensuring real-time data synchronization and native-like performance on iOS and Android.",
+    description:
+      "Design and develop cross-platform mobile applications with Flutter, focusing on performance, usability, and maintainable architecture. Experienced in implementing real-time data synchronization, authentication, and cloud-backed features to deliver native-like experiences on both Android and iOS.",
     icon: Smartphone,
-    tags: ["Flutter", "Dart", "Firebase"],
-    color: "text-green-400"
+    tags: ["Flutter", "Dart", "Firebase | Supabase", "REST APIs"],
+    color: "text-green-400",
   },
   {
     id: "04",
     title: "Interactive UI/UX",
-    description: "Immersive user interfaces using WebGL and Custom CSS3. I move beyond templates to create animated, highly engaging experiences.",
+    description:
+      "Craft visually engaging and interactive user interfaces with a strong focus on motion, responsiveness, and user experience. Experienced in building custom animations and immersive visual effects using modern web technologies, moving beyond static layouts to create dynamic, intuitive interfaces.",
     icon: Palette,
-    tags: ["WebGL", "Three.js", "GSAP"],
-    color: "text-orange-400"
-  }
-]
+    tags: ["Tailwind CSS", "CSS3", "GSAP", "Three.js", "WebGL", "Framer Motion"],
+    color: "text-orange-400",
+  },
+];
 
 export default function ServicesSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
   // Framer Motion Scroll Hooks
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
-  })
+    offset: ["start end", "end start"],
+  });
 
   // Parallax Transforms
-  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]) // Background text moves opposite
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0])
+  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]); // Background text moves opposite
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
   // 3D Background Effect
   useEffect(() => {
-    if (!canvasRef.current) return
+    if (!canvasRef.current) return;
 
-    const canvas = canvasRef.current
-    const scene = new THREE.Scene()
-    const camera = new THREE.PerspectiveCamera(75, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000)
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
-    
-    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    const canvas = canvasRef.current;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      canvas.offsetWidth / canvas.offsetHeight,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+    });
+
+    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
     // Abstract Geometry Particles
-    const geometry = new THREE.IcosahedronGeometry(1, 0)
-    const particlesCount = 20
+    const geometry = new THREE.IcosahedronGeometry(1, 0);
+    const particlesCount = 20;
     const particles = new THREE.InstancedMesh(
       geometry,
-      new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.1 }),
+      new THREE.MeshBasicMaterial({
+        color: 0x8b5cf6,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.1,
+      }),
       particlesCount
-    )
+    );
 
-    const dummy = new THREE.Object3D()
-    const positions: { x: number, y: number, z: number, speed: number }[] = []
+    const dummy = new THREE.Object3D();
+    const positions: { x: number; y: number; z: number; speed: number }[] = [];
 
     for (let i = 0; i < particlesCount; i++) {
-      const x = (Math.random() - 0.5) * 20
-      const y = (Math.random() - 0.5) * 20
-      const z = (Math.random() - 0.5) * 10 - 5
-      positions.push({ x, y, z, speed: Math.random() * 0.02 })
-      dummy.position.set(x, y, z)
-      dummy.updateMatrix()
-      particles.setMatrixAt(i, dummy.matrix)
+      const x = (Math.random() - 0.5) * 20;
+      const y = (Math.random() - 0.5) * 20;
+      const z = (Math.random() - 0.5) * 10 - 5;
+      positions.push({ x, y, z, speed: Math.random() * 0.02 });
+      dummy.position.set(x, y, z);
+      dummy.updateMatrix();
+      particles.setMatrixAt(i, dummy.matrix);
     }
 
-    scene.add(particles)
-    camera.position.z = 10
+    scene.add(particles);
+    camera.position.z = 10;
 
     // Animation Loop
-    let animationId: number
+    let animationId: number;
     const animate = () => {
-      animationId = requestAnimationFrame(animate)
+      animationId = requestAnimationFrame(animate);
 
       // Slight rotation based on time
-      particles.rotation.y += 0.002
-      
+      particles.rotation.y += 0.002;
+
       // Update individual particles for "floating" effect
       for (let i = 0; i < particlesCount; i++) {
-        const { x, y, z, speed } = positions[i]
-        const time = Date.now() * 0.001
-        
+        const { x, y, z, speed } = positions[i];
+        const time = Date.now() * 0.001;
+
         dummy.position.set(
           x + Math.sin(time * speed) * 1,
           y + Math.cos(time * speed) * 1,
           z
-        )
-        dummy.rotation.x = time * speed
-        dummy.updateMatrix()
-        particles.setMatrixAt(i, dummy.matrix)
+        );
+        dummy.rotation.x = time * speed;
+        dummy.updateMatrix();
+        particles.setMatrixAt(i, dummy.matrix);
       }
-      particles.instanceMatrix.needsUpdate = true
+      particles.instanceMatrix.needsUpdate = true;
 
-      renderer.render(scene, camera)
-    }
+      renderer.render(scene, camera);
+    };
 
-    animate()
+    animate();
 
     // Handle Scroll for 3D Camera Parallax
     const handleScroll = () => {
       if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect()
-        const scrollPercent = 1 - (rect.bottom / (window.innerHeight + rect.height))
+        const rect = containerRef.current.getBoundingClientRect();
+        const scrollPercent =
+          1 - rect.bottom / (window.innerHeight + rect.height);
         // Rotate the entire cloud of particles based on scroll
-        particles.rotation.z = scrollPercent * 0.5
-        particles.rotation.x = scrollPercent * 0.2
+        particles.rotation.z = scrollPercent * 0.5;
+        particles.rotation.x = scrollPercent * 0.2;
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", () => {
-      camera.aspect = canvas.offsetWidth / canvas.offsetHeight
-      camera.updateProjectionMatrix()
-      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
-    })
+      camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+    });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-      cancelAnimationFrame(animationId)
-      renderer.dispose()
-    }
-  }, [])
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(animationId);
+      renderer.dispose();
+    };
+  }, []);
 
   return (
     <section
@@ -165,20 +184,22 @@ export default function ServicesSection() {
 
       <div className="container relative z-10 px-6 mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-16">
-          
           {/* Sticky Header Section */}
           <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
             <motion.div style={{ y: y1, opacity }}>
-              <Badge variant="outline" className="mb-4 text-purple-400 border-purple-500/30">
+              <Badge
+                variant="outline"
+                className="mb-4 text-purple-400 border-purple-500/30"
+              >
                 What I Do
               </Badge>
               <h2 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 leading-tight">
                 My <br /> Services
               </h2>
               <p className="mt-6 text-lg text-gray-400 leading-relaxed max-w-md">
-                I help ambitious brands and startups build digital products that look good and work even better.
+                I help brands and startups design and develop digital products that are visually refined, technically sound, and built for real-world use.
               </p>
-              
+
               <div className="mt-12 hidden lg:block">
                 <div className="flex items-center gap-3 text-sm text-gray-500">
                   <span className="w-12 h-px bg-gray-800"></span>
@@ -191,7 +212,7 @@ export default function ServicesSection() {
           {/* Scrolling Cards Section */}
           <div className="lg:w-2/3 grid gap-6">
             {servicesData.map((service, index) => {
-              const Icon = service.icon
+              const Icon = service.icon;
               return (
                 <motion.div
                   key={service.id}
@@ -202,7 +223,7 @@ export default function ServicesSection() {
                 >
                   <Card className="group relative overflow-hidden bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors duration-500">
                     <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/10 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
+
                     <div className="p-8 flex flex-col md:flex-row gap-6 md:items-start">
                       {/* Icon Box */}
                       <div className="shrink-0">
@@ -217,9 +238,11 @@ export default function ServicesSection() {
                           <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
                             {service.title}
                           </h3>
-                          <span className="text-4xl font-bold text-white/5 select-none">{service.id}</span>
+                          <span className="text-4xl font-bold text-white/5 select-none">
+                            {service.id}
+                          </span>
                         </div>
-                        
+
                         <p className="text-gray-400 leading-relaxed">
                           {service.description}
                         </p>
@@ -227,7 +250,11 @@ export default function ServicesSection() {
                         {/* Tags */}
                         <div className="flex flex-wrap gap-2 pt-2">
                           {service.tags.map((tag) => (
-                            <Badge key={tag} variant="secondary" className="bg-black/40 text-gray-400 text-xs border-0">
+                            <Badge
+                              key={tag}
+                              variant="secondary"
+                              className="bg-black/40 text-gray-400 text-xs border-0"
+                            >
                               {tag}
                             </Badge>
                           ))}
@@ -241,11 +268,11 @@ export default function ServicesSection() {
                     </div>
                   </Card>
                 </motion.div>
-              )
+              );
             })}
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
