@@ -125,7 +125,11 @@ const About: React.FC = () => {
 
             <Dialog>
               <DialogTrigger asChild>
-                <button className="inline-block px-6 py-3 bg-white/5 hover:bg-gray-700/30 text-white rounded-full border border-white/10 transition-all duration-300">
+                <button className="px-6 py-3 bg-white/5 hover:bg-purple-500/10 text-white rounded-full border-2 border-purple-500/50 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 hover:scale-105 flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-eye">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
                   Preview
                 </button>
               </DialogTrigger>
