@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { Eye } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogFooter, DialogHeader } from "@/components/ui/dialog";
 
 const About: React.FC = () => {
@@ -43,7 +44,7 @@ const About: React.FC = () => {
             <div className="absolute -top-6 -right-6 bg-gradient-to-br from-violet-600 to-violet-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
               Software Engineer
             </div>
-            <div className="absolute -bottom-4 -left-6 bg-gradient-to-br from-amber-600 to-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
+            <div className="absolute -bottom-4 -left-6 bg-golden-gradient text-black px-4 py-2 rounded-full text-sm font-bold shadow-lg">
               B.Sc. Student
             </div>
           </div>
@@ -116,7 +117,7 @@ const About: React.FC = () => {
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 text-golden-gradient font-medium rounded-full shadow-lg transition-all duration-300 bg-transparent" style={{
+            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 text-golden-gradient font-medium rounded-full shadow-lg transition-all duration-300 bg-transparent border-2 border-golden-gradient hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105" style={{
               boxShadow: '0 0 18px rgba(247, 237, 186, 0.12)'
             }}>
               Download Resume

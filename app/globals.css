@@ -1309,3 +1309,8 @@ main {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Golden gradient for background */
+.bg-golden-gradient {
+  background: linear-gradient(135deg, #f7edba 0%, #fcf59b 25%, #f8e2a6 50%, #b9925a 75%, #fdefa0 100%);
+}
