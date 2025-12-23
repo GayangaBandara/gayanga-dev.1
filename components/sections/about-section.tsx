@@ -36,7 +36,7 @@ const About: React.FC = () => {
                 alt="Gayanga's Avatar"
                 width={300}
                 height={300}
-                src="image/about.jpg"
+                src="image/about.png"
                 className="h-full w-full object-cover"
               />
             </div>

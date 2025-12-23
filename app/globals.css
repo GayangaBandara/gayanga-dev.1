@@ -697,6 +697,28 @@ main {
   animation-delay: 2s;
 }
 
+/* 3D Tilt card for About section */
+.tilt-container {
+  perspective: 1200px;
+}
+
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: box-shadow 0.25s ease;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08));
+}
+
+.tilt-card img,
+.tilt-card .next-image {
+  transform-origin: center center;
+}
+
+.tilt-overlay {
+  background: linear-gradient(135deg, rgba(255,246,200,0.06), rgba(0,0,0,0.12));
+  mix-blend-mode: screen;
+}
+
 .floating-element-3 {
   width: 40px;
   height: 40px;
