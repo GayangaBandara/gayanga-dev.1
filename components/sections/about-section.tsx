@@ -52,10 +52,10 @@ const About: React.FC = () => {
           <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white">
             Hey! I'm{' '}
             <span className="relative">
-              <span className="bg-gradient-to-r from-violet-500 to-amber-600 bg-clip-text text-transparent font-bold">
+              <span className="text-golden-gradient font-bold">
                 Gayanga Bandara
               </span>
-              <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-amber-600 rounded-full"></span>
+              <span className="absolute -bottom-2 left-0 w-full h-1 rounded-full bg-golden-gradient"></span>
             </span>
           </h3>
           <p className="text-lg leading-7 mb-5 text-gray-200">
@@ -116,7 +116,9 @@ const About: React.FC = () => {
             </div>
           </div>
           <div className="mt-8 flex flex-wrap gap-3 justify-center lg:justify-start">
-            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 bg-gradient-to-r from-violet-600 to-amber-600 text-white font-medium rounded-full shadow-lg hover:shadow-amber-600/20 transition-all duration-300">
+            <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-8 py-3 text-golden-gradient font-medium rounded-full shadow-lg transition-all duration-300 bg-transparent" style={{
+              boxShadow: '0 0 18px rgba(247, 237, 186, 0.12)'
+            }}>
               Download Resume
             </a>
 
@@ -137,7 +139,7 @@ const About: React.FC = () => {
                 </div>
 
                 <DialogFooter>
-                  <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-4 py-2 bg-gradient-to-r from-violet-600 to-amber-600 text-white font-medium rounded-full shadow-lg hover:shadow-amber-600/20 transition-all duration-300">
+                  <a href="/pdf/Gayanga Bandara curriculum vitae.pdf" target="_blank" rel="noopener noreferrer" download className="inline-block px-4 py-2 text-golden-gradient font-medium rounded-full shadow-lg hover:shadow-amber-600/20 transition-all duration-300">
                     Download
                   </a>
                 </DialogFooter>

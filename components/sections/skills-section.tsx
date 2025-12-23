@@ -173,9 +173,9 @@ export default function SkillsSection() {
 
         {/* Header */}
         <div className="mb-16 md:text-center max-w-3xl mx-auto">
-          <Badge variant="outline" className="mb-4 border-purple-500/30 text-purple-400">Technical Arsenal</Badge>
+          <Badge variant="outline" className="mb-4 border-amber-500/30 text-golden-gradient">Technical Arsenal</Badge>
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Engineered for <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-amber-600">Performance</span>
+            Engineered for <span className="text-golden-gradient">Performance</span>
           </h2>
           <p className="text-zinc-400 text-lg">
             Modern technologies I use to build scalable, high-performance digital products with clean code and smooth UX.

@@ -113,7 +113,7 @@ export default function ContactSection() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Let's build something <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-amber-600">extraordinary</span>.
+              Let's build something <span className="text-golden-gradient">extraordinary</span>.
             </h2>
             <p className="text-gray-400 text-lg mb-12 leading-relaxed">
               Whether you have a project in mind, need a consultation, or just want to say hi, I'm always open to discussing new ideas and opportunities.

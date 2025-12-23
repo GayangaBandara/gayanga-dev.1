@@ -496,7 +496,7 @@ export default function ProjectsSection(): React.ReactElement {
             className="text-4xl md:text-6xl font-bold tracking-tight text-white"
           >
             Selected{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-500 to-amber-600">
+            <span className="text-golden-gradient">
               Works
             </span>
           </motion.h2>
