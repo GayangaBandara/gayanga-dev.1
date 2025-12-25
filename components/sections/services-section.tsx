@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Brain, Layout, Smartphone, Palette, ArrowRight } from "lucide-react"; // Importing Lucide icons
+import { Brain, Layout, Smartphone, Palette } from "lucide-react"; // Importing Lucide icons
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -61,7 +61,7 @@ export default function ServicesSection() {
   const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]); // Background text moves opposite
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
-  // 3D Background Effect
+  // 3D Background Effect (optimized)
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -79,22 +79,27 @@ export default function ServicesSection() {
       antialias: true,
     });
 
-    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Set initial size and cap pixel ratio to avoid excessive GPU work
+    const setRendererSize = () => {
+      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+    setRendererSize();
+
+    // Adapt particle count to device capability (avoid overloading low-end devices)
+    const cpuCores = typeof navigator !== "undefined" && navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 4;
+    const particlesCount = Math.max(6, Math.min(20, Math.floor(cpuCores * 2)));
 
     // Abstract Geometry Particles
     const geometry = new THREE.IcosahedronGeometry(1, 0);
-    const particlesCount = 20;
-    const particles = new THREE.InstancedMesh(
-      geometry,
-      new THREE.MeshBasicMaterial({
-        color: 0xFFD700,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.1,
-      }),
-      particlesCount
-    );
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xFFD700,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.1,
+    });
+
+    const particles = new THREE.InstancedMesh(geometry, material, particlesCount);
 
     const dummy = new THREE.Object3D();
     const positions: { x: number; y: number; z: number; speed: number }[] = [];
@@ -112,19 +117,23 @@ export default function ServicesSection() {
     scene.add(particles);
     camera.position.z = 10;
 
-    // Animation Loop
-    let animationId: number;
-    const animate = () => {
-      animationId = requestAnimationFrame(animate);
+    // Animation control flags and ids
+    let animationId: number | null = null;
+    let running = false;
 
-      // Slight rotation based on time
+    // Animation function (minimised per-frame work)
+    const animateFrame = () => {
+      // schedule next frame first so we can exit early in cleanup
+      animationId = requestAnimationFrame(animateFrame);
+
+      const time = performance.now() * 0.001; // single time read per frame
+
+      // slow global rotation
       particles.rotation.y += 0.002;
 
-      // Update individual particles for "floating" effect
+      // Update instanced matrices
       for (let i = 0; i < particlesCount; i++) {
         const { x, y, z, speed } = positions[i];
-        const time = Date.now() * 0.001;
-
         dummy.position.set(
           x + Math.sin(time * speed) * 1,
           y + Math.cos(time * speed) * 1,
@@ -139,30 +148,77 @@ export default function ServicesSection() {
       renderer.render(scene, camera);
     };
 
-    animate();
+    const startAnimation = () => {
+      if (running) return;
+      running = true;
+      if (animationId == null) animationId = requestAnimationFrame(animateFrame);
+    };
 
-    // Handle Scroll for 3D Camera Parallax
+    const stopAnimation = () => {
+      running = false;
+      if (animationId != null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    };
+
+    // Visibility handling: pause animation when not visible to save CPU
+    const io = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry?.isIntersecting) startAnimation();
+      else stopAnimation();
+    }, { root: null, threshold: 0 });
+
+    io.observe(canvas);
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") startAnimation();
+      else stopAnimation();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    // Resize handling with ResizeObserver to keep sizes accurate and avoid expensive window resize events
+    const ro = new ResizeObserver(() => {
+      camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
+      camera.updateProjectionMatrix();
+      setRendererSize();
+    });
+    ro.observe(canvas);
+
+    // Scroll handler for light parallax effect (keeps work minimal)
     const handleScroll = () => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        const scrollPercent =
-          1 - rect.bottom / (window.innerHeight + rect.height);
-        // Rotate the entire cloud of particles based on scroll
+        const scrollPercent = 1 - rect.bottom / (window.innerHeight + rect.height);
+        // small, cheap updates only
         particles.rotation.z = scrollPercent * 0.5;
         particles.rotation.x = scrollPercent * 0.2;
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", () => {
-      camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
-    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
+    // Start animation if visible initially
+    if (document.visibilityState === "visible") startAnimation();
+
+    // Cleanup
     return () => {
+      io.disconnect();
+      ro.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(animationId);
+      stopAnimation();
+
+      // Proper disposal of three.js objects to avoid memory leaks
+      scene.remove(particles);
+      try {
+        particles.geometry.dispose();
+        // material may be reused elsewhere; defend with try/catch
+        (particles.material as THREE.Material).dispose();
+      } catch (e) {
+        // ignore disposal errors in some environments
+      }
+
       renderer.dispose();
     };
   }, []);
@@ -221,29 +277,30 @@ export default function ServicesSection() {
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="group relative overflow-hidden bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors duration-500">
-                    <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/10 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <Card className="group relative overflow-hidden bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-purple-500/50 transition-all duration-300">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/15 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <div className="p-8 flex flex-col md:flex-row gap-6 md:items-start">
                       {/* Icon Box */}
                       <div className="shrink-0">
-                        <span className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/10 group-hover:border-purple-500/30 group-hover:scale-110 transition-all duration-300">
-                          <Icon className={`w-8 h-8 ${service.color}`} />
+                        <span className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/5 group-hover:border-purple-400/60 group-hover:bg-purple-500/10 group-hover:scale-125 transition-all duration-300">
+                          <Icon className={`w-8 h-8 ${service.color} group-hover:scale-110 transition-transform duration-300`} />
                         </span>
                       </div>
 
                       {/* Content */}
-                      <div className="space-y-4 flex-1">
+                      <div className="space-y-4 flex-1 group-hover:translate-y-0 transition-transform duration-300">
                         <div className="flex justify-between items-start">
-                          <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
+                          <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 group-hover:translate-x-1 transition-all duration-300">
                             {service.title}
                           </h3>
-                          <span className="text-4xl font-bold text-white/5 select-none">
+                          <span className="text-4xl font-bold text-white/5 select-none group-hover:text-white/10 transition-colors duration-300">
                             {service.id}
                           </span>
                         </div>
 
-                        <p className="text-gray-400 leading-relaxed">
+                        <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
                           {service.description}
                         </p>
 
@@ -253,17 +310,12 @@ export default function ServicesSection() {
                             <Badge
                               key={tag}
                               variant="secondary"
-                              className="bg-black/40 text-gray-400 text-xs border-0"
+                              className="bg-black/40 text-gray-400 text-xs border-0 group-hover:bg-purple-500/20 group-hover:text-purple-300 transition-all duration-300"
                             >
                               {tag}
                             </Badge>
                           ))}
                         </div>
-                      </div>
-
-                      {/* Arrow */}
-                      <div className="hidden md:flex items-center self-center opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
-                        <ArrowRight className="text-purple-400 w-6 h-6" />
                       </div>
                     </div>
                   </Card>

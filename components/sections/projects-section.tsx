@@ -279,7 +279,7 @@ export default function ProjectsSection(): React.ReactElement {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [showAll, setShowAll] = useState(false);
 
-  // Keep your existing 3D Background Logic
+  // Keep your existing 3D Background Logic (optimized)
   useEffect(() => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
@@ -296,10 +296,15 @@ export default function ProjectsSection(): React.ReactElement {
       antialias: true,
     });
 
-    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+    // Use a helper to set size and cap pixel ratio
+    const setRendererSize = () => {
+      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    };
+    setRendererSize();
     renderer.setClearColor(0x000000, 0);
 
-    // Simplified elegant cubes
+    // Static project markers
     const projectData = [
       { color: 0xFFD700, position: { x: -4, y: 0, z: 0 } }, // Yellow
       { color: 0x3b82f6, position: { x: 0, y: 0, z: 0 } }, // Blue
@@ -309,7 +314,7 @@ export default function ProjectsSection(): React.ReactElement {
     const cubes: THREE.Mesh[] = [];
 
     projectData.forEach((data) => {
-      const geometry = new THREE.IcosahedronGeometry(1.5, 0); // Changed to Icosahedron for more "tech" look
+      const geometry = new THREE.IcosahedronGeometry(1.5, 0);
       const material = new THREE.MeshBasicMaterial({
         color: data.color,
         transparent: true,
@@ -324,26 +329,83 @@ export default function ProjectsSection(): React.ReactElement {
 
     camera.position.z = 8;
 
-    const animate = () => {
-      requestAnimationFrame(animate);
-      cubes.forEach((cube, index) => {
+    // Animation control
+    let animationId: number | null = null;
+    let running = false;
+
+    const animateFrame = () => {
+      // schedule next frame early
+      animationId = requestAnimationFrame(animateFrame);
+
+      const t = performance.now() * 0.001; // single read
+      // minimal per-frame work
+      for (let i = 0; i < cubes.length; i++) {
+        const cube = cubes[i];
         cube.rotation.x += 0.002;
         cube.rotation.y += 0.003;
-        // Gentle floating
-        cube.position.y = Math.sin(Date.now() * 0.001 + index * 2) * 0.5;
-      });
+        cube.position.y = Math.sin(t + i * 2) * 0.5;
+      }
       renderer.render(scene, camera);
     };
-    animate();
 
-    const handleResize = () => {
+    const startAnimation = () => {
+      if (running) return;
+      running = true;
+      if (animationId == null) animationId = requestAnimationFrame(animateFrame);
+    };
+
+    const stopAnimation = () => {
+      running = false;
+      if (animationId != null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+    };
+
+    // Visibility and intersection to pause when not visible
+    const io = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (entry?.isIntersecting) startAnimation();
+      else stopAnimation();
+    }, { root: null, threshold: 0 });
+
+    io.observe(canvas);
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") startAnimation();
+      else stopAnimation();
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    // ResizeObserver for accurate sizing
+    const ro = new ResizeObserver(() => {
       camera.aspect = canvas.offsetWidth / canvas.offsetHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(canvas.offsetWidth, canvas.offsetHeight);
-    };
-    window.addEventListener("resize", handleResize);
+      setRendererSize();
+    });
+    ro.observe(canvas);
+
+    // Start if visible
+    if (document.visibilityState === "visible") startAnimation();
+
+    // Cleanup
     return () => {
-      window.removeEventListener("resize", handleResize);
+      io.disconnect();
+      ro.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      stopAnimation();
+
+      // Dispose meshes, geometries and materials
+      try {
+        cubes.forEach((c) => {
+          if (c.geometry) c.geometry.dispose();
+          if ((c.material as THREE.Material)) (c.material as THREE.Material).dispose();
+          scene.remove(c);
+        });
+      } catch (e) {
+        // Ignore dispose errors
+      }
+
       renderer.dispose();
     };
   }, []);
