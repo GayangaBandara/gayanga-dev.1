@@ -44,7 +44,7 @@ function SpotlightCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50 text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:shadow-purple-500/10",
+        "relative overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50 text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:shadow-purple-500/10 transform hover:-translate-y-1",
         className
       )}
     >
@@ -151,14 +151,14 @@ export default function SkillsSection() {
   // --- Map badge colors by category ---
   const getBadgeColor = (category: string) => {
     switch(category) {
-      case "core": return "bg-blue-500/10 text-blue-300 border-blue-500/20"
-      case "framework": return "bg-indigo-500/10 text-indigo-300 border-indigo-500/20"
-      case "state": return "bg-purple-500/10 text-purple-300 border-purple-500/20"
-      case "style": return "bg-pink-500/10 text-pink-300 border-pink-500/20"
-      case "ui": return "bg-cyan-500/10 text-cyan-300 border-cyan-500/20"
-      case "data": return "bg-green-500/10 text-green-300 border-green-500/20"
-      case "test": return "bg-yellow-500/10 text-yellow-300 border-yellow-500/20"
-      default: return "bg-gray-500/10 text-gray-300 border-gray-500/20"
+      case "core": return "bg-blue-500/6 text-blue-300 border border-blue-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "framework": return "bg-indigo-500/6 text-indigo-300 border border-indigo-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "state": return "bg-purple-500/6 text-purple-300 border border-purple-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "style": return "bg-pink-500/6 text-pink-300 border border-pink-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "ui": return "bg-cyan-500/6 text-cyan-300 border border-cyan-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "data": return "bg-green-500/6 text-green-300 border border-green-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "test": return "bg-yellow-500/6 text-yellow-300 border border-yellow-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      default: return "bg-gray-500/6 text-gray-300 border border-gray-500/10 text-[11px] px-2 py-0.5 rounded-full"
     }
   }
 
@@ -189,8 +189,8 @@ export default function SkillsSection() {
           <SpotlightCard className="col-span-1 md:col-span-2 lg:col-span-2 row-span-2 bg-gradient-to-br from-zinc-900/80 to-zinc-900/30">
             <div className="p-8 h-full flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-6 border border-blue-500/20">
-                  <Layout className="w-6 h-6 text-blue-400" />
+                <div className="w-10 h-10 rounded-md bg-blue-500/8 flex items-center justify-center mb-5 border border-blue-500/10">
+                  <Layout className="w-5 h-5 text-blue-400" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-2">Frontend Architecture</h3>
                 <p className="text-zinc-400 mb-6">
@@ -210,8 +210,8 @@ export default function SkillsSection() {
           {/* Backend */}
           <SpotlightCard className="col-span-1 md:col-span-1 lg:col-span-1 row-span-2">
             <div className="p-6 h-full flex flex-col">
-              <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 border border-green-500/20">
-                <Terminal className="w-5 h-5 text-green-400" />
+              <div className="w-9 h-9 rounded-md bg-green-500/8 flex items-center justify-center mb-3 border border-green-500/12">
+                <Terminal className="w-4 h-4 text-green-400" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Backend & API</h3>
               <p className="text-zinc-400 text-sm mb-auto">
@@ -231,8 +231,8 @@ export default function SkillsSection() {
           <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-1 row-span-1 bg-zinc-900/80">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center border border-purple-500/20">
-                  <Cpu className="w-5 h-5 text-purple-400" />
+                <div className="w-9 h-9 rounded-md bg-purple-500/8 flex items-center justify-center border border-purple-500/12">
+                  <Cpu className="w-4 h-4 text-purple-400" />
                 </div>
                 <Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-400">AI & ML</Badge>
               </div>
@@ -241,7 +241,7 @@ export default function SkillsSection() {
                 Smart solutions with ML pipelines, NLP, and automation for web and mobile apps.
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {aiSkills.map(s => <span key={s} className="text-[10px] px-2 py-1 rounded bg-white/5 text-zinc-300">{s}</span>)}
+                {aiSkills.map(s => <span key={s} className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-zinc-300">{s}</span>)}
               </div>
             </div>
           </SpotlightCard>
@@ -249,14 +249,14 @@ export default function SkillsSection() {
           {/* Mobile */}
           <SpotlightCard className="col-span-1 lg:col-span-1 row-span-1">
             <div className="p-6">
-              <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4 border border-orange-500/20">
-                <Smartphone className="w-5 h-5 text-orange-400" />
+              <div className="w-9 h-9 rounded-md bg-orange-500/8 flex items-center justify-center mb-3 border border-orange-500/12">
+                <Smartphone className="w-4 h-4 text-orange-400" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Mobile Apps</h3>
               <p className="text-zinc-400 text-sm mb-2">Cross-platform apps with Flutter, Dart, and native technologies.</p>
               <div className="flex flex-wrap gap-2 mt-2">
                 {mobileSkills.map(s => (
-                  <Badge key={s} variant="outline" className="border-white/10 text-zinc-400 hover:text-orange-400 transition-colors">{s}</Badge>
+                  <Badge key={s} variant="outline" className="text-[11px] border-white/10 text-zinc-400 hover:text-orange-400 transition-colors px-2 py-0.5 rounded-full">{s}</Badge>
                 ))}
               </div>
             </div>
@@ -265,8 +265,8 @@ export default function SkillsSection() {
           {/* DevOps */}
           <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-4 row-span-1">
             <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-              <div className="shrink-0 w-12 h-12 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20">
-                <Container className="w-6 h-6 text-red-400" />
+              <div className="shrink-0 w-10 h-10 rounded-md bg-red-500/8 flex items-center justify-center border border-red-500/12">
+                <Container className="w-4 h-4 text-red-400" />
               </div>
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-xl font-bold text-white">DevOps & Deployment</h3>
@@ -275,7 +275,7 @@ export default function SkillsSection() {
               <div className="flex gap-4 flex-wrap justify-center md:justify-start">
                 {devopsSkills.map(tool => (
                   <div key={tool.name} className="flex flex-col items-center gap-1 group">
-                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
+                    <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
                       <img src={tool.logo} alt={tool.name} className="w-4 h-4" />
                     </div>
                     <span className="text-[10px] text-zinc-500">{tool.name}</span>

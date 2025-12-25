@@ -269,6 +269,7 @@ export default function ServicesSection() {
           <div className="lg:w-2/3 grid gap-6">
             {servicesData.map((service, index) => {
               const Icon = service.icon;
+              const accentBg = service.color.replace("text-", "bg-") + "/10";
               return (
                 <motion.div
                   key={service.id}
@@ -277,15 +278,16 @@ export default function ServicesSection() {
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="group relative overflow-hidden bg-white/5 border border-white/5 backdrop-blur-sm hover:bg-white/10 hover:border-purple-500/50 transition-all duration-300">
+                  <Card className="group relative overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform hover:-translate-y-1">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/15 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <div className="p-8 flex flex-col md:flex-row gap-6 md:items-start">
                       {/* Icon Box */}
-                      <div className="shrink-0">
-                        <span className="flex items-center justify-center w-16 h-16 rounded-2xl bg-white/5 border border-white/5 group-hover:border-purple-400/60 group-hover:bg-purple-500/10 group-hover:scale-125 transition-all duration-300">
-                          <Icon className={`w-8 h-8 ${service.color} group-hover:scale-110 transition-transform duration-300`} />
+                      <div className="shrink-0 relative">
+                        <div className={`absolute left-0 top-6 bottom-6 w-[3px] rounded-r ${accentBg} opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none`} aria-hidden="true" />
+                        <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/4 border border-white/10 group-hover:scale-105 transition-all duration-300 p-1">
+                          <Icon className={`w-6 h-6 ${service.color} transition-transform duration-300`} />
                         </span>
                       </div>
 
@@ -310,7 +312,7 @@ export default function ServicesSection() {
                             <Badge
                               key={tag}
                               variant="secondary"
-                              className="bg-black/40 text-gray-400 text-xs border-0 group-hover:bg-purple-500/20 group-hover:text-purple-300 transition-all duration-300"
+                              className="bg-black/40 text-zinc-300 text-[11px] px-2 py-0.5 rounded-full border border-white/5 group-hover:bg-purple-500/10 group-hover:text-white transition-all duration-300"
                             >
                               {tag}
                             </Badge>
