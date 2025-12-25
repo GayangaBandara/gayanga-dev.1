@@ -44,7 +44,7 @@ function SpotlightCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative overflow-hidden rounded-xl border border-white/10 bg-zinc-900/50 text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:shadow-purple-500/10 transform hover:-translate-y-1",
+        "relative overflow-hidden rounded-xl border-[5px] border-accent/20 bg-zinc-900/50 text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:shadow-accent/10 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-accent/20",
         className
       )}
     >
@@ -105,7 +105,8 @@ export default function SkillsSection() {
     { name: "HTML5", category: "core" }, { name: "CSS3", category: "core" }, { name: "JavaScript (ES6+)", category: "core" }, { name: "TypeScript", category: "core" },
     { name: "React", category: "framework" }, { name: "Next.js", category: "framework" }, { name: "Vue.js", category: "framework" }, { name: "Svelte", category: "framework" },
     { name: "Redux", category: "state" }, { name: "Zustand", category: "state" }, { name: "Recoil", category: "state" },
-    { name: "Tailwind CSS", category: "style" }, { name: "Sass", category: "style" }, { name: "Framer Motion", category: "style" }, { name: "Three.js", category: "style" }, { name: "GSAP", category: "style" },
+    { name: "Tailwind CSS", category: "style" }, { name: "Sass", category: "style" },
+    { name: "Framer Motion", category: "animation" }, { name: "Three.js", category: "animation" }, { name: "GSAP", category: "animation" },
     { name: "Storybook", category: "ui" }, { name: "Radix UI", category: "ui" }, { name: "Headless UI", category: "ui" }, { name: "Radium", category: "ui" },
     { name: "Apollo Client", category: "data" }, { name: "React Query", category: "data" }, { name: "SWR", category: "data" },
     { name: "Jest", category: "test" }, { name: "React Testing Library", category: "test" }, { name: "Cypress", category: "test" }
@@ -155,6 +156,7 @@ export default function SkillsSection() {
       case "framework": return "bg-indigo-500/6 text-indigo-300 border border-indigo-500/10 text-[11px] px-2 py-0.5 rounded-full"
       case "state": return "bg-purple-500/6 text-purple-300 border border-purple-500/10 text-[11px] px-2 py-0.5 rounded-full"
       case "style": return "bg-pink-500/6 text-pink-300 border border-pink-500/10 text-[11px] px-2 py-0.5 rounded-full"
+      case "animation": return "bg-rose-500/10 text-rose-300 border border-rose-500/20 text-[11px] px-2 py-0.5 rounded-full"
       case "ui": return "bg-cyan-500/6 text-cyan-300 border border-cyan-500/10 text-[11px] px-2 py-0.5 rounded-full"
       case "data": return "bg-green-500/6 text-green-300 border border-green-500/10 text-[11px] px-2 py-0.5 rounded-full"
       case "test": return "bg-yellow-500/6 text-yellow-300 border border-yellow-500/10 text-[11px] px-2 py-0.5 rounded-full"
@@ -189,7 +191,7 @@ export default function SkillsSection() {
           <SpotlightCard className="col-span-1 md:col-span-2 lg:col-span-2 row-span-2 bg-gradient-to-br from-zinc-900/80 to-zinc-900/30">
             <div className="p-8 h-full flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-md bg-blue-500/8 flex items-center justify-center mb-5 border border-blue-500/10">
+                <div className="w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center mb-5 border-2 border-accent/20">
                   <Layout className="w-5 h-5 text-blue-400" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-2">Frontend Architecture</h3>
@@ -210,7 +212,7 @@ export default function SkillsSection() {
           {/* Backend */}
           <SpotlightCard className="col-span-1 md:col-span-1 lg:col-span-1 row-span-2">
             <div className="p-6 h-full flex flex-col">
-              <div className="w-9 h-9 rounded-md bg-green-500/8 flex items-center justify-center mb-3 border border-green-500/12">
+              <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center mb-3 border-2 border-accent/20">
                 <Terminal className="w-4 h-4 text-green-400" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Backend & API</h3>
@@ -231,7 +233,7 @@ export default function SkillsSection() {
           <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-1 row-span-1 bg-zinc-900/80">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
-                <div className="w-9 h-9 rounded-md bg-purple-500/8 flex items-center justify-center border border-purple-500/12">
+                <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center border-2 border-accent/20">
                   <Cpu className="w-4 h-4 text-purple-400" />
                 </div>
                 <Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-400">AI & ML</Badge>
@@ -249,7 +251,7 @@ export default function SkillsSection() {
           {/* Mobile */}
           <SpotlightCard className="col-span-1 lg:col-span-1 row-span-1">
             <div className="p-6">
-              <div className="w-9 h-9 rounded-md bg-orange-500/8 flex items-center justify-center mb-3 border border-orange-500/12">
+              <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center mb-3 border-2 border-accent/20">
                 <Smartphone className="w-4 h-4 text-orange-400" />
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Mobile Apps</h3>
@@ -265,7 +267,7 @@ export default function SkillsSection() {
           {/* DevOps */}
           <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-4 row-span-1">
             <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-              <div className="shrink-0 w-10 h-10 rounded-md bg-red-500/8 flex items-center justify-center border border-red-500/12">
+              <div className="shrink-0 w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center border-2 border-accent/20">
                 <Container className="w-4 h-4 text-red-400" />
               </div>
               <div className="flex-1 text-center md:text-left">

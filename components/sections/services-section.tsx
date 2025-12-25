@@ -278,15 +278,15 @@ export default function ServicesSection() {
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="group relative overflow-hidden bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 hover:border-white/20 transition-all duration-300 transform hover:-translate-y-1">
+                  <Card className="group relative overflow-hidden bg-white/5 border-2 border-accent/20 backdrop-blur-sm hover:bg-white/10 hover:border-accent/40 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-accent/20">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/15 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     <div className="p-8 flex flex-col md:flex-row gap-6 md:items-start">
                       {/* Icon Box */}
                       <div className="shrink-0 relative">
-                        <div className={`absolute left-0 top-6 bottom-6 w-[3px] rounded-r ${accentBg} opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none`} aria-hidden="true" />
-                        <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-white/4 border border-white/10 group-hover:scale-105 transition-all duration-300 p-1">
+                        <div className={`absolute left-0 top-6 bottom-6 w-[2px] rounded-r ${accentBg} opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none`} aria-hidden="true" />
+                        <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 border-2 border-accent/20 group-hover:scale-105 group-hover:bg-accent/20 transition-all duration-300 p-1">
                           <Icon className={`w-6 h-6 ${service.color} transition-transform duration-300`} />
                         </span>
                       </div>
