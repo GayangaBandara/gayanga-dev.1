@@ -233,7 +233,7 @@ const About: React.FC = () => {
                data-file="/pdf/Gayanga Bandara curriculum vitae.pdf"
             >
               <ul>
-                <li>Download Resume</li>
+                <li>Resume</li>
                 <li>Downloading</li>
                 <li>Open File</li>
               </ul>
@@ -245,7 +245,7 @@ const About: React.FC = () => {
             <Dialog>
               <DialogTrigger asChild>
                 <button className="preview-button">
-                  Preview
+                  <Eye size={20} />
                 </button>
               </DialogTrigger>
               <DialogContent className="max-w-4xl w-full overflow-hidden">

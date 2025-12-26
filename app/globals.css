@@ -1345,7 +1345,7 @@ main {
 
 .social-icons a:nth-child(1) {
   background: rgba(255, 255, 255, 0.05);
-  background-image: linear-gradient(#ebd8a6 50%, #333 50%);
+  background-image: linear-gradient(#d8c491d8 50%, #333 50%);
   background-size: 100% 200%;
   background-position: 0% 5%;
   color: #333;
@@ -1353,7 +1353,7 @@ main {
 
 .social-icons a:nth-child(2) {
   background: rgba(255, 255, 255, 0.05);
-  background-image: linear-gradient(#ebd8a6 50%, #0077b5 50%);
+  background-image: linear-gradient(#d8c491d8 50%, #0077b5 50%);
   background-size: 100% 200%;
   background-position: 0% 5%;
   color: #0077b5;
@@ -1361,7 +1361,7 @@ main {
 
 .social-icons a:nth-child(3) {
   background: rgba(255, 255, 255, 0.05);
-  background-image: linear-gradient(#ebd8a6 50%, #ea4335 50%);
+  background-image: linear-gradient(#d8c491d8 50%, #ea4335 50%);
   background-size: 100% 200%;
   background-position: 0% 5%;
   color: #ea4335;
@@ -1387,8 +1387,8 @@ main {
 
 /* Download Button Styles */
 .button {
-  --background: #275efe;
-  --rectangle: #184fee;
+  --background: #0c173a;
+  --rectangle: #11286e;
   --success: #4BC793;
   --text: #fff;
   --arrow: #fff;
@@ -1595,28 +1595,21 @@ main {
 
 /* Preview Button Styles */
 .preview-button {
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  background: none;
+  border: none;
   color: #fff;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
+  padding: 0;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  backdrop-filter: blur(10px);
 }
 
 .preview-button:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  transform: scale(1.1);
 }
 
 /* Small Download Button for Dialog */
