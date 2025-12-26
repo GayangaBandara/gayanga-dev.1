@@ -1345,7 +1345,7 @@ main {
 
 .social-icons a:nth-child(1) {
   background: rgba(255, 255, 255, 0.05);
-  background-image: linear-gradient(#d8c491d8 50%, #333 50%);
+  background-image: linear-gradient(#ffffffd8 50%, #333 50%);
   background-size: 100% 200%;
   background-position: 0% 5%;
   color: #333;
@@ -1353,7 +1353,7 @@ main {
 
 .social-icons a:nth-child(2) {
   background: rgba(255, 255, 255, 0.05);
-  background-image: linear-gradient(#d8c491d8 50%, #0077b5 50%);
+  background-image: linear-gradient(#ffffffd8 50%, #0077b5 50%);
   background-size: 100% 200%;
   background-position: 0% 5%;
   color: #0077b5;
@@ -1361,7 +1361,7 @@ main {
 
 .social-icons a:nth-child(3) {
   background: rgba(255, 255, 255, 0.05);
-  background-image: linear-gradient(#d8c491d8 50%, #ea4335 50%);
+  background-image: linear-gradient(#ffffffd8 50%, #ea4335 50%);
   background-size: 100% 200%;
   background-position: 0% 5%;
   color: #ea4335;
@@ -1639,4 +1639,26 @@ main {
 
 .download-button-small:active {
   transform: scale(0.95);
+}
+
+/* Modern Blob Animation for About Section Image */
+.blob-container {
+  width: 300px;
+  aspect-ratio: 1;
+  background-color: red;
+  box-shadow: inset 0px 0px 15px 0px #00000070;
+  border-radius: 30% 70% 40% 60% / 30% 60% 40% 70%;
+  background-size: cover;
+  background-position-y: 40%;
+  animation: modernEffect 2s ease-in-out infinite alternate;
+  overflow: hidden;
+}
+
+@keyframes modernEffect {
+  0% {
+    border-radius: 30% 70% 40% 60% / 30% 60% 40% 70%;
+  }
+  100% {
+    border-radius: 70% 30% 60% 40% / 60% 30% 80% 40%;
+  }
 }

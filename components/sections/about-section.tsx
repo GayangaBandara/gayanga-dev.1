@@ -145,14 +145,7 @@ const About: React.FC = () => {
           <div className="relative">
             <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-violet-500/20 to-orange-500/20 blur-lg -z-10"></div>
             <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-violet-500/30 to-orange-500/30 -z-10"></div>
-            <div className="flex justify-center size-64 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl">
-              <Image
-                alt="Gayanga's Avatar"
-                width={300}
-                height={300}
-                src="image/about.png"
-                className="h-full w-full object-cover"
-              />
+            <div className="blob-container" style={{ backgroundImage: "url('image/about.png')" }}>
             </div>
             <div className="absolute -top-6 -right-6 bg-gradient-to-br from-violet-600 to-violet-800 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
               Software Engineer
