@@ -47,6 +47,28 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     setMounted(true);
   }, []);
 
+  // Scroll-based autoplay using Intersection Observer
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video?.play().catch((e) => console.log("Autoplay prevented:", e));
+          } else {
+            video?.pause();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [mounted]);
+
   // Hover behavior (desktop): play preview muted
   const handleMouseEnter = () => {
     setIsHovering(true);
