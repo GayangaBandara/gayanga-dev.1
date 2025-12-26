@@ -1,301 +1,603 @@
-"use client"
+'use client';
 
-import React, { useRef, useState } from "react"
-import { motion, useInView } from "framer-motion"
-import {
-  Terminal,
-  Cpu,
-  Layout,
-  Smartphone,
-  GitBranch,
-  Container,
-  Zap
-} from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
+import React, { useState, useEffect } from 'react';
+import { 
+  Layout, 
+  Terminal, 
+  Smartphone, 
+  Cpu, 
+  Container, 
+  Database, 
+  ShieldCheck
+} from "lucide-react";
 
-// --- Spotlight Card Component ---
-function SpotlightCard({
-  children,
-  className = "",
-  spotlightColor = "rgba(120, 119, 198, 0.3)"
-}: {
-  children: React.ReactNode
-  className?: string
-  spotlightColor?: string
-}) {
-  const divRef = useRef<HTMLDivElement>(null)
-  const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [opacity, setOpacity] = useState(0)
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current) return
-    const rect = divRef.current.getBoundingClientRect()
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-  }
-
-  const handleMouseEnter = () => setOpacity(1)
-  const handleMouseLeave = () => setOpacity(0)
-
-  return (
-    <div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      className={cn(
-        "relative overflow-hidden rounded-xl border-[5px] border-accent/20 bg-zinc-900/50 text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:shadow-accent/10 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-accent/20",
-        className
-      )}
-    >
-      <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
-        style={{
-          opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
-        }}
-      />
-      <div className="relative h-full">{children}</div>
-    </div>
-  )
+// --- Types ---
+interface TechItem {
+  id: string;
+  title: string;
+  color: string;
+  Icon: React.ElementType;
+  row: 1 | 2 | 3;
+  description: string;
+  skills: string[];
+  category: string;
 }
 
-// --- Infinite Marquee Component ---
-function Marquee({ items, speed = 20, withLogos = false }: { items: (string | { name: string; logo: string })[], speed?: number, withLogos?: boolean }) {
+// --- Data ---
+const techData: TechItem[] = [
+  // --- Row 1 ---
+  {
+    id: 'frontend',
+    title: 'FRONTEND ARCHITECTURE',
+    color: '#22d3ee', // Cyan-400
+    Icon: Layout,
+    row: 1,
+    category: 'core',
+    description: "Pixel-perfect, modern, and scalable interfaces with advanced tools.",
+    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js", "Redux"]
+  },
+  {
+    id: 'backend',
+    title: 'BACKEND & API',
+    color: '#34d399', // Emerald-400
+    Icon: Terminal,
+    row: 1,
+    category: 'code',
+    description: "Scalable server logic, databases, and APIs for robust solutions.",
+    skills: ["Node.js", "NestJS", "FastAPI", "Python", "Go", "GraphQL", "Apache Camel"]
+  },
+
+  // --- Row 2 ---
+  {
+    id: 'mobile',
+    title: 'MOBILE APPS',
+    color: '#fb923c', // Orange-400
+    Icon: Smartphone,
+    row: 2,
+    category: 'mobile',
+    description: "Cross-platform apps with native performance.",
+    skills: ["Flutter", "Dart", "React Native", "Kotlin", "Swift", "Firebase", "iOS/Android"]
+  },
+  {
+    id: 'ai',
+    title: 'AI ENGINEERING',
+    color: '#a78bfa', // Violet-400
+    Icon: Cpu,
+    row: 2,
+    category: 'ai',
+    description: "Smart solutions with ML pipelines and automation.",
+    skills: ["Python", "TensorFlow", "PyTorch", "LangChain", "Ollama", "CrewAI", "Jupyter"]
+  },
+  {
+    id: 'devops',
+    title: 'DEVOPS & CLOUD',
+    color: '#f87171', // Red-400
+    Icon: Container,
+    row: 2,
+    category: 'ops',
+    description: "CI/CD pipelines, containerization, and cloud deployment.",
+    skills: ["Docker", "Kubernetes", "AWS", "GitHub Actions", "Linux", "Vercel", "Render"]
+  },
+
+  // --- Row 3 ---
+  {
+    id: 'database',
+    title: 'DATA STORAGE',
+    color: '#facc15', // Yellow-400
+    Icon: Database,
+    row: 3,
+    category: 'data',
+    description: "Optimized data structures and persistent storage.",
+    skills: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Supabase", "Prisma"]
+  },
+  {
+    id: 'testing',
+    title: 'QUALITY & TESTING',
+    color: '#f472b6', // Pink-400
+    Icon: ShieldCheck,
+    row: 3,
+    category: 'test',
+    description: "Ensuring reliability through rigorous testing standards.",
+    skills: ["Jest", "Cypress", "React Testing Library", "Storybook", "Playwright"]
+  },
+];
+
+const HexagonIntro: React.FC = () => {
+  const [activeItem, setActiveItem] = useState<TechItem | null>(null);
+  const [hoverNotifyVisible, setHoverNotifyVisible] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css?family=Oswald:400,700,300|Inter:400,500,600';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, []);
+
+  const handleMouseEnter = (item: TechItem) => {
+    setHoverNotifyVisible(false);
+    setActiveItem(item);
+  };
+
+  const handleMouseLeave = () => {
+    // Optional: Reset active item logic here if needed
+  };
+
+  const rows = {
+    1: techData.filter(i => i.row === 1),
+    2: techData.filter(i => i.row === 2),
+    3: techData.filter(i => i.row === 3),
+  };
+
+  const getBadgeStyle = (color: string) => ({
+    backgroundColor: 'transparent',
+    color: color,
+    border: `1px solid ${color}60`,
+    boxShadow: `0 0 5px ${color}10`
+  });
+
   return (
-    <div className="relative flex overflow-hidden w-full bg-zinc-950/50 border-y border-white/5 py-4">
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-black to-transparent z-10" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-black to-transparent z-10" />
-      <motion.div
-        className="flex gap-12 whitespace-nowrap"
-        animate={{ x: [0, -1000] }}
-        transition={{ repeat: Infinity, duration: speed, ease: "linear" }}
-      >
-        {[...items, ...items, ...items].map((item, i) => {
-          const isObject = typeof item === 'object';
-          const displayText = isObject ? item.name : item;
-          return (
-            <div key={i} className="flex items-center gap-2">
-              {withLogos && isObject ? (
-                <>
-                  <img src={item.logo} alt={item.name} className="w-5 h-5 object-contain" />
-                  <span className="text-sm font-medium text-zinc-400">{displayText}</span>
-                </>
-              ) : (
-                <span className="text-lg font-medium text-zinc-500 flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-purple-900/50" fill="currentColor" />
-                  {displayText}
-                </span>
-              )}
-            </div>
-          );
-        })}
-      </motion.div>
-    </div>
-  )
-}
+    <section className="skills-section section">
+      <div className="hex-app-container">
+        <div className="ambient-glow glow-1"></div>
+        <div className="ambient-glow glow-2"></div>
+        
+        {mounted && (
+        <style>{`
+          /* --- Base & Reset --- */
+          .hex-app-container {
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: #e4e4e7;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+          }
 
-// --- Main Skills Section ---
-export default function SkillsSection() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+          /* --- Ambient Glow Orbs --- */
+          .ambient-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+          }
+          .glow-1 {
+            top: -20%;
+            right: -10%;
+            background: radial-gradient(circle, #8b5cf6, transparent 70%);
+          }
+          .glow-2 {
+            bottom: -20%;
+            left: -10%;
+            background: radial-gradient(circle, #f97316, transparent 70%);
+          }
 
-  // --- Frontend skills with categories and colors ---
-  const frontendSkills = [
-    { name: "HTML5", category: "core" }, { name: "CSS3", category: "core" }, { name: "JavaScript (ES6+)", category: "core" }, { name: "TypeScript", category: "core" },
-    { name: "React", category: "framework" }, { name: "Next.js", category: "framework" }, { name: "Vue.js", category: "framework" }, { name: "Svelte", category: "framework" },
-    { name: "Redux", category: "state" }, { name: "Zustand", category: "state" }, { name: "Recoil", category: "state" },
-    { name: "Tailwind CSS", category: "style" }, { name: "Sass", category: "style" },
-    { name: "Framer Motion", category: "animation" }, { name: "Three.js", category: "animation" }, { name: "GSAP", category: "animation" },
-    { name: "Storybook", category: "ui" }, { name: "Radix UI", category: "ui" }, { name: "Headless UI", category: "ui" }, { name: "Radium", category: "ui" },
-    { name: "Apollo Client", category: "data" }, { name: "React Query", category: "data" }, { name: "SWR", category: "data" },
-    { name: "Jest", category: "test" }, { name: "React Testing Library", category: "test" }, { name: "Cypress", category: "test" }
-  ]
+          /* --- Hexagon Grid Layout --- */
+          .intro-block {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            padding: 20px;
+            z-index: 1;
+          }
 
-  const backendSkills = [
-    "Node.js", "NestJS", "FastAPI", "Flask", "Spring Boot",
-    "PostgreSQL", "MongoDB", "MySQL", "Redis", "GraphQL",
-    "Swagger (OpenAPI)", "cURL", "Postman", "Apache Camel", "Jitsi Meet"
-  ]
+          .centerfold-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 60px;
+            width: 100%;
+          }
 
-  const aiSkills = [
-    "Python", "TensorFlow", "PyTorch", "LangChain",
-    "Ollama", "CrewAI", "Colab", "Jupyter Notebook"
-  ]
+          .hex-master-wrap {
+            position: relative;
+            width: 500px;
+            min-width: 500px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0; 
+          }
 
-  const mobileSkills = [
-    "Flutter", "Dart", "React Native", "Firebase",
-    "Kotlin", "Swift", "iOS/Android"
-  ]
+          .grid-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 75%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+          }
+          
+          .grid-row.middle-row {
+            width: 100%;
+            margin-top: -55px;
+            z-index: 2;
+          }
 
-  const devopsSkills = [
-    { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" },
-    { name: "Kubernetes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" },
-    { name: "Minikube", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg" },
-    { name: "Render", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/renderco_logo-removebg-preview.png" },
-    { name: "AWS", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/aws-color.png" },
-    { name: "GitHub Actions", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" },
-    { name: "Linux", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" },
-    { name: "Vercel", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg" }
-  ]
+          .grid-row.last-row {
+            width: 75%;
+            margin-top: -55px;
+            z-index: 1;
+          }
 
-  const designSkills = [
-    { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg" },
-    { name: "VS Code", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg" },
-    { name: "Storybook", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/storybook/storybook-original.svg" },
-    { name: "Sanity", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sanity/sanity-original.svg" },
-    { name: "Stripe", logo: "https://logo.svgcdn.com/logos/stripe.svg" },
-    { name: "Auth.js", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/logo-sm.webp" },
-    { name: "Clerk", logo: "https://ncmttztvfuwnkyuekrvv.supabase.co/storage/v1/object/public/portfolio/images.jfif" }
-  ]
+          /* --- Hexagon Shape Construction --- */
+          .hex-wrap {
+            position: relative;
+            width: 150px;
+            height: 190px;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+          }
 
-  // --- Map badge colors by category ---
-  const getBadgeColor = (category: string) => {
-    switch(category) {
-      case "core": return "bg-blue-500/6 text-blue-300 border border-blue-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      case "framework": return "bg-indigo-500/6 text-indigo-300 border border-indigo-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      case "state": return "bg-purple-500/6 text-purple-300 border border-purple-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      case "style": return "bg-pink-500/6 text-pink-300 border border-pink-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      case "animation": return "bg-rose-500/10 text-rose-300 border border-rose-500/20 text-[11px] px-2 py-0.5 rounded-full"
-      case "ui": return "bg-cyan-500/6 text-cyan-300 border border-cyan-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      case "data": return "bg-green-500/6 text-green-300 border border-green-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      case "test": return "bg-yellow-500/6 text-yellow-300 border border-yellow-500/10 text-[11px] px-2 py-0.5 rounded-full"
-      default: return "bg-gray-500/6 text-gray-300 border border-gray-500/10 text-[11px] px-2 py-0.5 rounded-full"
-    }
-  }
+          .hex-wrap:hover {
+            transform: scale(1.15);
+            z-index: 30 !important;
+          }
 
-  return (
-    <section id="skills" className="skills-section section text-gray-300 relative overflow-hidden py-24">
-      {/* Background */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
+          /* The Borders */
+          .hex-borders > div {
+            position: absolute;
+            width: 100%;
+            height: 88px;
+            top: 46px;
+            left: 0;
+            border-left: 2px solid #3f3f46; 
+            border-right: 2px solid #3f3f46;
+            border-radius: 8px;
+            z-index: 2;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            background: transparent; 
+          }
+          
+          .hex-wrap:hover .hex-borders > div {
+             border-width: 2px;
+             border-color: currentColor; 
+             box-shadow: 0 0 15px currentColor; 
+             background: #09090b; 
+          }
 
-      <div className="container relative z-10 mx-auto px-6 max-w-7xl">
+          .hex-border-1 { transform: rotate(0deg); }
+          .hex-border-2 { transform: rotate(60deg); }
+          .hex-border-3 { transform: rotate(120deg); }
 
-        {/* Header */}
-        <div className="mb-16 md:text-center max-w-3xl mx-auto">
-          <Badge variant="outline" className="mb-4 border-amber-500/30 text-golden-gradient">Technical Arsenal</Badge>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
-            Engineered for <span className="text-golden-gradient">Performance</span>
-          </h2>
-          <p className="text-zinc-400 text-lg">
-            Modern technologies I use to build scalable, high-performance digital products with clean code and smooth UX.
-          </p>
-        </div>
+          /* The Icon/Label */
+          .label {
+            position: absolute;
+            top: 0; bottom: 0; left: 0; right: 0;
+            margin: auto;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            pointer-events: none;
+            color: #52525b; 
+            transition: color 0.3s, transform 0.3s;
+          }
+          
+          .hex-wrap:hover .label {
+            color: #fff;
+            transform: scale(1.1);
+            text-shadow: 0 0 10px currentColor;
+          }
 
-        {/* Grid */}
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-20">
+          /* --- Animations & Interactions --- */
+          .hover-notify {
+            position: absolute;
+            top: -60px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            font-weight: 300;
+            color: #52525b;
+            animation: float 3s ease-in-out infinite;
+            opacity: 1;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+          }
+          .hover-notify.hidden {
+            opacity: 0;
+            animation: none;
+          }
 
-          {/* Frontend */}
-          <SpotlightCard className="col-span-1 md:col-span-2 lg:col-span-2 row-span-2 bg-gradient-to-br from-zinc-900/80 to-zinc-900/30">
-            <div className="p-8 h-full flex flex-col justify-between">
-              <div>
-                <div className="w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center mb-5 border-2 border-accent/20">
-                  <Layout className="w-5 h-5 text-blue-400" />
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+
+          /* --- Description Panel --- */
+          .code-display {
+            width: 480px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            background: transparent;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            padding: 40px;
+            margin-left: 20px;
+          }
+          
+          .expertise-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            color: #52525b;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+          }
+
+          .code-description {
+            width: 100%;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+          }
+
+          .code-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1;
+            margin-bottom: 20px;
+            font-weight: 700;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+          }
+
+          .desc-text p {
+            font-size: 1.1rem;
+            margin: 0 0 25px 0;
+            color: #d4d4d8;
+            line-height: 1.6;
+            font-weight: 300;
+          }
+          
+          .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+          }
+          
+          .skill-badge {
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+          }
+
+          .slide-in-text {
+            animation: slideRight 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+          }
+          
+          @keyframes slideRight {
+            0% { transform: translateX(-20px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+          }
+          
+          .placeholder-text {
+            color: #3f3f46;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            line-height: 1.6;
+          }
+          
+          .placeholder-cursor {
+             display: inline-block;
+             width: 8px;
+             height: 18px;
+             background: #3f3f46;
+             animation: blink 1s infinite;
+          }
+          
+          @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+          /* --- Responsiveness --- */
+          @media (max-width: 1100px) {
+            .centerfold-wrap {
+              flex-direction: column;
+              gap: 40px;
+            }
+            .code-display {
+              width: 90%;
+              height: auto;
+              align-items: center;
+              text-align: center;
+              padding: 30px;
+              background: transparent;
+              border: none;
+              margin-left: 0;
+              border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .expertise-label {
+               margin-top: 20px;
+            }
+            .code-description {
+              align-items: center;
+            }
+            .skills-grid {
+              justify-content: center;
+            }
+            .hex-master-wrap {
+               transform: scale(0.9);
+            }
+          }
+          
+          @media (max-width: 550px) {
+            .hex-master-wrap {
+               transform: scale(0.65);
+               margin: -40px 0;
+            }
+            .code-title {
+              font-size: 2.5rem;
+            }
+          }
+        `}</style>
+        )}
+
+        {mounted && (
+        <section className="intro">
+          <div className="intro-block">
+            <div className="centerfold-wrap">
+              
+              {/* --- The Hexagon Grid --- */}
+              <div className="hex-master-wrap">
+                <div className={`hover-notify ${!hoverNotifyVisible ? 'hidden' : ''}`}>
+                  Init System...
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-2">Frontend Architecture</h3>
-                <p className="text-zinc-400 mb-6">
-                  Pixel-perfect, modern, and scalable interfaces with advanced tools.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2 justify-start">
-                {frontendSkills.map(skill => (
-                  <Badge key={skill.name} variant="secondary" className={`${getBadgeColor(skill.category)} hover:opacity-80`}>
-                    {skill.name}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </SpotlightCard>
 
-          {/* Backend */}
-          <SpotlightCard className="col-span-1 md:col-span-1 lg:col-span-1 row-span-2">
-            <div className="p-6 h-full flex flex-col">
-              <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center mb-3 border-2 border-accent/20">
-                <Terminal className="w-4 h-4 text-green-400" />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2">Backend & API</h3>
-              <p className="text-zinc-400 text-sm mb-auto">
-                Scalable server logic, databases, and APIs for robust solutions.
-              </p>
-              <ul className="space-y-3 mt-6">
-                {backendSkills.map(skill => (
-                  <li key={skill} className="flex items-center gap-2 text-sm text-zinc-300">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500" />{skill}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </SpotlightCard>
-
-          {/* AI */}
-          <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-1 row-span-1 bg-zinc-900/80">
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center border-2 border-accent/20">
-                  <Cpu className="w-4 h-4 text-purple-400" />
+                {/* Row 1: Top 2 Hexes */}
+                <div className="grid-row">
+                  {rows[1].map((item) => (
+                    <HexagonItem 
+                      key={item.id} 
+                      item={item} 
+                      isActive={activeItem?.id === item.id}
+                      onEnter={handleMouseEnter}
+                      onLeave={handleMouseLeave}
+                    />
+                  ))}
                 </div>
-                <Badge variant="outline" className="text-[10px] border-purple-500/30 text-purple-400">AI & ML</Badge>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-1">AI Engineering</h3>
-              <p className="text-zinc-500 text-xs mb-4">
-                Smart solutions with ML pipelines, NLP, and automation for web and mobile apps.
-              </p>
-              <div className="flex flex-wrap gap-1.5 justify-start">
-                {aiSkills.map(s => <span key={s} className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-zinc-300">{s}</span>)}
-              </div>
-            </div>
-          </SpotlightCard>
 
-          {/* Mobile */}
-          <SpotlightCard className="col-span-1 lg:col-span-1 row-span-1">
-            <div className="p-6">
-              <div className="w-9 h-9 rounded-md bg-accent/10 flex items-center justify-center mb-3 border-2 border-accent/20">
-                <Smartphone className="w-4 h-4 text-orange-400" />
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2">Mobile Apps</h3>
-              <p className="text-zinc-400 text-sm mb-2">Cross-platform apps with Flutter, Dart, and native technologies.</p>
-              <div className="flex flex-wrap gap-2 mt-2 justify-start">
-                {mobileSkills.map(s => (
-                  <Badge key={s} variant="outline" className="text-[11px] border-white/10 text-zinc-400 hover:text-orange-400 transition-colors px-2 py-0.5 rounded-full">{s}</Badge>
-                ))}
-              </div>
-            </div>
-          </SpotlightCard>
+                {/* Row 2: Middle 3 Hexes */}
+                <div className="grid-row middle-row">
+                  {rows[2].map((item) => (
+                    <HexagonItem 
+                      key={item.id} 
+                      item={item} 
+                      isActive={activeItem?.id === item.id}
+                      onEnter={handleMouseEnter}
+                      onLeave={handleMouseLeave}
+                    />
+                  ))}
+                </div>
 
-          {/* DevOps */}
-          <SpotlightCard className="col-span-1 md:col-span-3 lg:col-span-4 row-span-1">
-            <div className="p-6 flex flex-col md:flex-row items-center gap-6">
-              <div className="shrink-0 w-10 h-10 rounded-md bg-accent/10 flex items-center justify-center border-2 border-accent/20">
-                <Container className="w-4 h-4 text-red-400" />
+                {/* Row 3: Bottom 2 Hexes */}
+                <div className="grid-row last-row">
+                  {rows[3].map((item) => (
+                    <HexagonItem 
+                      key={item.id} 
+                      item={item} 
+                      isActive={activeItem?.id === item.id}
+                      onEnter={handleMouseEnter}
+                      onLeave={handleMouseLeave}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-xl font-bold text-white">DevOps & Deployment</h3>
-                <p className="text-zinc-400 text-sm">CI/CD pipelines, containerization, cloud deployment, and essential developer tools.</p>
-              </div>
-              <div className="flex gap-4 flex-wrap justify-start">
-                {devopsSkills.map(tool => (
-                  <div key={tool.name} className="flex flex-col items-center gap-1 group">
-                    <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
-                      <img src={tool.logo} alt={tool.name} className="w-4 h-4" />
+
+              {/* --- The Info Panel --- */}
+              <div className="code-display">
+                <h3 className="expertise-label">System Modules</h3>
+                <div className="code-description">
+                  {activeItem ? (
+                    <div key={activeItem.id} className="slide-in-text">
+                      <div className="code-title" style={{ color: activeItem.color, textShadow: `0 0 20px ${activeItem.color}50` }}>
+                        {activeItem.title}
+                      </div>
+                      <div className="desc-text">
+                        <p>{activeItem.description}</p>
+                        <div className="skills-grid">
+                          {activeItem.skills.map(skill => (
+                            <span 
+                              key={skill} 
+                              className="skill-badge"
+                              style={getBadgeStyle(activeItem.color)}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-[10px] text-zinc-500">{tool.name}</span>
-                  </div>
-                ))}
+                  ) : (
+                    <div className="placeholder-text">
+                      &gt; AWAITING INPUT...<br/>
+                      &gt; HOVER MODULE TO SCAN<span className="placeholder-cursor"></span>
+                    </div>
+                  )}
+                </div>
               </div>
+
             </div>
-          </SpotlightCard>
-
-        </div>
-
-        {/* Marquee */}
-        <div className="mt-24">
-          <p className="text-center text-sm text-zinc-500 mb-6 uppercase tracking-widest">Design & Other Tools</p>
-          <Marquee items={designSkills} withLogos={true} />
-        </div>
-
+          </div>
+        </section>
+        )}
       </div>
     </section>
-  )
+  );
+};
+
+// Sub-component for individual Hexagon
+interface HexProps {
+  item: TechItem;
+  isActive: boolean;
+  onEnter: (item: TechItem) => void;
+  onLeave: () => void;
 }
+
+const HexagonItem: React.FC<HexProps> = ({ item, isActive, onEnter, onLeave }) => {
+  const Icon = item.Icon;
+  
+  return (
+    <div 
+      className="hex-wrap"
+      onMouseEnter={() => onEnter(item)}
+      onMouseLeave={onLeave}
+      style={{ 
+        zIndex: isActive ? 30 : 10,
+        color: item.color 
+      } as React.CSSProperties}
+    >
+      <div className="hex-borders">
+        <div className="hex-border-1"></div>
+        <div className="hex-border-2"></div>
+        <div className="hex-border-3"></div>
+      </div>
+      
+      <div className="label">
+        <Icon size={42} strokeWidth={1.5} />
+      </div>
+    </div>
+  );
+};
+
+export default HexagonIntro;

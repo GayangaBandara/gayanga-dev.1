@@ -816,6 +816,8 @@ main {
   z-index: 25;
 }
 
+
+
 .service-card {
   background: rgba(185, 146, 90, 0.05);
   border: 1px solid rgba(185, 146, 90, 0.2);
@@ -828,7 +830,6 @@ main {
 }
 
 .service-card:hover {
-  transform: translateY(-10px);
   border-color: rgba(185, 146, 90, 0.4);
   box-shadow: 0 20px 40px rgba(185, 146, 90, 0.1);
 }

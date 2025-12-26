@@ -50,6 +50,7 @@ const servicesData = [
 export default function ServicesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [mounted, setMounted] = React.useState(false);
 
   // Framer Motion Scroll Hooks
   const { scrollYProgress } = useScroll({
@@ -61,9 +62,14 @@ export default function ServicesSection() {
   const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]); // Background text moves opposite
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
 
+  // Set mounted state
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // 3D Background Effect (optimized)
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!mounted || !canvasRef.current) return;
 
     const canvas = canvasRef.current;
     const scene = new THREE.Scene();
@@ -169,10 +175,12 @@ export default function ServicesSection() {
       else stopAnimation();
     }, { root: null, threshold: 0 });
 
-    io.observe(canvas);
+    if (canvasRef.current) {
+      io.observe(canvasRef.current);
+    }
 
     const onVisibilityChange = () => {
-      if (document.visibilityState === "visible") startAnimation();
+      if (typeof document !== "undefined" && document.visibilityState === "visible") startAnimation();
       else stopAnimation();
     };
     document.addEventListener("visibilitychange", onVisibilityChange);
@@ -199,7 +207,7 @@ export default function ServicesSection() {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     // Start animation if visible initially
-    if (document.visibilityState === "visible") startAnimation();
+    if (typeof document !== "undefined" && document.visibilityState === "visible") startAnimation();
 
     // Cleanup
     return () => {
@@ -221,7 +229,7 @@ export default function ServicesSection() {
 
       renderer.dispose();
     };
-  }, []);
+  }, [mounted]);
 
   return (
     <section
@@ -230,9 +238,11 @@ export default function ServicesSection() {
       className="services-section relative min-h-screen py-24 overflow-hidden"
     >
       {/* 3D Background Layer */}
+      {mounted && (
       <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
         <canvas ref={canvasRef} className="w-full h-full" />
       </div>
+      )}
 
       {/* Decorative Gradients */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
@@ -266,8 +276,8 @@ export default function ServicesSection() {
           </div>
 
           {/* Scrolling Cards Section */}
-          <div className="lg:w-2/3 grid gap-6">
-            {servicesData.map((service, index) => {
+          <div className="lg:w-2/3 grid gap-6 items-start">
+              {servicesData.map((service, index) => {
               const Icon = service.icon;
               const accentBg = service.color.replace("text-", "bg-") + "/10";
               return (
@@ -277,8 +287,9 @@ export default function ServicesSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="w-full"
                 >
-                  <Card className="group relative overflow-hidden bg-white/5 border-2 border-accent/20 backdrop-blur-sm hover:bg-white/10 hover:border-accent/40 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-lg hover:shadow-accent/20">
+                  <Card className="group relative overflow-hidden bg-white/5 border-2 border-accent/20 backdrop-blur-sm hover:bg-white/10 hover:border-accent/40 transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 w-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/15 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -330,3 +341,4 @@ export default function ServicesSection() {
     </section>
   );
 }
+
