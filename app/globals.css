@@ -1314,3 +1314,336 @@ main {
 .bg-golden-gradient {
   background: linear-gradient(135deg, #f7edba 0%, #fcf59b 25%, #f8e2a6 50%, #b9925a 75%, #fdefa0 100%);
 }
+
+/* Social Icons Styles */
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social-icons a {
+  display: inline-flex;
+  width: 45px;
+  height: 45px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-icons a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.social-icons a:nth-child(1) {
+  background: rgba(255, 255, 255, 0.05);
+  background-image: linear-gradient(#ebd8a6 50%, #333 50%);
+  background-size: 100% 200%;
+  background-position: 0% 5%;
+  color: #333;
+}
+
+.social-icons a:nth-child(2) {
+  background: rgba(255, 255, 255, 0.05);
+  background-image: linear-gradient(#ebd8a6 50%, #0077b5 50%);
+  background-size: 100% 200%;
+  background-position: 0% 5%;
+  color: #0077b5;
+}
+
+.social-icons a:nth-child(3) {
+  background: rgba(255, 255, 255, 0.05);
+  background-image: linear-gradient(#ebd8a6 50%, #ea4335 50%);
+  background-size: 100% 200%;
+  background-position: 0% 5%;
+  color: #ea4335;
+}
+
+.social-icons a:hover {
+  background-position: 0% 100%;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.social-icons a:nth-child(1):hover {
+  background-image: linear-gradient(#333 50%, #333 50%);
+}
+
+.social-icons a:nth-child(2):hover {
+  background-image: linear-gradient(#0077b5 50%, #0077b5 50%);
+}
+
+.social-icons a:nth-child(3):hover {
+  background-image: linear-gradient(#ea4335 50%, #ea4335 50%);
+}
+
+/* Download Button Styles */
+.button {
+  --background: #275efe;
+  --rectangle: #184fee;
+  --success: #4BC793;
+  --text: #fff;
+  --arrow: #fff;
+  --checkmark: #fff;
+  --shadow: rgba(10, 22, 50, .24);
+  display: flex;
+  overflow: hidden;
+  text-decoration: none;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  background: var(--background);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px -1px var(--shadow);
+  transition: transform .2s ease, box-shadow .2s ease;
+  position: relative;
+  min-height: 60px;
+  margin: 8px 0;
+}
+
+.button:active {
+  transform: scale(.95);
+  box-shadow: 0 1px 4px -1px var(--shadow);
+}
+
+.button ul {
+  margin: 0;
+  padding: 16px 40px;
+  list-style: none;
+  text-align: center;
+  position: relative;
+  backface-visibility: hidden;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 28px;
+  color: var(--text);
+}
+
+.button ul li {
+  transition: transform 0.3s ease;
+}
+
+.button ul li:not(:first-child) {
+  top: 16px;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+
+.button ul li:nth-child(2) {
+  top: 76px;
+}
+
+.button ul li:nth-child(3) {
+  top: 136px;
+}
+
+.button > div {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: var(--rectangle);
+}
+
+.button > div:before,
+.button > div:after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+
+.button > div:before {
+  border-radius: 1px;
+  width: 2px;
+  top: 50%;
+  left: 50%;
+  height: 17px;
+  margin: -9px 0 0 -1px;
+  background: var(--arrow);
+}
+
+.button > div:after {
+  width: 60px;
+  height: 60px;
+  transform-origin: 50% 0;
+  border-radius: 0 0 80% 80%;
+  background: var(--success);
+  top: 0;
+  left: 0;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.button svg {
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 50%;
+  top: 50%;
+  margin: -9px 0 0 -10px;
+  fill: none;
+  z-index: 1;
+  stroke-width: 2px;
+  stroke: var(--arrow);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Loading animation states */
+.button.loading ul {
+  animation: text calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+}
+
+.button.loading > div:before {
+  animation: line calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+}
+
+.button.loading > div:after {
+  animation: background calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+}
+
+.button.loading svg {
+  animation: svg calc(var(--duration) * 1ms) linear forwards calc(var(--duration) * .065ms);
+}
+
+@keyframes text {
+  10%,
+  85% {
+    transform: translateY(-100%);
+  }
+  95%,
+  100% {
+    transform: translateY(-200%);
+  }
+}
+
+@keyframes line {
+  5%,
+  10% {
+    transform: translateY(-30px);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  65% {
+    transform: translateY(0);
+  }
+  75%,
+  100% {
+    transform: translateY(30px);
+  }
+}
+
+@keyframes svg {
+  0%,
+  20% {
+    stroke-dasharray: 0;
+    stroke-dashoffset: 0;
+  }
+  21%,
+  89% {
+    stroke-dasharray: 26px;
+    stroke-dashoffset: 26px;
+    stroke-width: 3px;
+    margin: -10px 0 0 -10px;
+    stroke: var(--checkmark);
+  }
+  100% {
+    stroke-dasharray: 26px;
+    stroke-dashoffset: 0;
+    margin: -10px 0 0 -10px;
+    stroke: var(--checkmark);
+  }
+}
+
+@keyframes background {
+  10% {
+    transform: scaleY(0);
+  }
+  40% {
+    transform: scaleY(.15);
+  }
+  65% {
+    transform: scaleY(.5);
+    border-radius: 0 0 50% 50%;
+  }
+  75% {
+    border-radius: 0 0 50% 50%;
+  }
+  90%,
+  100% {
+    border-radius: 0;
+  }
+  75%,
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* Hover effects for better UX */
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px -2px var(--shadow);
+}
+
+/* Preview Button Styles */
+.preview-button {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  backdrop-filter: blur(10px);
+}
+
+.preview-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Small Download Button for Dialog */
+.download-button-small {
+  background: #275efe;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  box-shadow: 0 2px 8px rgba(10, 22, 50, 0.24);
+}
+
+.download-button-small:hover {
+  background: #1e4edd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 22, 50, 0.3);
+}
+
+.download-button-small:active {
+  transform: scale(0.95);
+}

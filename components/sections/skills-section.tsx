@@ -199,7 +199,7 @@ export default function SkillsSection() {
                   Pixel-perfect, modern, and scalable interfaces with advanced tools.
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 justify-start">
                 {frontendSkills.map(skill => (
                   <Badge key={skill.name} variant="secondary" className={`${getBadgeColor(skill.category)} hover:opacity-80`}>
                     {skill.name}
@@ -242,7 +242,7 @@ export default function SkillsSection() {
               <p className="text-zinc-500 text-xs mb-4">
                 Smart solutions with ML pipelines, NLP, and automation for web and mobile apps.
               </p>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-1.5 justify-start">
                 {aiSkills.map(s => <span key={s} className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-zinc-300">{s}</span>)}
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function SkillsSection() {
               </div>
               <h3 className="text-lg font-bold text-white mb-2">Mobile Apps</h3>
               <p className="text-zinc-400 text-sm mb-2">Cross-platform apps with Flutter, Dart, and native technologies.</p>
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-wrap gap-2 mt-2 justify-start">
                 {mobileSkills.map(s => (
                   <Badge key={s} variant="outline" className="text-[11px] border-white/10 text-zinc-400 hover:text-orange-400 transition-colors px-2 py-0.5 rounded-full">{s}</Badge>
                 ))}
@@ -274,7 +274,7 @@ export default function SkillsSection() {
                 <h3 className="text-xl font-bold text-white">DevOps & Deployment</h3>
                 <p className="text-zinc-400 text-sm">CI/CD pipelines, containerization, cloud deployment, and essential developer tools.</p>
               </div>
-              <div className="flex gap-4 flex-wrap justify-center md:justify-start">
+              <div className="flex gap-4 flex-wrap justify-start">
                 {devopsSkills.map(tool => (
                   <div key={tool.name} className="flex flex-col items-center gap-1 group">
                     <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-red-500/20 transition-colors">
