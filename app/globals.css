@@ -1388,13 +1388,13 @@ main {
 
 /* Download Button Styles */
 .button {
-  --background: #220d36;
-  --rectangle: #341750;
+  --background: linear-gradient(to right, #7c3aed, #4f46e5);
+  --rectangle: #4338ca;
   --success: #6e6426;
   --text: #fff;
   --arrow: #fff;
   --checkmark: #fff;
-  --shadow: rgba(10, 22, 50, .24);
+  --shadow: rgba(124, 58, 237, 0.3);
   display: flex;
   overflow: hidden;
   text-decoration: none;

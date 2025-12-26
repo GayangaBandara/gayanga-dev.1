@@ -533,7 +533,7 @@ const HexagonIntro: React.FC = () => {
 
               {/* --- The Info Panel --- */}
               <div className="code-display">
-                <h3 className="expertise-label">System Modules</h3>
+                <h3 className="expertise-label">Technical Arsenal</h3>
                 <div className="code-description">
                   {activeItem ? (
                     <div key={activeItem.id} className="slide-in-text">
