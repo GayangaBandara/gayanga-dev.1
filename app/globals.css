@@ -1112,23 +1112,115 @@ main {
 }
 
 /* ===== RESPONSIVE STYLES ===== */
-@media (max-width: 1200px) {
+/* Common breakpoints based on 2025 screen resolution data */
+
+/* Large Desktop (2560px+) */
+@media (min-width: 2560px) {
   .hero-name {
-    font-size: clamp(6rem, 12vw, 16rem);
+    font-size: clamp(12rem, 20vw, 28rem);
+  }
+
+  .hero-image-container {
+    width: 45vw;
+  }
+
+  .container {
+    max-width: 1400px;
+  }
+
+  .hero-section .hero-content {
+    max-width: 1600px;
+  }
+}
+
+/* Desktop Large (1920px - 2559px) */
+@media (min-width: 1920px) and (max-width: 2559px) {
+  .hero-name {
+    font-size: clamp(10rem, 16vw, 24rem);
+  }
+
+  .hero-image-container {
+    width: 48vw;
+  }
+
+  .container {
+    max-width: 1300px;
+  }
+}
+
+/* Desktop Standard (1536px - 1919px) */
+@media (min-width: 1536px) and (max-width: 1919px) {
+  .hero-name {
+    font-size: clamp(8rem, 14vw, 20rem);
+  }
+
+  .hero-image-container {
+    width: 50vw;
+  }
+
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Desktop Small (1440px - 1535px) */
+@media (min-width: 1440px) and (max-width: 1535px) {
+  .hero-name {
+    font-size: clamp(7rem, 12vw, 18rem);
+  }
+
+  .hero-image-container {
+    width: 52vw;
+  }
+
+  .container {
+    max-width: 1100px;
+  }
+}
+
+/* Laptop (1280px - 1439px) */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .hero-name {
+    font-size: clamp(6rem, 11vw, 16rem);
   }
 
   .hero-image-container {
     width: 55vw;
   }
+
+  .container {
+    max-width: 1000px;
+  }
+
+  .nav-links {
+    gap: 2rem;
+  }
+
+  .nav-link {
+    font-size: 1.3rem;
+  }
 }
 
-@media (max-width: 1024px) {
+/* Small Desktop (1024px - 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
   .hero-name {
     font-size: clamp(5rem, 10vw, 14rem);
   }
 
   .hero-image-container {
     width: 60vw;
+  }
+
+  .container {
+    max-width: 900px;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+  }
+
+  .nav-link {
+    font-size: 1.2rem;
   }
 
   .bandara-text {
@@ -1154,7 +1246,8 @@ main {
   }
 }
 
-@media (max-width: 768px) {
+/* Tablet Landscape (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
   .navbar {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -1226,9 +1319,44 @@ main {
   .decorative-border {
     display: none;
   }
+
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }
 
-@media (max-width: 480px) {
+/* Tablet Portrait (601px - 767px) */
+@media (min-width: 601px) and (max-width: 767px) {
+  .hero-name {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+  }
+
+  .hero-image-container {
+    width: 75vw;
+    margin-top: 200px;
+  }
+
+  .hero-subtitle {
+    bottom: 5rem;
+  }
+
+  .hero-subtitle p {
+    font-size: 0.8rem;
+  }
+
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .navbar {
+    padding: 1rem;
+  }
+}
+
+/* Large Mobile (480px - 600px) */
+@media (min-width: 480px) and (max-width: 600px) {
   .nav-links {
     width: 80%;
     gap: 1.5rem;
@@ -1247,25 +1375,16 @@ main {
   }
 
   .hero-subtitle {
-    bottom: 5rem;
+    bottom: 4rem;
   }
 
   .hero-subtitle p {
     font-size: 0.75rem;
   }
-}
 
-@media (max-height: 500px) and (orientation: landscape) {
-  .hero-name {
-    font-size: clamp(3rem, 8vh, 6rem);
-  }
-
-  .hero-image-container {
-    width: 40vw;
-  }
-
-  .hero-subtitle {
-    bottom: 2rem;
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 
   .scroll-indicator {
@@ -1273,6 +1392,83 @@ main {
   }
 }
 
+/* Small Mobile (320px - 479px) */
+@media (max-width: 479px) {
+  .nav-links {
+    width: 90%;
+    gap: 1rem;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+  }
+
+  .hero-name {
+    font-size: clamp(2.5rem, 18vw, 6rem);
+    line-height: 0.9;
+  }
+
+  .hero-image-container {
+    width: 85vw;
+    margin-top: 180px;
+  }
+
+  .hero-subtitle {
+    bottom: 3rem;
+  }
+
+  .hero-subtitle p {
+    font-size: 0.7rem;
+  }
+
+  .bandara-text {
+    font-size: 1rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .navbar {
+    padding: 0.75rem;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-name {
+    font-size: clamp(3rem, 8vh, 6rem);
+  }
+
+  .hero-image-container {
+    width: 40vw;
+    margin-top: 50px;
+  }
+
+  .hero-subtitle {
+    bottom: 1rem;
+  }
+
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .hero-image-container {
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4));
+  }
+}
+
+/* Reduced Motion Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .nav-link,
   .nav-logo,
@@ -1287,6 +1483,17 @@ main {
     transition: none;
     will-change: auto;
   }
+
+  .floating-element {
+    animation: none;
+  }
+}
+
+/* Dark mode optimizations for better contrast */
+@media (prefers-color-scheme: dark) {
+  .hero-section {
+    background: linear-gradient(135deg, #00080f 0%, #011d29 25%, #011a25 50%, #000a11 100%);
+  }
 }
 
 /* Ensure all main sections start below the navbar and smoothly scroll into view with an offset */
@@ -1296,6 +1503,121 @@ main {
 .skills-section,
 .contact-section {
   scroll-margin-top: var(--navbar-height);
+}
+
+/* Enhanced Touch Targets for Mobile */
+@media (max-width: 768px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 48px;
+    touch-action: manipulation;
+  }
+}
+
+/* Smooth scrolling with performance optimization */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Performance optimizations for animations */
+.will-change-transform {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .will-change-transform {
+    will-change: auto;
+  }
+}
+
+/* Focus styles for accessibility */
+.focus\:ring-2:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.5);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bg-white\/5 {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Print styles */
+@media print {
+  .hero-section,
+  .navbar,
+  .mobile-menu-button,
+  .scroll-indicator {
+    display: none !important;
+  }
+  
+  .about-section,
+  .projects-section,
+  .services-section,
+  .skills-section,
+  .contact-section {
+    background: white !important;
+    color: black !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* Contact Form Responsive Enhancements */
+.contact-section .min-h-\[150px\] {
+  min-height: 120px;
+}
+
+@media (min-width: 640px) {
+  .contact-section .min-h-\[150px\] {
+    min-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section .space-y-6 > * + * {
+    margin-top: 1rem;
+  }
+  
+  .contact-section .grid.sm\:grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .contact-section .w-full {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .contact-section .text-3xl {
+    font-size: 1.75rem;
+  }
+  
+  .contact-section .p-6 {
+    padding: 1rem;
+  }
 }
 
 /* Add this to the end of your globals.css */

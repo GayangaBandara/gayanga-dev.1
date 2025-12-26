@@ -97,13 +97,13 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="contact-section text-gray-300 relative overflow-hidden pt-20 lg:pt-24 pb-0 min-h-screen flex flex-col justify-center">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-3xl"></div>
+    <section id="contact" className="contact-section text-gray-300 relative overflow-hidden pt-16 sm:pt-20 lg:pt-24 pb-0 min-h-screen flex flex-col justify-center">
+      <div className="absolute top-0 right-0 w-64 sm:w-80 lg:w-96 h-64 sm:h-80 lg:h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute bottom-0 left-0 w-64 sm:w-80 lg:w-96 h-64 sm:h-80 lg:h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 sm:w-20 lg:w-24 h-16 sm:h-20 lg:h-24 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-3xl"></div>
 
-      <div className="container relative z-10 px-6 mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+      <div className="container relative z-10 px-4 sm:px-6 mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-24 items-start">
           
           {/* Left Column: Contact Info & CTA */}
           <motion.div
@@ -112,10 +112,10 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               Let's build something <span className="text-golden-gradient">extraordinary</span>.
             </h2>
-            <p className="text-gray-400 text-lg mb-12 leading-relaxed">
+            <p className="text-gray-400 text-base sm:text-lg mb-8 sm:mb-12 leading-relaxed">
               Whether you have a project in mind, need a consultation, or just want to say hi, I'm always open to discussing new ideas and opportunities.
             </p>
 
@@ -183,7 +183,7 @@ export default function ContactSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <Card className="bg-zinc-900/50 border-white/10 backdrop-blur-sm overflow-hidden shadow-2xl shadow-purple-900/10">
-              <CardContent className="p-8">
+              <CardContent className="p-6 sm:p-8">
                 <AnimatePresence mode="wait">
                   {isSuccess ? (
                     <motion.div
@@ -284,7 +284,7 @@ export default function ContactSection() {
                           <Button 
                             type="submit" 
                             disabled={isSubmitting}
-                            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-6 shadow-lg shadow-purple-900/20 transition-all duration-300 hover:scale-[1.01]"
+                            className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium py-4 sm:py-6 shadow-lg shadow-purple-900/20 transition-all duration-300 hover:scale-[1.01]"
                           >
                             {isSubmitting ? (
                               <>

@@ -597,8 +597,8 @@ export default function ProjectsSection(): React.ReactElement {
           </motion.p>
         </div>
 
-        {/* Projects Grid: show 2x2 on larger screens (first 4 projects) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {/* Enhanced Responsive Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-6 sm:gap-8">
           {projects.slice(0, 4).map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}

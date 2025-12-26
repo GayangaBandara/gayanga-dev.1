@@ -119,6 +119,148 @@ const About: React.FC = () => {
   }, []);
   return (
     <section id="about" className="about-section section text-gray-300 relative overflow-hidden">
+      <style>{`
+        /* Enhanced responsive design for all common screen resolutions */
+        .about-section .blob-container {
+          width: 320px;
+          height: 320px;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          border-radius: 9999px;
+          box-shadow: 0 18px 40px rgba(2,6,23,0.45);
+          transition: transform 240ms ease, width 240ms ease, height 240ms ease;
+        }
+
+        .about-section .blob-container:focus { outline: 2px dashed rgba(255,255,255,0.06); }
+
+        /* Headline scaling for all screen sizes */
+        .about-section span.text-8xl {
+          font-size: clamp(3.2rem, 8.8vw, 6rem);
+          line-height: 0.9;
+        }
+        .about-section h2 {
+          font-size: clamp(1.8rem, 4.6vw, 3.5rem);
+        }
+
+        /* Large Desktop (2560px+) */
+        @media (min-width: 2560px) {
+          .about-section .blob-container { width: 520px; height: 520px; }
+          .about-section .absolute.-top-6.-right-6 { top: -28px; right: -28px; padding: 0.5rem 1rem; font-size: 0.9rem; }
+          .about-section .absolute.-bottom-4.-left-6 { bottom: -24px; left: -24px; padding: 0.5rem 1rem; font-size: 0.9rem; }
+        }
+
+        /* Desktop Large (1920px - 2559px) */
+        @media (min-width: 1920px) and (max-width: 2559px) {
+          .about-section .blob-container { width: 480px; height: 480px; }
+          .about-section .max-w-4xl { max-width: 1400px; }
+        }
+
+        /* Desktop Standard (1536px - 1919px) */
+        @media (min-width: 1536px) and (max-width: 1919px) {
+          .about-section .blob-container { width: 420px; height: 420px; }
+          .about-section .max-w-4xl { max-width: 1200px; }
+        }
+
+        /* Desktop Small (1440px - 1535px) */
+        @media (min-width: 1440px) and (max-width: 1535px) {
+          .about-section .blob-container { width: 380px; height: 380px; }
+          .about-section .absolute.-top-6.-right-6 { top: -20px; right: -20px; }
+          .about-section .absolute.-bottom-4.-left-6 { bottom: -16px; left: -16px; }
+        }
+
+        /* Laptop (1280px - 1439px) */
+        @media (min-width: 1280px) and (max-width: 1439px) {
+          .about-section .blob-container { width: 360px; height: 360px; }
+          .about-section .flex.flex-col.lg\:flex-row { gap: 3rem; }
+        }
+
+        /* Small Desktop (1024px - 1279px) */
+        @media (min-width: 1024px) and (max-width: 1279px) {
+          .about-section .blob-container { width: 320px; height: 320px; }
+          .about-section .absolute.-top-6.-right-6 { top: -16px; right: -16px; padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+          .about-section .absolute.-bottom-4.-left-6 { bottom: -12px; left: -16px; padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+          .about-section .max-w-6xl { max-width: 1000px; }
+        }
+
+        /* Tablet Landscape (768px - 1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .about-section .blob-container { width: 300px; height: 300px; }
+          .about-section .absolute.-top-6.-right-6 { top: -12px; right: -12px; padding: 0.35rem 0.6rem; font-size: 0.75rem; }
+          .about-section .absolute.-bottom-4.-left-6 { bottom: -10px; left: -12px; padding: 0.35rem 0.6rem; font-size: 0.75rem; }
+          .about-section .flex.flex-col.lg\:flex-row { flex-direction: column; gap: 2.5rem; align-items: center; }
+          .about-section .max-w-6xl { max-width: 800px; }
+          .about-section .text-3xl { font-size: 2.2rem; }
+        }
+
+        /* Tablet Portrait (601px - 767px) */
+        @media (min-width: 601px) and (max-width: 767px) {
+          .about-section .blob-container { width: 280px; height: 280px; }
+          .about-section .flex.flex-col.items-center { padding: 20px 16px; }
+          .about-section .text-lg { font-size: 1rem; }
+          .about-section .max-w-6xl { max-width: 700px; padding: 0 1.5rem; }
+        }
+
+        /* Large Mobile (480px - 600px) */
+        @media (min-width: 480px) and (max-width: 600px) {
+          .about-section .blob-container { width: 260px; height: 260px; }
+          .about-section .absolute.-top-6.-right-6 { top: -8px; right: -8px; font-size: 0.7rem; }
+          .about-section .absolute.-bottom-4.-left-6 { bottom: -8px; left: -8px; font-size: 0.7rem; }
+          .about-section .max-w-4xl { padding-left: 12px; padding-right: 12px; }
+          .about-section .mt-8 { margin-top: 1.5rem; }
+          .about-section .text-3xl { font-size: 1.9rem; }
+          .about-section .max-w-xl { max-width: 500px; }
+        }
+
+        /* Small Mobile (320px - 479px) */
+        @media (max-width: 479px) {
+          .about-section .blob-container { width: 220px; height: 220px; }
+          .about-section .absolute.-top-6.-right-6 { top: -6px; right: -6px; font-size: 0.65rem; padding: 0.25rem 0.5rem; }
+          .about-section .absolute.-bottom-4.-left-6 { bottom: -6px; left: -6px; font-size: 0.65rem; padding: 0.25rem 0.5rem; }
+          .about-section .max-w-4xl { padding-left: 8px; padding-right: 8px; }
+          .about-section .mt-8 { margin-top: 1.25rem; }
+          .about-section .text-3xl { font-size: 1.6rem; }
+          .about-section .text-lg { font-size: 0.95rem; }
+          .about-section .flex-wrap.gap-4 { gap: 8px; }
+          .about-section .max-w-xl { max-width: 400px; }
+          .about-section .gap-12 { gap: 1.5rem; }
+        }
+
+        /* Landscape Mobile Optimization */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .about-section .blob-container { width: 200px; height: 200px; }
+          .about-section .flex.flex-col.lg\:flex-row { flex-direction: row; gap: 2rem; }
+          .about-section .max-w-6xl { max-width: 1200px; }
+        }
+
+        /* iframe modal sizing improvements */
+        .about-section iframe {
+          min-height: 50vh;
+          max-height: 90vh;
+          border-radius: 6px;
+        }
+
+        /* social icons spacing and hit area for touch */
+        .about-section .social-icons a {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border-radius: 8px;
+          background: rgba(255,255,255,0.02);
+        }
+
+        /* Ensure buttons / labels do not reflow badly */
+        .about-section .flex-wrap.gap-4 { gap: clamp(8px, 2.2vw, 16px); }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          .about-section .blob-container {
+            box-shadow: 0 20px 50px rgba(2,6,23,0.5);
+          }
+        }
+      `}</style>
       <div className="absolute top-0 right-0 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-600/5 rounded-full blur-3xl -z-10"></div>
       <div className="flex flex-col items-center justify-center py-8 px-4">
@@ -222,7 +364,7 @@ const About: React.FC = () => {
                target="_blank"
                rel="noopener noreferrer"
                download
-               className="button"
+               className="button min-h-[48px] touch-manipulation"
                data-file="/pdf/Gayanga Bandara curriculum vitae.pdf"
             >
               <ul>

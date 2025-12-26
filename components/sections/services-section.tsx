@@ -248,8 +248,8 @@ export default function ServicesSection() {
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-500/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="container relative z-10 px-6 mx-auto max-w-7xl">
-        <div className="flex flex-col lg:flex-row gap-16">
+      <div className="container relative z-10 px-4 sm:px-6 mx-auto max-w-7xl">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
           {/* Sticky Header Section */}
           <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
             <motion.div style={{ y: y1, opacity }}>
