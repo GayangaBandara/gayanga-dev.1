@@ -151,6 +151,14 @@ const HexagonIntro: React.FC = () => {
         
         {mounted && (
         <style>{`
+          /* --- Variables & Responsive sizing --- */
+          :root {
+            --container-max: 1400px;
+            --hex-size: clamp(88px, 10.5vw, 160px);
+            --hex-gap: clamp(8px, 1.6vw, 20px);
+            --panel-width: clamp(260px, 36vw, 520px);
+          }
+
           /* --- Base & Reset --- */
           .hex-app-container {
             font-family: 'Inter', sans-serif;
@@ -158,18 +166,20 @@ const HexagonIntro: React.FC = () => {
             color: #e4e4e7;
             width: 100%;
             min-height: 100vh;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            overflow: visible;
           }
 
-          /* --- Ambient Glow Orbs --- */
+          /* --- Ambient Glow Orbs (responsive) --- */
           .ambient-glow {
             position: absolute;
-            width: 600px;
-            height: 600px;
+            width: clamp(240px, 40vw, 800px);
+            height: clamp(240px, 40vw, 800px);
             border-radius: 50%;
             filter: blur(100px);
             opacity: 0.15;
@@ -177,110 +187,120 @@ const HexagonIntro: React.FC = () => {
             z-index: 0;
           }
           .glow-1 {
-            top: -20%;
-            right: -10%;
+            top: -18%;
+            right: -8%;
             background: radial-gradient(circle, #8b5cf6, transparent 70%);
           }
           .glow-2 {
-            bottom: -20%;
-            left: -10%;
+            bottom: -18%;
+            left: -8%;
             background: radial-gradient(circle, #f97316, transparent 70%);
           }
 
-          /* --- Hexagon Grid Layout --- */
+          /* --- Layout --- */
           .intro-block {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            max-width: 1400px;
-            height: 100%;
+            max-width: var(--container-max);
             padding: 20px;
             z-index: 1;
+            box-sizing: border-box;
           }
 
           .centerfold-wrap {
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 60px;
+            align-items: flex-start;
+            gap: var(--hex-gap);
             width: 100%;
+            flex-wrap: wrap;
           }
 
           .hex-master-wrap {
             position: relative;
-            width: 500px;
-            min-width: 500px;
+            width: min(540px, 48%);
             height: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px 0; 
+            padding: 20px 0;
+            box-sizing: border-box;
           }
 
           .grid-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 75%;
+            width: 100%;
             margin: 0 auto;
             position: relative;
             z-index: 1;
+            gap: calc(var(--hex-gap));
           }
-          
+
           .grid-row.middle-row {
-            width: 100%;
-            margin-top: -55px;
+            margin-top: -45px;
             z-index: 2;
           }
 
           .grid-row.last-row {
-            width: 75%;
-            margin-top: -55px;
+            margin-top: -45px;
             z-index: 1;
           }
 
-          /* --- Hexagon Shape Construction --- */
+          /* --- Hexagon Shape Construction (responsive) --- */
           .hex-wrap {
             position: relative;
-            width: 150px;
-            height: 190px;
-            margin: 0 4px;
+            width: var(--hex-size);
+            height: calc(var(--hex-size) * 1.15);
+            margin: 0 6px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s;
             z-index: 10;
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
 
-          .hex-wrap:hover {
-            transform: scale(1.15);
+          .hex-wrap:hover,
+          .hex-wrap:focus {
+            transform: scale(1.08);
             z-index: 30 !important;
+          }
+
+          .hex-wrap:focus-visible {
+            outline: 3px solid currentColor;
+            outline-offset: 8px;
+            border-radius: 8px;
           }
 
           /* The Borders */
           .hex-borders > div {
             position: absolute;
             width: 100%;
-            height: 88px;
-            top: 46px;
+            height: calc(var(--hex-size) * 0.55);
+            top: calc(var(--hex-size) * 0.29);
             left: 0;
-            border-left: 2px solid #3f3f46; 
+            border-left: 2px solid #3f3f46;
             border-right: 2px solid #3f3f46;
             border-radius: 8px;
             z-index: 2;
             pointer-events: none;
             transition: all 0.3s ease;
-            background: transparent; 
+            background: transparent;
           }
-          
+
           .hex-wrap:hover .hex-borders > div {
-             border-width: 2px;
-             border-color: currentColor; 
-             box-shadow: 0 0 15px currentColor; 
-             background: #09090b; 
+            border-width: 2px;
+            border-color: currentColor;
+            box-shadow: 0 0 18px currentColor;
+            background: linear-gradient(180deg, rgba(9,9,11,0.5), rgba(9,9,11,0.85));
           }
 
           .hex-border-1 { transform: rotate(0deg); }
@@ -292,53 +312,51 @@ const HexagonIntro: React.FC = () => {
             position: absolute;
             top: 0; bottom: 0; left: 0; right: 0;
             margin: auto;
-            width: 100px;
-            height: 100px;
+            width: calc(var(--hex-size) * 0.62);
+            height: calc(var(--hex-size) * 0.62);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 3;
             pointer-events: none;
-            color: #52525b; 
+            color: #8b8b92;
             transition: color 0.3s, transform 0.3s;
           }
-          
-          .hex-wrap:hover .label {
+
+          .hex-wrap:hover .label,
+          .hex-wrap:focus .label {
             color: #fff;
-            transform: scale(1.1);
+            transform: scale(1.08);
             text-shadow: 0 0 10px currentColor;
           }
 
-          /* --- Animations & Interactions --- */
+          /* --- Interactions & Notifications --- */
           .hover-notify {
             position: absolute;
-            top: -60px;
+            top: -48px;
             width: 100%;
             text-align: center;
             font-family: 'Oswald', sans-serif;
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 300;
-            color: #52525b;
+            color: #8b8b92;
             animation: float 3s ease-in-out infinite;
             opacity: 1;
             transition: opacity 0.5s;
             pointer-events: none;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
           }
-          .hover-notify.hidden {
-            opacity: 0;
-            animation: none;
-          }
+          .hover-notify.hidden { opacity: 0; animation: none; }
 
           @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
           }
 
           /* --- Description Panel --- */
           .code-display {
-            width: 500px;
+            width: var(--panel-width);
             height: auto;
             display: flex;
             flex-direction: column;
@@ -346,25 +364,26 @@ const HexagonIntro: React.FC = () => {
             align-items: flex-start;
             position: relative;
             background: transparent;
-            border-left: 1px solid rgba(255,255,255,0.1);
-            padding: 40px;
-            margin-left: 20px;
+            border-left: 1px solid rgba(255,255,255,0.06);
+            padding: 28px;
+            margin-left: 24px;
             overflow: hidden;
+            box-sizing: border-box;
           }
-          
+
           .expertise-label {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            color: #52525b;
+            font-size: 1rem;
+            color: #8b8b92;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
           }
 
           .code-description {
             width: 100%;
-            min-height: 200px;
+            min-height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -372,110 +391,96 @@ const HexagonIntro: React.FC = () => {
 
           .code-title {
             font-family: 'Oswald', sans-serif;
-            font-size: 2.8rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
+            font-size: clamp(1.5rem, 3.4vw, 2.8rem);
+            line-height: 1.05;
+            margin-bottom: 16px;
             font-weight: 700;
             transition: color 0.3s;
             text-transform: uppercase;
             letter-spacing: -1px;
             width: 100%;
-            max-width: 450px;
+            max-width: 520px;
             word-wrap: break-word;
             overflow-wrap: break-word;
           }
 
           .desc-text p {
-            font-size: 1.1rem;
-            margin: 0 0 25px 0;
+            font-size: 1rem;
+            margin: 0 0 18px 0;
             color: #d4d4d8;
             line-height: 1.6;
             font-weight: 300;
           }
-          
+
           .skills-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
-            max-width: 450px;
-            overflow: hidden;
+            max-width: 520px;
+            overflow: visible;
           }
-          
+
           .skill-badge {
             font-size: 0.8rem;
-            padding: 6px 14px;
-            border-radius: 4px;
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: 600;
-            letter-spacing: 0.5px;
-            transition: all 0.2s;
+            letter-spacing: 0.4px;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
             text-transform: uppercase;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.03);
           }
 
-          .slide-in-text {
-            animation: slideRight 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-          }
-          
-          @keyframes slideRight {
-            0% { transform: translateX(-20px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
-          }
-          
-          .placeholder-text {
-            color: #3f3f46;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1rem;
-            line-height: 1.6;
-          }
-          
-          .placeholder-cursor {
-             display: inline-block;
-             width: 8px;
-             height: 18px;
-             background: #3f3f46;
-             animation: blink 1s infinite;
-          }
-          
+          .skill-badge:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
+
+          .slide-in-text { animation: slideRight 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both; }
+          @keyframes slideRight { 0% { transform: translateX(-20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+
+          .placeholder-text { color: #3f3f46; font-family: 'Courier New', monospace; font-size: 1rem; line-height: 1.6; }
+          .placeholder-cursor { display: inline-block; width: 8px; height: 18px; background: #3f3f46; animation: blink 1s infinite; }
           @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-          /* --- Responsiveness --- */
-          @media (max-width: 1100px) {
-            .centerfold-wrap {
-              flex-direction: column;
-              gap: 40px;
-            }
-            .code-display {
-              width: 90%;
-              height: auto;
-              align-items: center;
-              text-align: center;
-              padding: 30px;
-              background: transparent;
-              border: none;
-              margin-left: 0;
-              border-top: 1px solid rgba(255,255,255,0.1);
-            }
-            .expertise-label {
-               margin-top: 20px;
-            }
-            .code-description {
-              align-items: center;
-            }
-            .skills-grid {
-              justify-content: center;
-            }
-            .hex-master-wrap {
-               transform: scale(0.9);
-            }
+          /* --- Breakpoints for common device sizes --- */
+          @media (max-width: 1280px) {
+            .hex-master-wrap { width: 420px; }
+            .code-display { width: 44%; padding: 24px; }
           }
-          
-          @media (max-width: 550px) {
-            .hex-master-wrap {
-               transform: scale(0.65);
-               margin: -40px 0;
-            }
-            .code-title {
-              font-size: 2.5rem;
-            }
+
+          @media (max-width: 1024px) {
+            .centerfold-wrap { flex-direction: column; gap: 28px; align-items: center; }
+            .hex-master-wrap { width: min(560px, 95%); }
+            .hex-wrap { width: clamp(90px, 16vw, 140px); height: calc(var(--hex-size) * 1.05); }
+            .code-display { width: 90%; margin-left: 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); padding: 22px; align-items: center; text-align: center; }
+            .hover-notify { top: -40px; }
+          }
+
+          @media (max-width: 768px) {
+            .grid-row { gap: 12px; }
+            .hex-wrap { width: clamp(86px, 22vw, 120px); }
+            .code-title { font-size: clamp(1.3rem, 6.5vw, 2.1rem); }
+            .hover-notify { font-size: 14px; letter-spacing: 3px; }
+          }
+
+          @media (max-width: 480px) {
+            .hex-wrap { width: clamp(72px, 30vw, 100px); }
+            .code-title { font-size: 1.6rem; }
+            .placeholder-text { font-size: 0.95rem; }
+            .hover-notify { display: none; }
+            .centerfold-wrap { gap: 18px; }
+            .hex-borders > div { height: 66px; top: 36px; }
+            .code-display { padding: 18px; }
+          }
+
+          /* Large / ultra-wide displays */
+          @media (min-width: 1440px) {
+            .hex-app-container { padding: 80px 40px; }
+            .hex-master-wrap { width: 520px; }
+            .code-display { padding: 36px; }
+          }
+
+          @media (min-width: 1920px) {
+            :root { --container-max: 1800px; --hex-size: clamp(120px, 8.5vw, 200px); }
           }
         `}</style>
         )}
@@ -585,10 +590,18 @@ const HexagonItem: React.FC<HexProps> = ({ item, isActive, onEnter, onLeave }) =
   const Icon = item.Icon;
   
   return (
-    <div 
+    <div
       className="hex-wrap"
+      role="button"
+      tabIndex={0}
       onMouseEnter={() => onEnter(item)}
       onMouseLeave={onLeave}
+      onFocus={() => onEnter(item)}
+      onBlur={onLeave}
+      onClick={() => onEnter(item)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onEnter(item); } }}
+      aria-pressed={isActive}
+      aria-label={item.title}
       style={{ 
         zIndex: isActive ? 30 : 10,
         color: item.color 
@@ -601,7 +614,7 @@ const HexagonItem: React.FC<HexProps> = ({ item, isActive, onEnter, onLeave }) =
       </div>
       
       <div className="label">
-        <Icon size={42} strokeWidth={1.5} />
+        <Icon size={isActive ? 48 : 42} strokeWidth={1.5} />
       </div>
     </div>
   );
