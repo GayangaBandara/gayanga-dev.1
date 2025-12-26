@@ -33,8 +33,8 @@ const techData: TechItem[] = [
     Icon: Layout,
     row: 1,
     category: 'core',
-    description: "Pixel-perfect, modern, and scalable interfaces with advanced tools.",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js", "Redux"]
+    description: "Pixel-perfect, modern, and scalable interfaces with advanced tools. Expertise in HTML5, CSS3, JavaScript (ES6+), TypeScript and modern frameworks.",
+    skills: ["HTML5", "CSS3", "JavaScript (ES6+)", "TypeScript", "React", "Next.js", "Vue.js", "Svelte", "Redux", "Zustand", "Recoil", "Apollo Client", "React Query", "SWR", "Tailwind CSS", "Sass", "Radix UI", "Headless UI", "Radium", "Framer Motion", "Three.js", "GSAP", "Storybook"]
   },
   {
     id: 'backend',
@@ -43,8 +43,8 @@ const techData: TechItem[] = [
     Icon: Terminal,
     row: 1,
     category: 'code',
-    description: "Scalable server logic, databases, and APIs for robust solutions.",
-    skills: ["Node.js", "NestJS", "FastAPI", "Python", "Go", "GraphQL", "Apache Camel"]
+    description: "Scalable server logic, databases, and APIs for robust solutions. Node.js, Python, Java ecosystems with API design and communication protocols.",
+    skills: ["Node.js", "NestJS", "Python", "FastAPI", "Flask", "Java", "Spring Boot", "GraphQL", "Swagger (OpenAPI)", "cURL", "Postman", "Apache Camel", "Jitsi Meet"]
   },
 
   // --- Row 2 ---
@@ -55,8 +55,8 @@ const techData: TechItem[] = [
     Icon: Smartphone,
     row: 2,
     category: 'mobile',
-    description: "Cross-platform apps with native performance.",
-    skills: ["Flutter", "Dart", "React Native", "Kotlin", "Swift", "Firebase", "iOS/Android"]
+    description: "Cross-platform and native mobile development. Flutter for cross-platform excellence, React Native for JavaScript-based apps, and native development with Kotlin and Swift.",
+    skills: ["Flutter", "Dart", "React Native", "Kotlin", "Swift", "iOS", "Android", "Firebase", "Cross-Platform Development"]
   },
   {
     id: 'ai',
@@ -65,8 +65,8 @@ const techData: TechItem[] = [
     Icon: Cpu,
     row: 2,
     category: 'ai',
-    description: "Smart solutions with ML pipelines and automation.",
-    skills: ["Python", "TensorFlow", "PyTorch", "LangChain", "Ollama", "CrewAI", "Jupyter"]
+    description: "Smart solutions with machine learning pipelines and AI automation. Deep learning frameworks, LLM agents, and intelligent automation tools.",
+    skills: ["Python", "Jupyter Notebook", "Colab", "TensorFlow", "PyTorch", "LangChain", "Ollama", "CrewAI"]
   },
   {
     id: 'devops',
@@ -75,8 +75,8 @@ const techData: TechItem[] = [
     Icon: Container,
     row: 2,
     category: 'ops',
-    description: "CI/CD pipelines, containerization, and cloud deployment.",
-    skills: ["Docker", "Kubernetes", "AWS", "GitHub Actions", "Linux", "Vercel", "Render"]
+    description: "CI/CD pipelines, containerization, and cloud deployment. Docker and Kubernetes orchestration, AWS cloud services, and modern deployment platforms.",
+    skills: ["Docker", "Kubernetes", "Minikube", "AWS", "Render", "Vercel", "GitHub Actions", "Linux"]
   },
 
   // --- Row 3 ---
@@ -87,8 +87,8 @@ const techData: TechItem[] = [
     Icon: Database,
     row: 3,
     category: 'data',
-    description: "Optimized data structures and persistent storage.",
-    skills: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Supabase", "Prisma"]
+    description: "Optimized data structures and persistent storage. SQL, NoSQL, in-memory caching, and real-time database solutions.",
+    skills: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Firebase (Realtime DB/Firestore)"]
   },
   {
     id: 'testing',
@@ -97,8 +97,8 @@ const techData: TechItem[] = [
     Icon: ShieldCheck,
     row: 3,
     category: 'test',
-    description: "Ensuring reliability through rigorous testing standards.",
-    skills: ["Jest", "Cypress", "React Testing Library", "Storybook", "Playwright"]
+    description: "Ensuring reliability through rigorous testing standards. Unit testing, component testing, E2E testing, and visual regression testing.",
+    skills: ["Jest", "React Testing Library", "Cypress"]
   },
 ];
 
@@ -338,17 +338,18 @@ const HexagonIntro: React.FC = () => {
 
           /* --- Description Panel --- */
           .code-display {
-            width: 480px;
-            height: 400px;
+            width: 500px;
+            height: auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: flex-start;
             position: relative;
             background: transparent;
             border-left: 1px solid rgba(255,255,255,0.1);
             padding: 40px;
             margin-left: 20px;
+            overflow: hidden;
           }
           
           .expertise-label {
@@ -371,13 +372,17 @@ const HexagonIntro: React.FC = () => {
 
           .code-title {
             font-family: 'Oswald', sans-serif;
-            font-size: 3.5rem;
-            line-height: 1;
+            font-size: 2.8rem;
+            line-height: 1.1;
             margin-bottom: 20px;
             font-weight: 700;
             transition: color 0.3s;
             text-transform: uppercase;
             letter-spacing: -1px;
+            width: 100%;
+            max-width: 450px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
           }
 
           .desc-text p {
@@ -392,6 +397,8 @@ const HexagonIntro: React.FC = () => {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
+            max-width: 450px;
+            overflow: hidden;
           }
           
           .skill-badge {
