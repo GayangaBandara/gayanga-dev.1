@@ -253,17 +253,18 @@
   display: none;
   flex-direction: column;
   justify-content: space-around;
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   background: transparent;
   border: none;
   cursor: pointer;
   padding: 0;
   z-index: 60;
+  touch-action: manipulation;
 }
 
 .hamburger-line {
-  width: zrem;
+  width: 2rem;
   height: 0.25rem;
   background: #fff;
   border-radius: 10px;
@@ -1253,33 +1254,18 @@ main {
     padding-right: 1rem;
   }
 
-  .mobile-menu-button {
-    display: flex;
-  }
-
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    height: 100vh;
     width: 70%;
-    background: rgba(0, 8, 15, 0.95);
-    backdrop-filter: blur(10px);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    transition: right 0.3s ease;
-    z-index: 55;
-  }
-
-  .nav-links.mobile-open {
-    right: 0;
+    gap: 2.5rem;
+    padding: 2rem 0;
   }
 
   .nav-link {
     font-size: 1.5rem;
-    padding: 1rem;
+    padding: 1rem 2rem;
+    min-height: 48px;
+    min-width: 120px;
+    text-align: center;
   }
 
   .nav-logo {
@@ -1326,6 +1312,35 @@ main {
   }
 }
 
+/* Mobile Navigation Enhancement */
+@media (max-width: 1023px) {
+  .mobile-menu-button {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    background: rgba(0, 8, 15, 0.98);
+    backdrop-filter: blur(15px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: right 0.3s ease;
+    z-index: 55;
+  }
+
+  .nav-links.mobile-open {
+    right: 0;
+  }
+
+  .nav-link {
+    touch-action: manipulation;
+  }
+}
+
 /* Tablet Portrait (601px - 767px) */
 @media (min-width: 601px) and (max-width: 767px) {
   .hero-name {
@@ -1359,11 +1374,19 @@ main {
 @media (min-width: 480px) and (max-width: 600px) {
   .nav-links {
     width: 80%;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 
   .nav-link {
     font-size: 1.25rem;
+    padding: 1rem 1.5rem;
+    min-height: 48px;
+    min-width: 100px;
+  }
+
+  .mobile-menu-button {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .hero-name {
@@ -1396,11 +1419,20 @@ main {
 @media (max-width: 479px) {
   .nav-links {
     width: 90%;
-    gap: 1rem;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
   }
 
   .nav-link {
     font-size: 1.1rem;
+    padding: 0.75rem 1rem;
+    min-height: 44px;
+    min-width: 80px;
+  }
+
+  .mobile-menu-button {
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   .hero-name {
@@ -1623,6 +1655,220 @@ html {
 /* Add this to the end of your globals.css */
 .perspective-1000 {
   perspective: 1000px;
+}
+
+/* ===== MOBILE ABOUT SECTION FIXES ===== */
+/* Fix mobile layout for about section only */
+@media (max-width: 768px) {
+  /* Center the image and about content on mobile */
+  .about-section .flex.flex-col.lg\:flex-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  /* Center the image container */
+  .about-section .order-2.lg\:order-1,
+  .about-section .order-1.lg\:order-2 {
+    order: 1 !important;
+  }
+  
+  .about-section .order-1.lg\:order-2 {
+    order: 2 !important;
+  }
+  
+  /* Center What I Do items on mobile */
+  .about-section .flex.flex-wrap.gap-4.justify-start {
+    justify-content: center !important;
+    text-align: center !important;
+  }
+  
+  /* Center Connect With Me social icons on mobile */
+  .about-section .flex.justify-start.gap-4.mt-4 {
+    justify-content: center !important;
+  }
+  
+  /* Center the buttons section */
+  .about-section .flex.flex-wrap.gap-3.justify-start {
+    justify-content: center !important;
+  }
+  
+  /* Ensure image is centered in its container */
+  .about-section .relative.order-2.lg\:order-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Make text content centered on mobile */
+  .about-section .lg\:text-left.text-center {
+    text-align: center !important;
+  }
+}
+
+/* Small mobile fixes for better spacing */
+@media (max-width: 480px) {
+  .about-section .blob-container {
+    margin: 0 auto;
+  }
+  
+  .about-section .flex.flex-wrap.gap-4.justify-start .flex {
+    margin: 0.25rem;
+  }
+  
+  /* Ensure proper spacing on very small screens */
+  .about-section .max-w-xl {
+    max-width: 100% !important;
+    padding: 0 1rem;
+  }
+  
+  /* Center the main content container */
+  .about-section .flex.items-start.justify-between.max-w-6xl {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Mobile button improvements */
+  /* Make resume button compact on very small screens without affecting desktop */
+  .about-section .button {
+    min-height: 44px;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    overflow: visible;
+    background: var(--background);
+    box-shadow: 0 2px 8px -1px var(--shadow);
+  }
+
+  /* Hide stacked/animated labels on mobile — show primary label only */
+  .about-section .button ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: static;
+    display: inline;
+    line-height: 1;
+    font-weight: 600;
+    color: var(--text, #fff);
+    font-size: 0.85rem;
+  }
+  
+  .about-section .button ul li { 
+    position: static; 
+    top: auto; 
+    left: auto; 
+    right: auto;
+    display: inline;
+  }
+  
+  .about-section .button ul li:not(:first-child) { 
+    display: none !important; 
+  }
+
+  .about-section .button > div {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .about-section .button > div:before { 
+    height: 12px; 
+    width: 2px; 
+    margin: -6px 0 0 -1px; 
+  }
+  
+  .about-section .button > div:after {
+    display: none;
+  }
+  
+  .about-section .button svg { 
+    width: 16px; 
+    height: 16px; 
+    margin: -8px 0 0 -8px; 
+  }
+
+  /* Preview button on mobile — eye icon only, no background or text */
+  .about-section .download-button-small {
+    min-height: 44px;
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: none !important;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0;
+    box-shadow: none;
+  }
+
+  .about-section .download-button-small:hover {
+    background: none !important;
+    transform: scale(1.15);
+  }
+
+  /* Align buttons in flex row on mobile */
+  .about-section .flex.flex-wrap.gap-3.justify-start {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center !important;
+  }
+  
+  /* Social icons centering */
+  .about-section .social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .about-section .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+  }
+  
+  /* Mobile About text override */
+  .about-section .text-lg.leading-7.mb-5.text-gray-200 {
+    display: none;
+  }
+  
+  .about-section .text-lg.leading-7.mb-8.text-gray-200 {
+    display: none;
+  }
+  
+  /* Show mobile version */
+  .about-section .mobile-about-text {
+    display: block;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #e5e7eb;
+    text-align: center;
+    max-width: 100%;
+  }
+  
+  /* Hide What I Do section on mobile */
+  .about-section .what-i-do-section {
+    display: none;
+  }
 }
 
 /* Golden gradient for text */
@@ -1935,14 +2181,18 @@ html {
   transform: scale(1.1);
 }
 
-/* Small Download Button for Dialog */
+/* Small Download Button for Dialog - Eye Icon Only */
 .download-button-small {
-  background: #275efe;
+  background: none;
   border: none;
   color: #fff;
-  padding: 12px 24px;
+  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 0;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -1950,14 +2200,13 @@ html {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  box-shadow: 0 2px 8px rgba(10, 22, 50, 0.24);
+  box-shadow: none;
 }
 
 .download-button-small:hover {
-  background: #1e4edd;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(10, 22, 50, 0.3);
+  background: none;
+  transform: scale(1.15);
+  box-shadow: none;
 }
 
 .download-button-small:active {
