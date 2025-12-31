@@ -466,7 +466,7 @@ const About: React.FC = () => {
               </DialogTrigger>
               <DialogContent className="max-w-4xl w-full overflow-hidden">
                 <DialogHeader>
-                  <DialogTitle>Gayanga Bandara — Curriculum Vitae</DialogTitle>
+                  <DialogTitle>Gayanga_Bandara_CV</DialogTitle>
                   <DialogDescription>
                     Preview of resume. Use the download button below to save a
                     copy.
@@ -475,7 +475,7 @@ const About: React.FC = () => {
 
                 <div className="mt-4">
                   <iframe
-                    src="/pdf/Gayanga Bandara curriculum vitae.pdf"
+                    src="/pdf/Gayanga_Bandara_CV.pdf"
                     className="w-full h-[70vh] sm:h-[80vh] border rounded-md"
                     title="Resume Preview"
                   />
@@ -483,7 +483,7 @@ const About: React.FC = () => {
 
                 <DialogFooter>
                   <a
-                    href="/pdf/Gayanga Bandara curriculum vitae.pdf"
+                    href="/pdf/Gayanga_Bandara_CV.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     download
