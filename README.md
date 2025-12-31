@@ -206,25 +206,6 @@ This is a **production-ready interactive portfolio website** showcasing my proje
 - 📱 Fully responsive design
 - ⚡ Performance optimized (Core Web Vitals)
 
-### How to Update Projects
-
-Edit `components/sections/projects-section.tsx` and modify the `projects` array:
-
-```typescript
-{
-  id: "project-id",
-  title: "Project Name",
-  subtitle: "Optional subtitle",
-  description: "Detailed description",
-  image: "screenshot.png",           // Place in public/projects/
-  tech: ["React", "TypeScript"],
-  demo: "https://demo-link.com",
-  github: "https://github.com/...",
-  video: "https://video-url.mp4",   // Optional
-  featured: true                     // Optional
-}
-```
-
 ---
 
 ## 📄 License
