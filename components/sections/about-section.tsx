@@ -440,12 +440,12 @@ const About: React.FC = () => {
           <div className="mt-8 flex flex-wrap gap-3 justify-start">
             <a
               ref={downloadButtonRef}
-              href="/pdf/Gayanga Bandara curriculum vitae.pdf"
+              href="/pdf/Gayanga_Bandara_CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               download
               className="button min-h-[48px] touch-manipulation"
-              data-file="/pdf/Gayanga Bandara curriculum vitae.pdf"
+              data-file="/pdf/Gayanga_Bandara_CV.pdf"
             >
               <ul>
                 <li>Resume</li>
