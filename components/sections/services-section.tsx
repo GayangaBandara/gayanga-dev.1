@@ -251,7 +251,7 @@ export default function ServicesSection() {
       <div className="container relative z-10 px-4 sm:px-6 mx-auto max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
           {/* Sticky Header Section */}
-          <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
+          <div className="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-6 md:space-y-8 mb-6 md:mb-0">
             <motion.div style={{ y: y1, opacity }}>
               <Badge
                 variant="outline"
@@ -259,14 +259,14 @@ export default function ServicesSection() {
               >
                 What I Do
               </Badge>
-              <h2 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 leading-tight">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white via-gray-200 to-gray-500 leading-tight">
                 My <br /> Services
               </h2>
-              <p className="mt-6 text-lg text-gray-400 leading-relaxed max-w-md">
+              <p className="mt-4 sm:mt-6 text-base sm:text-lg text-gray-400 leading-relaxed max-w-md">
                 I help brands and startups design and develop digital products that are visually refined, technically sound, and built for real-world use.
               </p>
 
-              <div className="mt-12 hidden lg:block">
+              <div className="mt-8 md:mt-12 hidden lg:block">
                 <div className="flex items-center gap-3 text-sm text-gray-500">
                   <span className="w-12 h-px bg-gray-800"></span>
                   SCROLL TO EXPLORE
@@ -276,7 +276,7 @@ export default function ServicesSection() {
           </div>
 
           {/* Scrolling Cards Section */}
-          <div className="lg:w-2/3 grid gap-6 items-start">
+          <div className="w-full lg:w-2/3 grid gap-4 sm:gap-5 md:gap-6 items-start">
               {servicesData.map((service, index) => {
               const Icon = service.icon;
               const accentBg = service.color.replace("text-", "bg-") + "/10";
@@ -293,27 +293,27 @@ export default function ServicesSection() {
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-purple-500/15 to-transparent blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    <div className="p-8 flex flex-col md:flex-row gap-6 md:items-start">
+                    <div className="p-5 sm:p-6 md:p-8 flex flex-col gap-4 sm:gap-5 md:gap-6 w-full">
                       {/* Icon Box */}
                       <div className="shrink-0 relative">
-                        <div className={`absolute left-0 top-6 bottom-6 w-[2px] rounded-r ${accentBg} opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none`} aria-hidden="true" />
-                        <span className="flex items-center justify-center w-12 h-12 rounded-xl bg-accent/10 border-2 border-accent/20 group-hover:scale-105 group-hover:bg-accent/20 transition-all duration-300 p-1">
-                          <Icon className={`w-6 h-6 ${service.color} transition-transform duration-300`} />
+                        <div className={`absolute left-0 top-2 bottom-2 sm:top-4 md:top-6 md:bottom-6 w-[2px] rounded-r ${accentBg} opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none`} aria-hidden="true" />
+                        <span className="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 rounded-xl bg-accent/10 border-2 border-accent/20 group-hover:scale-105 group-hover:bg-accent/20 transition-all duration-300 p-1">
+                          <Icon className={`w-5 sm:w-6 h-5 sm:h-6 ${service.color} transition-transform duration-300`} />
                         </span>
                       </div>
 
                       {/* Content */}
-                      <div className="space-y-4 flex-1 group-hover:translate-y-0 transition-transform duration-300">
-                        <div className="flex justify-between items-start">
-                          <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 group-hover:translate-x-1 transition-all duration-300">
+                      <div className="space-y-3 sm:space-y-4 flex-1 group-hover:translate-y-0 transition-transform duration-300">
+                        <div className="flex justify-between items-start gap-2">
+                          <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-purple-300 group-hover:translate-x-1 transition-all duration-300 leading-snug">
                             {service.title}
                           </h3>
-                          <span className="text-4xl font-bold text-white/5 select-none group-hover:text-white/10 transition-colors duration-300">
+                          <span className="text-3xl sm:text-4xl font-bold text-white/5 select-none group-hover:text-white/10 transition-colors duration-300 shrink-0">
                             {service.id}
                           </span>
                         </div>
 
-                        <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                        <p className="text-sm sm:text-base text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
                           {service.description}
                         </p>
 
@@ -323,7 +323,7 @@ export default function ServicesSection() {
                             <Badge
                               key={tag}
                               variant="secondary"
-                              className="bg-black/40 text-zinc-300 text-[11px] px-2 py-0.5 rounded-full border border-white/5 group-hover:bg-purple-500/10 group-hover:text-white transition-all duration-300"
+                              className="bg-black/40 text-zinc-300 text-[10px] sm:text-[11px] px-2 py-0.5 rounded-full border border-white/5 group-hover:bg-purple-500/10 group-hover:text-white transition-all duration-300"
                             >
                               {tag}
                             </Badge>

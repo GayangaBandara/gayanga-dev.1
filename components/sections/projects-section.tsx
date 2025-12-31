@@ -611,7 +611,7 @@ export default function ProjectsSection(): React.ReactElement {
             size="sm"
             className="bg-white/5 hover:bg-white/10 text-white"
           >
-            <Link href="#">View All Projects</Link>
+            <Link href="https://github.com/GayangaBandara?tab=repositories">View All Projects</Link>
           </Button>
         </div>
       </div>

@@ -1149,8 +1149,8 @@ main {
   }
 }
 
-/* Desktop Standard (1536px - 1919px) */
-@media (min-width: 1536px) and (max-width: 1919px) {
+/* Ultra Wide / TV Extended (1920px - 2559px) - 3xl: extended */
+@media (min-width: 1920px) and (max-width: 2559px) {
   .hero-name {
     font-size: clamp(8rem, 14vw, 20rem);
   }
@@ -1164,8 +1164,8 @@ main {
   }
 }
 
-/* Desktop Small (1440px - 1535px) */
-@media (min-width: 1440px) and (max-width: 1535px) {
+/* Large Desktop (1536px - 1919px) - 2xl: breakpoint */
+@media (min-width: 1536px) and (max-width: 1919px) {
   .hero-name {
     font-size: clamp(7rem, 12vw, 18rem);
   }
@@ -1179,8 +1179,8 @@ main {
   }
 }
 
-/* Laptop (1280px - 1439px) */
-@media (min-width: 1280px) and (max-width: 1439px) {
+/* Desktop (Standard) (1280px - 1535px) - xl: breakpoint */
+@media (min-width: 1280px) and (max-width: 1535px) {
   .hero-name {
     font-size: clamp(6rem, 11vw, 16rem);
   }
@@ -1202,7 +1202,7 @@ main {
   }
 }
 
-/* Small Desktop (1024px - 1279px) */
+/* Laptop / Landscape (1024px - 1279px) - lg: breakpoint */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .hero-name {
     font-size: clamp(5rem, 10vw, 14rem);
@@ -1247,7 +1247,7 @@ main {
   }
 }
 
-/* Tablet Landscape (768px - 1023px) */
+/* Tablet (Portrait) (768px - 1023px) - md: breakpoint */
 @media (min-width: 768px) and (max-width: 1023px) {
   .navbar {
     padding-left: 1rem;
@@ -1341,8 +1341,8 @@ main {
   }
 }
 
-/* Tablet Portrait (601px - 767px) */
-@media (min-width: 601px) and (max-width: 767px) {
+/* Small Tablet (640px - 767px) - sm: breakpoint */
+@media (min-width: 640px) and (max-width: 767px) {
   .hero-name {
     font-size: clamp(3.5rem, 10vw, 8rem);
   }
@@ -1370,8 +1370,8 @@ main {
   }
 }
 
-/* Large Mobile (480px - 600px) */
-@media (min-width: 480px) and (max-width: 600px) {
+/* Large Mobile (480px - 639px) - xs: custom breakpoint */
+@media (min-width: 480px) and (max-width: 639px) {
   .nav-links {
     width: 80%;
     gap: 2rem;
@@ -1415,7 +1415,7 @@ main {
   }
 }
 
-/* Small Mobile (320px - 479px) */
+/* Small Mobile (0px - 479px) - default / mobile-first */
 @media (max-width: 479px) {
   .nav-links {
     width: 90%;
@@ -1537,21 +1537,132 @@ main {
   scroll-margin-top: var(--navbar-height);
 }
 
-/* Enhanced Touch Targets for Mobile */
-@media (max-width: 768px) {
+/* Enhanced Touch Targets for User Interactive Elements - Optimized by Device Category */
+
+/* Ultra Wide / TV (1920px+) - 3xl: Larger touch targets for comfortable use */
+@media (min-width: 1920px) {
   .nav-link,
   .nav-logo,
   .mobile-menu-button,
   .hero-scroll-indicator,
-  .social-icons a {
-    min-height: 44px;
-    min-width: 44px;
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small,
+  button,
+  a[role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 52px;
+    min-width: 52px;
   }
-  
+}
+
+/* Large Desktop (1536px - 1919px) - 2xl: Standard desktop sizing */
+@media (min-width: 1536px) and (max-width: 1919px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
   .button,
   .preview-button,
   .download-button-small {
     min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Desktop (Standard) (1280px - 1535px) - xl: Standard touch targets */
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Laptop / Landscape (1024px - 1279px) - lg: Touch-friendly for laptop use */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Tablet (Portrait) (768px - 1023px) - md: Touch-optimized for tablet use */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+  }
+}
+
+/* Small Tablet (640px - 767px) - sm: Touch-optimized for small tablets */
+@media (min-width: 640px) and (max-width: 767px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+  }
+}
+
+/* Large Mobile (480px - 639px) - xs: Critical touch targets for mobile */
+@media (min-width: 480px) and (max-width: 639px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 48px;
+    min-width: 48px;
+    touch-action: manipulation;
+  }
+}
+
+/* Small Mobile (0px - 479px) - default: Maximum touch target size for precision */
+@media (max-width: 479px) {
+  .nav-link,
+  .nav-logo,
+  .mobile-menu-button,
+  .hero-scroll-indicator,
+  .social-icons a,
+  .button,
+  .preview-button,
+  .download-button-small {
+    min-height: 48px;
+    min-width: 48px;
     touch-action: manipulation;
   }
 }
