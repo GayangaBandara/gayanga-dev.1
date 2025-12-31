@@ -89,6 +89,8 @@ I'm a **passionate Final-year Software Engineering student** at SLTC Research Un
   - [Doctor App](https://github.com/GayangaBandara/safespace-doctor-app)
   - [Admin Panel](https://github.com/GayangaBandara/safespace-admin_web)
 
+---
+
 ### 📊 **Mobile Service Churn Prediction System**
 > Enterprise telecom analytics platform with ML-powered customer insights
 
@@ -100,6 +102,8 @@ I'm a **passionate Final-year Software Engineering student** at SLTC Research Un
   - Performance optimization with caching
 - **🔗 [View Project](https://github.com/GayangaBandara/Mobile-Service-Churn-Prediction-System)**
 
+---
+
 ### 💰 **Smart Finance Tracker**
 > Personal finance management with real-time analytics
 
@@ -107,12 +111,16 @@ I'm a **passionate Final-year Software Engineering student** at SLTC Research Un
 - **Key Features:** Income tracking, expense categorization, financial insights
 - **🔗 [View Project](https://github.com/GayangaBandara/smart-finance-tracker)**
 
+---
+
 ### 🎓 **Digital Land Registry (Hackathon)**
 > Blockchain-based land record management system
 
 - **Tech Stack:** TypeScript | Next.js | Solidity | Web3
 - **Key Features:** Secure records, verification, multi-user access
 - **🔗 [View Project](https://github.com/GayangaBandara/Team-Imprez_digital-land-registry)**
+
+---
 
 ### 🤖 **Mental Health Chatbot**
 > NLP-powered conversational AI for wellness support
