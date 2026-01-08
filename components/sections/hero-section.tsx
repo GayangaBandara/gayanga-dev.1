@@ -1,24 +1,15 @@
 "use client"
 
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 
 export default function HeroSection() {
   const [isLoading, setIsLoading] = useState(true)
-  const [isNavbarPinned, setIsNavbarPinned] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 2000)
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      // Change navbar only when scrolling past the Hero section (approx 1 viewport height)
-      // Subtracting a small buffer (e.g., 80px) ensures it transitions just as the About section hits the top.
-      setIsNavbarPinned(scrollY > window.innerHeight - 80)
-    }
 
     // Set the CSS variable for navbar height so CSS can use it for scroll-margin-top
     const updateNavbarHeightVar = () => {
@@ -29,12 +20,10 @@ export default function HeroSection() {
     }
 
     updateNavbarHeightVar();
-    window.addEventListener("scroll", handleScroll)
     window.addEventListener("resize", updateNavbarHeightVar)
 
     return () => {
       clearTimeout(timer)
-      window.removeEventListener("scroll", handleScroll)
       window.removeEventListener("resize", updateNavbarHeightVar)
     }
   }, [])
@@ -44,7 +33,6 @@ export default function HeroSection() {
     if (element) {
       if (sectionId === 'home') {
         window.scrollTo({ top: 0, behavior: 'smooth' })
-        setIsMobileMenuOpen(false)
         return
       }
       const navbar = document.querySelector('.navbar') as HTMLElement
@@ -52,7 +40,6 @@ export default function HeroSection() {
       const targetTop = element.getBoundingClientRect().top + window.scrollY - navbarHeight
       window.scrollTo({ top: targetTop, behavior: 'smooth' })
     }
-    setIsMobileMenuOpen(false)
   }
 
   const scrollToBottom = () => {
@@ -77,6 +64,37 @@ export default function HeroSection() {
   return (
     <section id="home" className="hero-section">
       <div className="hero-content">
+        <div className="hero-text-content">
+          <span className="hero-badge">Available for freelance & collaborations</span>
+          <p className="tagline">Full-stack Developer • UI Engineer</p>
+          <h2 className="hero-headline">
+            Designing fast, elegant web experiences that feel effortless to use.
+          </h2>
+          <p className="micro-bio">
+            I build responsive, high-performing products with Next.js, React, and scalable design systems.
+          </p>
+          <div className="hero-actions">
+            <button
+              type="button"
+              className="hero-button primary"
+              onClick={() => scrollToSection("projects")}
+            >
+              View Projects
+            </button>
+            <button
+              type="button"
+              className="hero-button ghost"
+              onClick={() => scrollToSection("contact")}
+            >
+              Let&apos;s Talk
+            </button>
+          </div>
+          <div className="hero-highlights">
+            <span>Product Strategy</span>
+            <span>Performance-first Builds</span>
+            <span>Accessible UI</span>
+          </div>
+        </div>
         <h1 className="hero-name">GAYANGA</h1>
         <div className="hero-image-container">
           <Image
