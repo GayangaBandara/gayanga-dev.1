@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "Full-Stack Developer, AI enthusiast, and Mobile App creator building scalable, high-quality digital products.",
   icons: {
-    icon: "/favicon.png",
+    icon: "/Favicon.png",
   },
 }
 
