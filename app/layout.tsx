@@ -30,7 +30,7 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         />
         {/* Explicit favicon link for browser support */}
-        <link rel="icon" href="/favicon.png" type="image/png" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       </head>
       <body className="font-sans antialiased">
         {children}
