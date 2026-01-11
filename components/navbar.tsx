@@ -6,7 +6,7 @@ import Link from "next/link"
 
 const navLinks = [
   { name: "Home", href: "#home" },
-  { name: "Work", href: "#projects" }, // if you want "Projects" change label
+  { name: "Work", href: "#projects" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ]
@@ -57,7 +57,6 @@ export function Navbar() {
         // After About -> hide full navbar, show floating hamburger only
         setHideDesktopNavbar(y >= switchPoint)
       } else {
-        // not desktop
         setHideDesktopNavbar(false)
       }
     }
@@ -71,6 +70,13 @@ export function Navbar() {
     }
   }, [])
 
+  // ✅ If navbar hides on desktop while menu is open, close it (prevents weird states)
+  useEffect(() => {
+    if (hideDesktopNavbar && isOpen && window.innerWidth < 1024) {
+      closeMenu()
+    }
+  }, [hideDesktopNavbar, isOpen])
+
   // 3) Escape close
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -80,7 +86,7 @@ export function Navbar() {
     return () => document.removeEventListener("keydown", handleEscape)
   }, [isOpen])
 
-  // 4) Mobile dropdown animation (same as your old code)
+  // 4) Mobile dropdown animation
   useEffect(() => {
     if (!mobileMenuRef.current) return
 
@@ -157,7 +163,7 @@ export function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Hamburger (unchanged behavior) */}
+            {/* Mobile Hamburger */}
             <button
               onClick={toggleMenu}
               className="md:hidden relative w-10 h-10 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg"
@@ -246,12 +252,15 @@ export function Navbar() {
         <div className="flex flex-col items-center justify-center gap-1">
           <span className={`block w-5 h-[2px] bg-foreground transition-all ${isOpen ? "rotate-45 translate-y-2" : ""}`} />
           <span className={`block w-5 h-[2px] bg-foreground transition-all ${isOpen ? "opacity-0" : "opacity-100"}`} />
-          <span className={`block w-5 h-[2px] bg-foreground transition-all ${isOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          <span
+            className={`block w-5 h-[2px] bg-foreground transition-all ${isOpen ? "-rotate-45 -translate-y-2" : ""}`}
+          />
         </div>
       </button>
 
       {/* =======================
           DESKTOP OVERLAY MENU (only desktop)
+          ✅ Removed the panel close (X) button
          ======================= */}
       <div
         className={[
@@ -269,13 +278,7 @@ export function Navbar() {
           <div className="p-10 h-full flex flex-col">
             <div className="flex items-center justify-between">
               <p className="text-xs tracking-[0.2em] text-muted-foreground">NAVIGATION</p>
-              <button
-                onClick={closeMenu}
-                className="w-12 h-12 rounded-full bg-secondary/50 border border-border flex items-center justify-center"
-                aria-label="Close menu"
-              >
-                <span className="text-2xl leading-none">×</span>
-              </button>
+              {/* ✅ Removed duplicate close button here */}
             </div>
 
             <div className="mt-6 h-px bg-border" />
