@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
@@ -17,44 +17,60 @@ const skills: Skill[] = [
   {
     category: "Frontend",
     items: ["React", "Next.js", "Tailwind CSS", "GSAP", "Three.js"],
-    codeLines: [
-      "const UI = () => <Hero />",
-      "useGSAP(() => animate())",
-      "export default UI",
-    ],
+    codeLines: ["const UI = () => <Hero />", "useGSAP(() => animate())", "export default UI"],
   },
   {
     category: "Backend",
     items: ["Node.js", "FastAPI", "Flask", "PostgreSQL", "Supabase"],
-    codeLines: [
-      "app.get('/api', handler)",
-      "return res.json({ ok: true })",
-      "db.query('SELECT * FROM users')",
-    ],
+    codeLines: ["app.get('/api', handler)", "return res.json({ ok: true })", "db.query('SELECT * FROM users')"],
   },
   {
     category: "Mobile",
     items: ["Flutter", "Dart", "Firebase"],
-    codeLines: [
-      "Widget build(BuildContext ctx) {",
-      "  return const Scaffold()",
-      "}",
-    ],
+    codeLines: ["Widget build(BuildContext ctx) {", "  return const Scaffold()", "}"],
   },
   {
     category: "AI / ML",
     items: ["Python", "NLP", "TensorFlow"],
-    codeLines: [
-      "import tensorflow as tf",
-      "model.fit(x_train, y_train)",
-      "pred = model(x)",
-    ],
+    codeLines: ["import tensorflow as tf", "model.fit(x_train, y_train)", "pred = model(x)"],
   },
 ];
 
-function SkillCard({ skill }: { skill: Skill }) {
+type SkillCardHandle = {
+  play: () => void;
+};
+
+const SkillCard = React.forwardRef<SkillCardHandle, { skill: Skill }>(({ skill }, ref) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const codeRef = useRef<HTMLDivElement>(null);
+
+  // For autoplay / mobile behavior
+  const playedOnceRef = useRef(false);
+
+  // typing control
+  const timersRef = useRef<number[]>([]);
+  const isDesktopRef = useRef(false);
+
+  const clearTimers = () => {
+    timersRef.current.forEach((t) => window.clearTimeout(t));
+    timersRef.current = [];
+  };
+
+  useEffect(() => {
+    // ✅ desktop detection (runs client-side only)
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const apply = () => (isDesktopRef.current = mq.matches);
+    apply();
+
+    // safari support
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+    else mq.addListener(apply);
+
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", apply);
+      else mq.removeListener(apply);
+    };
+  }, []);
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = cardRef.current;
@@ -66,8 +82,11 @@ function SkillCard({ skill }: { skill: Skill }) {
     el.style.setProperty("--my", `${y}%`);
   };
 
-  const startTyping = () => {
+  const typeFromStart = () => {
     if (!codeRef.current) return;
+
+    clearTimers();
+
     const el = codeRef.current;
     el.innerHTML = "";
 
@@ -75,6 +94,7 @@ function SkillCard({ skill }: { skill: Skill }) {
     let char = 0;
 
     const type = () => {
+      if (!codeRef.current) return;
       if (line >= skill.codeLines.length) return;
 
       const current = skill.codeLines[line];
@@ -89,22 +109,54 @@ function SkillCard({ skill }: { skill: Skill }) {
       char++;
 
       if (char <= current.length) {
-        setTimeout(type, 28);
+        timersRef.current.push(window.setTimeout(type, 22));
       } else {
         line++;
         char = 0;
-        setTimeout(type, 200);
+        timersRef.current.push(window.setTimeout(type, 140));
       }
     };
 
     type();
   };
 
+  const play = () => {
+    // ✅ autoplay should be once (all devices)
+    if (playedOnceRef.current) return;
+    playedOnceRef.current = true;
+    typeFromStart();
+  };
+
+  const onHoverStart = () => {
+    // ✅ DESKTOP: always restart from beginning on hover
+    if (isDesktopRef.current) {
+      typeFromStart();
+      return;
+    }
+
+    // ✅ MOBILE/TABLET: only first time
+    if (playedOnceRef.current) return;
+    playedOnceRef.current = true;
+    typeFromStart();
+  };
+
+  const onHoverEnd = () => {
+    // ✅ stop typing when leaving (important for desktop)
+    clearTimers();
+  };
+
+  React.useImperativeHandle(ref, () => ({ play }));
+
+  useEffect(() => {
+    return () => clearTimers();
+  }, []);
+
   return (
     <div
       ref={cardRef}
       onMouseMove={onMove}
-      onMouseEnter={startTyping}
+      onMouseEnter={onHoverStart}
+      onMouseLeave={onHoverEnd}
       className="skill-card group p-6 bg-card/50 border border-border rounded-xl transition-transform duration-200 hover:-translate-y-1"
     >
       <div className="relative z-10">
@@ -126,19 +178,19 @@ function SkillCard({ skill }: { skill: Skill }) {
           ))}
         </div>
 
-        <div
-          ref={codeRef}
-          className="mt-5 font-mono text-xs text-muted-foreground min-h-[64px]"
-        />
+        <div ref={codeRef} className="mt-5 font-mono text-xs text-muted-foreground min-h-[64px]" />
       </div>
     </div>
   );
-}
+});
+SkillCard.displayName = "SkillCard";
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [showCVModal, setShowCVModal] = useState(false);
+
+  const cardsHandlesRef = useRef<Array<SkillCardHandle | null>>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -157,6 +209,19 @@ export function About() {
           },
         }
       );
+
+      // ✅ autoplay when section comes into view (once)
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top 70%",
+        once: true,
+        onEnter: () => {
+          cardsHandlesRef.current.forEach((handle, i) => {
+            if (!handle) return;
+            window.setTimeout(() => handle.play(), i * 250);
+          });
+        },
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -168,34 +233,25 @@ export function About() {
         <div ref={contentRef} className="grid lg:grid-cols-2 gap-16">
           {/* Left */}
           <div>
-            <p className="text-accent font-mono text-sm mb-4 tracking-wider">
-              ABOUT ME
-            </p>
+            <p className="text-accent font-mono text-sm mb-4 tracking-wider">ABOUT ME</p>
+
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Crafting digital experiences with code & creativity
             </h2>
 
             <p className="text-muted-foreground leading-relaxed mb-6">
-              I am a Full-Stack Developer, AI enthusiast, and Mobile App creator
-              with a passion for building scalable, high-quality digital
-              products.
+              I am a Full-Stack Developer, AI enthusiast, and Mobile App creator with a passion for building scalable,
+              high-quality digital products.
             </p>
 
             <p className="text-muted-foreground leading-relaxed mb-8">
-              Currently focused on blending thoughtful design with robust
-              engineering to build high-performance, immersive experiences.
+              Currently focused on blending thoughtful design with robust engineering to build high-performance,
+              immersive experiences.
             </p>
 
-            {/* Social + CV Actions */}
             <div className="mt-8 flex flex-wrap items-center gap-4">
-              {/* Social Icons */}
               <div className="social-media">
-                <Link
-                  href="https://github.com/GayangaBandara"
-                  target="_blank"
-                  className="social-btn"
-                  aria-label="GitHub"
-                >
+                <Link href="https://github.com/GayangaBandara" target="_blank" className="social-btn" aria-label="GitHub">
                   <i className="fab fa-github" />
                 </Link>
 
@@ -208,17 +264,12 @@ export function About() {
                   <i className="fab fa-linkedin-in" />
                 </Link>
 
-                <Link
-                  href="https://x.com/Gayanga20"
-                  target="_blank"
-                  className="social-btn"
-                  aria-label="Twitter"
-                >
+                <Link href="https://x.com/Gayanga20" target="_blank" className="social-btn" aria-label="X">
                   <i className="fa-brands fa-x-twitter" />
                 </Link>
 
                 <Link
-                  href="https://www.reddit.com/user/Consistent_City2925/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button"
+                  href="https://www.reddit.com/user/Consistent_City2925/"
                   target="_blank"
                   className="social-btn"
                   aria-label="Reddit"
@@ -227,25 +278,13 @@ export function About() {
                 </Link>
               </div>
 
-              {/* CV Buttons */}
               <div className="cv-actions">
-                {/* Preview */}
-                <button
-                  onClick={() => setShowCVModal(true)}
-                  className="cv-btn"
-                  aria-label="Preview CV"
-                >
+                <button onClick={() => setShowCVModal(true)} className="cv-btn" aria-label="Preview CV">
                   <i className="fas fa-eye" />
                   <span>Preview CV</span>
                 </button>
 
-                {/* Download */}
-                <a
-                  href="/pdf/Gayanga_Bandara_CV.pdf"
-                  download
-                  className="cv-btn"
-                  aria-label="Download CV"
-                >
+                <a href="/pdf/Gayanga_Bandara_CV.pdf" download className="cv-btn" aria-label="Download CV">
                   <i className="fas fa-download" />
                   <span>Download CV</span>
                 </a>
@@ -255,19 +294,23 @@ export function About() {
 
           {/* Right */}
           <div>
-            <p className="text-accent font-mono text-sm mb-6 tracking-wider">
-              WHAT I DO
-            </p>
+            <p className="text-accent font-mono text-sm mb-6 tracking-wider">WHAT I DO</p>
+
             <div className="grid sm:grid-cols-2 gap-6">
-              {skills.map((skill) => (
-                <SkillCard key={skill.category} skill={skill} />
+              {skills.map((skill, idx) => (
+                <SkillCard
+                  key={skill.category}
+                  skill={skill}
+                  ref={(h) => {
+                    cardsHandlesRef.current[idx] = h;
+                  }}
+                />
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* CV Modal */}
       {showCVModal && (
         <div
           className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
@@ -277,7 +320,6 @@ export function About() {
             className="relative bg-background rounded-xl border border-border shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-border bg-card/50">
               <h3 className="text-xl font-semibold">CV Preview</h3>
               <button
@@ -289,13 +331,8 @@ export function About() {
               </button>
             </div>
 
-            {/* PDF Viewer */}
             <div className="overflow-auto h-[calc(90vh-80px)]">
-              <iframe
-                src="/pdf/Gayanga_Bandara_CV.pdf"
-                className="w-full h-full min-h-[600px]"
-                title="CV Preview"
-              />
+              <iframe src="/pdf/Gayanga_Bandara_CV.pdf" className="w-full h-full min-h-[600px]" title="CV Preview" />
             </div>
           </div>
         </div>
