@@ -1,19 +1,23 @@
-import HeroSection from "@/components/sections/hero-section"
-import About from "@/components/sections/about-section"
-import ProjectsSection from "@/components/sections/projects-section"
-import ServicesSection from "@/components/sections/services-section"
-import SkillsSection from "@/components/sections/skills-section"
-import ContactSection from "@/components/sections/contact-section"
+import { Navbar } from "@/components/navbar"
+import { Hero } from "@/components/hero"
+import { About } from "@/components/about"
+import { Projects } from "@/components/projects"
+import { Services } from "@/components/services"
+import Skills from "@/components/skills"
+import { Contact } from "@/components/contact"
+import { Footer } from "@/components/footer"
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main className="min-h-screen site-scroll">
-      <HeroSection />
+    <main className="min-h-screen">
+      <Navbar />
+      <Hero />
       <About />
-      <ProjectsSection />
-      <ServicesSection />
-      <SkillsSection />
-      <ContactSection />
+      <Projects />
+      <Services />
+      <Skills />
+      <Contact />
+      <Footer />
     </main>
   )
 }
