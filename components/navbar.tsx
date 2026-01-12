@@ -297,17 +297,17 @@ export function Navbar() {
             </div>
 
             <div className="mt-auto pt-10 flex gap-10 text-sm text-muted-foreground">
-              <Link href="https://www.linkedin.com" target="_blank" className="hover:text-foreground">
+              <Link href="https://linkedin.com/in/gayanga-bandara" target="_blank" className="hover:text-foreground">
                 Linkedin
               </Link>
-              <Link href="https://github.com" target="_blank" className="hover:text-foreground">
+              <Link href="https://github.com/GayangaBandara" target="_blank" className="hover:text-foreground">
                 Github
               </Link>
-              <Link href="https://behance.net" target="_blank" className="hover:text-foreground">
-                Behance
+              <Link href="https://x.com/Gayanga20" target="_blank" className="hover:text-foreground">
+                X-twitter
               </Link>
-              <Link href="https://instagram.com" target="_blank" className="hover:text-foreground">
-                Instagram
+              <Link href="https://www.reddit.com/user/Consistent_City2925/" target="_blank" className="hover:text-foreground">
+                Reddit
               </Link>
             </div>
           </div>
