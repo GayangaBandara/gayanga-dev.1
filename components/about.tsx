@@ -162,11 +162,7 @@ const SkillCard = React.forwardRef<SkillCardHandle, { skill: Skill }>(({ skill }
       <div className="relative z-10">
         <div className="flex items-start justify-between gap-3">
           <h3 className="font-semibold">{skill.category}</h3>
-          <span className="text-[10px] tracking-[0.25em] text-muted-foreground opacity-60 group-hover:opacity-100 transition">
-            CODE
-          </span>
         </div>
-
         <div className="mt-3 flex flex-wrap gap-2">
           {skill.items.map((item) => (
             <span
