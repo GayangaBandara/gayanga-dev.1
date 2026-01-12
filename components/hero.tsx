@@ -19,6 +19,14 @@ export function Hero() {
     const name = nameRef.current
     if (!name) return
 
+    // ✅ Desktop only (prevents mobile/tablet weird jumps)
+    const isFinePointer =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(pointer:fine)").matches
+
+    if (!isFinePointer) return
+
     const handleMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window
       const x = (e.clientX / innerWidth - 0.5) * 40
@@ -44,18 +52,29 @@ export function Hero() {
           style={{ opacity: heroOpacity }}
         >
           {/* Cinematic background name */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
             <div
               ref={nameRef}
-              className="transition-transform duration-300 ease-out will-change-transform"
+              className="transition-transform duration-300 ease-out will-change-transform origin-center"
               style={{
                 transformStyle: "preserve-3d",
               }}
             >
               <span
                 className="
-                  text-[28vw] md:text-[22vw] lg:text-[18vw]
-                  font-black tracking-tighter uppercase whitespace-nowrap
+                  font-black uppercase whitespace-nowrap leading-none
+                  [text-rendering:geometricPrecision]
+                  tracking-[-0.08em] sm:-tracking-widest md:tracking-[-0.5em] lg:tracking-[-0.04em]
+
+                  /* ✅ Mobile: responsive with clamp */
+                  text-[clamp(64px,20vw,210px)]
+                  
+                  /* ✅ Tablet: explicit sizes for clarity */
+                  sm:text-[120px]
+                  md:text-[160px]
+
+                  /* ✅ Desktop: flexible scaling */
+                  lg:text-[18vw]
                 "
                 style={{
                   color: "rgba(255,255,255,0.05)",
@@ -74,7 +93,7 @@ export function Hero() {
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             {/* Glow behind face */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[420px] h-[420px] bg-accent/10 blur-[140px] rounded-full" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-105 h-105 bg-accent/10 blur-[140px] rounded-full" />
 
             <Image
               src="/images/gayanga-portrait.png"
@@ -82,7 +101,7 @@ export function Hero() {
               width={600}
               height={720}
               priority
-              className="w-[320px] sm:w-[400px] md:w-[480px] lg:w-[550px] object-contain relative z-10"
+              className="w-[320px] sm:w-100 md:w-120 lg:w-137.5 object-contain relative z-10"
             />
           </motion.div>
         </motion.div>
