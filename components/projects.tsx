@@ -34,7 +34,8 @@ const projects = [
   {
     title: "Finance Tracker",
     category: "Finance Management",
-    description: "Track expenses, manage budgets, and gain insights with AI-powered comprehensive solution.",
+    description:
+      "Track expenses, manage budgets, and gain insights with AI-powered comprehensive solution.",
     tech: ["React", "Vite", "Tailwind", "Supabase", "Groq AI"],
     demo: "https://smart-finance-tracker-nu.vercel.app/",
     github: "https://github.com/GayangaBandara/smart-finance-tracker",
@@ -163,7 +164,11 @@ export function Projects() {
           invalidateOnRefresh: true,
           animation: tween,
           onUpdate: (self) => {
-            gsap.to(progressLine, { scaleX: self.progress, duration: 0.05, ease: "none" })
+            gsap.to(progressLine, {
+              scaleX: self.progress,
+              duration: 0.05,
+              ease: "none",
+            })
           },
         })
 
@@ -188,11 +193,17 @@ export function Projects() {
   }, [])
 
   return (
-    <section ref={sectionRef} id="projects" className="py-24 px-6 bg-card overflow-hidden lg:min-h-screen">
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="section bg-card overflow-hidden lg:min-h-screen"
+    >
       {/* Title */}
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <p className="text-accent font-mono text-sm mb-4 tracking-wider">SELECTED WORKS</p>
+          <p className="text-accent font-mono text-sm mb-4 tracking-wider">
+            SELECTED WORKS
+          </p>
           <h2 className="text-3xl md:text-4xl font-bold">Featured Projects</h2>
         </div>
       </div>
@@ -206,7 +217,6 @@ export function Projects() {
               ref={(el) => {
                 if (el) cardsRef.current[index] = el
               }}
-              // ✅ Hover anywhere on card plays video (no replay on mouse move)
               onMouseEnter={() => setActiveId(project.title)}
               onMouseLeave={() => setActiveId(null)}
               onFocus={() => setActiveId(project.title)}
@@ -223,13 +233,22 @@ export function Projects() {
               />
 
               <div className="p-6">
-                <span className="text-accent text-sm font-mono">{project.category}</span>
-                <h3 className="text-xl font-semibold mt-2 mb-3">{project.title}</h3>
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{project.description}</p>
+                <span className="text-accent text-sm font-mono">
+                  {project.category}
+                </span>
+                <h3 className="text-xl font-semibold mt-2 mb-3">
+                  {project.title}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                  {project.description}
+                </p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((t) => (
-                    <span key={t} className="px-3 py-1 bg-secondary text-xs text-muted-foreground rounded-full">
+                    <span
+                      key={t}
+                      className="px-3 py-1 bg-secondary text-xs text-muted-foreground rounded-full"
+                    >
                       {t}
                     </span>
                   ))}
@@ -270,7 +289,10 @@ export function Projects() {
       >
         {/* Progress */}
         <div className="mx-auto mb-10 h-[2px] w-[900px] max-w-full bg-border relative">
-          <div ref={progressLineRef} className="absolute left-0 top-0 h-full w-full bg-foreground origin-left scale-x-0" />
+          <div
+            ref={progressLineRef}
+            className="absolute left-0 top-0 h-full w-full bg-foreground origin-left scale-x-0"
+          />
         </div>
 
         {/* Track */}
@@ -284,7 +306,6 @@ export function Projects() {
                 ref={(el) => {
                   if (isLast && el) lastCardRef.current = el
                 }}
-                // ✅ Hover anywhere on card plays video (no replay on mouse move)
                 onMouseEnter={() => setActiveId(project.title)}
                 onMouseLeave={() => setActiveId(null)}
                 onFocus={() => setActiveId(project.title)}
@@ -300,13 +321,22 @@ export function Projects() {
                 />
 
                 <div className="p-6">
-                  <span className="text-accent text-sm font-mono">{project.category}</span>
-                  <h3 className="text-xl font-semibold mt-2 mb-3">{project.title}</h3>
-                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{project.description}</p>
+                  <span className="text-accent text-sm font-mono">
+                    {project.category}
+                  </span>
+                  <h3 className="text-xl font-semibold mt-2 mb-3">
+                    {project.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+                    {project.description}
+                  </p>
 
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tech.map((t) => (
-                      <span key={t} className="px-3 py-1 bg-secondary text-xs text-muted-foreground rounded-full">
+                      <span
+                        key={t}
+                        className="px-3 py-1 bg-secondary text-xs text-muted-foreground rounded-full"
+                      >
                         {t}
                       </span>
                     ))}
@@ -340,10 +370,7 @@ export function Projects() {
   )
 }
 
-/** ✅ Controlled media: hover anywhere on card triggers active=true.
- *  - If mouse moves inside card: DOES NOT restart
- *  - Leave card: pause + reset
- */
+/** ✅ Controlled media */
 function ProjectMedia({
   image,
   video,
@@ -362,8 +389,6 @@ function ProjectMedia({
     if (!v) return
 
     if (active) {
-      // ✅ Do NOT set currentTime here (prevents replay)
-      // ✅ If already playing, play() won't restart
       v.play().catch(() => {})
     } else {
       v.pause()

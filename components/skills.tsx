@@ -86,7 +86,16 @@ const techData: TechItem[] = [
     row: 2,
     description:
       "Cross-platform and native mobile development. Flutter for cross-platform excellence, React Native for JavaScript-based apps, and native development with Kotlin and Swift.",
-    skills: ["Flutter", "Dart", "React Native", "Kotlin", "Swift", "Firebase", "iOS", "Android"],
+    skills: [
+      "Flutter",
+      "Dart",
+      "React Native",
+      "Kotlin",
+      "Swift",
+      "Firebase",
+      "iOS",
+      "Android",
+    ],
   },
   {
     id: "ai",
@@ -96,7 +105,16 @@ const techData: TechItem[] = [
     row: 2,
     description:
       "Smart solutions with machine learning pipelines and AI automation. Deep learning frameworks, LLM agents, and intelligent automation tools.",
-    skills: ["Python", "Jupyter", "Colab", "TensorFlow", "PyTorch", "LangChain", "Ollama", "CrewAI"],
+    skills: [
+      "Python",
+      "Jupyter",
+      "Colab",
+      "TensorFlow",
+      "PyTorch",
+      "LangChain",
+      "Ollama",
+      "CrewAI",
+    ],
   },
   {
     id: "devops",
@@ -204,20 +222,19 @@ export default function Skills() {
     boxShadow: `0 0 5px ${color}10`,
   })
 
-  // Optional: load font (same as your old code)
   useEffect(() => {
     const link = document.createElement("link")
-    link.href = "https://fonts.googleapis.com/css?family=Oswald:400,700,300|Inter:400,500,600"
+    link.href =
+      "https://fonts.googleapis.com/css?family=Oswald:400,700,300|Inter:400,500,600"
     link.rel = "stylesheet"
     document.head.appendChild(link)
     return () => {
-      // ensure the cleanup returns void
       link.remove()
     }
   }, [])
 
   return (
-    <section id="skills" className="skills-section section">
+    <section id="skills" className="section skills-section">
       <div className="ta-wrap">
         <div className="ta-glow ta-g1" />
         <div className="ta-glow ta-g2" />
@@ -225,7 +242,9 @@ export default function Skills() {
         <div className="ta-container">
           <div className="ta-gridWrap">
             <div className="ta-hexWrap">
-              <div className={`ta-hint ${!hintVisible ? "is-hidden" : ""}`}>Init System...</div>
+              <div className={`ta-hint ${!hintVisible ? "is-hidden" : ""}`}>
+                Init System...
+              </div>
 
               <div className="ta-row">
                 {rows[1].map((item) => (
@@ -283,7 +302,11 @@ export default function Skills() {
 
                   <div className="ta-badges">
                     {activeItem.skills.map((s) => (
-                      <span key={s} className="ta-badge" style={badgeStyle(activeItem.color)}>
+                      <span
+                        key={s}
+                        className="ta-badge"
+                        style={badgeStyle(activeItem.color)}
+                      >
                         {s}
                       </span>
                     ))}
