@@ -90,7 +90,7 @@ export function Contact() {
                     href="mailto:gayangabandara@gmail.com"
                     className="font-medium text-foreground hover:text-accent transition-colors break-all"
                   >
-                    gayangabandara@gmail.com
+                    gr.gayangabandara@gmail.com
                   </Link>
                 </div>
               </div>
